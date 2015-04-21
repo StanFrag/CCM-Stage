@@ -1,9 +1,9 @@
 imports:
     - { resource: config.yml }
-    - { resource: /etc/quidea/prod/sharedance_bg.yml }
-    - { resource: /etc/quidea/prod/syslog.yml }
-    - { resource: /etc/quidea/prod/mailing.yml }
-    - { resource: /etc/quidea/prod/db_md5.yml }
+    - { resource: /etc/quidea/qlf/sharedance_bg.yml }
+    - { resource: /etc/quidea/qlf/syslog.yml }
+    - { resource: /etc/quidea/qlf/mailing.yml }
+    - { resource: /etc/quidea/qlf/db_md5.yml }
 
 #framework:
 #    validation:

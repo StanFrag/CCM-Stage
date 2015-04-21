@@ -4,8 +4,38 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "928cf07615062470571573abc0843fa6",
+    "hash": "f2d6cf6b622adb566848e79edc817451",
     "packages": [
+        {
+            "name": "ccmbenchmark/sharedance-bundle",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "git@bitbucket.org:ccmbenchmark/sharedance_bundle.git",
+                "reference": "244049ace937a6247b02b1d67b0a7dc0cb9a5ff8"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "http://satis.admin2.ccmbg.com//dist/ccmbenchmark-sharedance-bundle-1.0.1-9ca267.tar",
+                "reference": "244049ace937a6247b02b1d67b0a7dc0cb9a5ff8",
+                "shasum": "8b33ef03a97952cd87e79c188839259257e2904a"
+            },
+            "require": {
+                "php": ">=5.5.0",
+                "symfony/symfony": "2.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CCMBenchmark\\SharedanceBundle\\": "src/SharedanceBundle"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Add a sharedance session handler to symfony",
+            "time": "2015-03-17 16:20:20"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.3",

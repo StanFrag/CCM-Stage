@@ -1,12 +1,18 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "license": "MIT",
+    "name": "ccmbenchmark/dm_md5",
+    "license": "proprietary",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "MD5 matching for data & marketing",
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
-    "require": {
+    "repositories": [
+    {
+      "type": "composer",
+      "url": "http://satis.admin2.ccmbg.com/"
+    }
+  ],
+  "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.6.*",
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
@@ -18,7 +24,8 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~3.0,>=3.0.12",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "ccmbenchmark/sharedance-bundle": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
@@ -50,9 +57,10 @@
         "bin-dir": "bin"
     },
     "extra": {
+        "symfony-cache-warmup": true,
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
-        "symfony-assets-install": "relative",
+        "symfony-assets-install": "hard",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },

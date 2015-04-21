@@ -1,5 +1,9 @@
 imports:
     - { resource: config.yml }
+    - { resource: /etc/quidea/dev/sharedance_bg.yml }
+    - { resource: /etc/quidea/dev/syslog.yml }
+    - { resource: /etc/quidea/dev/mailing.yml }
+    - { resource: /etc/quidea/dev/db_md5.yml }
 
 framework:
     router:
