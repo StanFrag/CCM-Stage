@@ -1,0 +1,67 @@
+sonata_admin:
+
+    security:
+        # handler: sonata.admin.security.handler.acl
+        handler: sonata.admin.security.handler.role
+
+    title:      MD5 - CCM Benchmark Data & Marketing
+    title_logo: bundles/app/img/ccmbg-group.png
+
+    options:
+        html5_validate: true # does not use html5 validation
+        pager_links: 10 # pager max links to display
+        title_mode: single_text
+
+    templates:
+        # default global templates
+        layout:     SonataAdminBundle::standard_layout.html.twig
+        ajax:       SonataAdminBundle::ajax_layout.html.twig
+
+        # default actions templates, should extend a global templates
+        list:    SonataAdminBundle:CRUD:list.html.twig
+        show:    SonataAdminBundle:CRUD:show.html.twig
+        edit:    SonataAdminBundle:CRUD:edit.html.twig
+
+        # Extends some templates
+        #side_bar_after_nav:    AppBundle:side_bar_after_nav.html.twig
+
+    dashboard:
+        blocks:
+            # display a dashboard block
+            -
+                position: top
+                class: col-md-12
+                type: sonata.block.service.text
+                settings:
+                    content: "<div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>Bienvenue sur CCM Benchmark Web2SMS</h3></div><div class='panel-body'>Outil de génération de campagnes SMS multi-sessions.</div></div>"
+            -
+                position: left
+                type: sonata.admin.block.admin_list
+
+            #-
+                #position: right
+                #type: appbundle.block.service.importcsv
+
+            # - { position: right, type: sonata.block.service.rss, settings: { title: Sonata Project's Feeds, url: http://sonata-project.org/blog/archive.rss }}
+
+        groups:
+            #default: ~
+            sonata.admin.group.administration:
+                label:           sonata_administration
+                label_catalogue: SonataAdminBundle
+                icon:            '<i class="fa fa-cogs"></i>'
+                items:
+                    - sonata.user.admin.user
+                    - sonata.user.admin.group
+                    #- sonata.page.admin.site
+                    #- sonata.notification.admin.message
+
+    assets:
+        stylesheets:
+            - bundles/app/css/sonata_admin_css.css
+            - bundles/app/css/sonata_jqueryui_css.css
+            - bundles/app/css/dm_md5.css
+
+        javascripts:
+            - bundles/app/js/sonata_admin_js.js
+            - bundles/app/js/sonata_jqueryui_js.js
