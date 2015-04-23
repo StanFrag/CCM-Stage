@@ -17,6 +17,36 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
+            // JMS Serializer used for media
+            new JMS\AopBundle\JMSAopBundle(),
+            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
+
+            // MEDIA
+            //new Sonata\MediaBundle\SonataMediaBundle(),
+            //new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+
+            // Add your dependencies
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            //new Sonata\IntlBundle\SonataIntlBundle(),
+
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+
+            // Used during installation : > php app/console sonata:easy-extends:generate SonataUserBundle -d src
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+
+            // If you haven't already, add the storage bundle
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+
+            // Then add SonataAdminBundle
+            new Sonata\AdminBundle\SonataAdminBundle(),
+
+            // user : Most of the cases, you'll want to extend FOSUserBundle though ;)
+            new FOS\UserBundle\FOSUserBundle(),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+
             new CCMBenchmark\SharedanceBundle\CCMBenchmarkSharedanceBundle(),
 
             new AppBundle\AppBundle(),
