@@ -4,6 +4,11 @@ parameters:
 #    parameter_name: value
 
 services:
+ public_user.registration.form.type:
+  class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
+  arguments: [%fos_user.model.user.class%]
+  tags: 
+   - { name: form.type, alias: public_user_registration }
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

@@ -19,4 +19,11 @@ class Group extends BaseGroup
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+     */
+    protected $users;
 }
