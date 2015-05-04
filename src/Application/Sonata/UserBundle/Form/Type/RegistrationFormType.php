@@ -16,14 +16,25 @@ class RegistrationFormType extends BaseType
         $builder
             ->add('lastname', 'text', array('label'  => 'Nom :'))
             ->add('firstname', 'text', array('label'  => 'Prénom :'))
-            ->add('company', 'text', array('label'  => 'Société :'))
+            ->add('company', 'text', array('label'  => 'Nom société :'))
             ->add('legalSituation', 'text', array('label'  => 'Statut juridique :'))
+            ->add('legalSituation', 'choice', array(
+                'choices' => array(
+                                    'ei' => 'Entreprises individuelles', 
+                                    'sc' => 'Sociétés civiles',
+                                    'eurl' => 'EURL',
+                                    'sarl' => 'SARL',
+                                    'sas' => 'SAS',
+                                    'sa' => 'SA'
+                                ),
+                'label'  => 'Statut juridique :'
+            ))
             ->add('activityType', 'choice', array(
                 'choices' => array('editor' => 'Editeur Standard', 'mailer' => 'Emailer'),
                 'label'  => 'Type d\'activité :'
             ))
             ->add('phoneNumber', 'text', array('label'  => 'Téléphone :'))
-            ->add('url', 'url', array('label'  => 'Url :'));
+            ->add('url', 'url', array('label'  => 'Url de votre site :'));
     }
 
     public function getName()

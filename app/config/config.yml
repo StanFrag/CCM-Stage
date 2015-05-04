@@ -17,7 +17,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ['en'] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -54,11 +54,14 @@ fos_user:
         form:
             type: public_user_registration
 
-
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+
+mopa_bootstrap:
+    form:
+        templating: false # default is true
 
 # Assetic Configuration
 assetic:
