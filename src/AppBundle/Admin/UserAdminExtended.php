@@ -19,6 +19,7 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Doctrine\ORM\EntityRepository;
 
 class UserAdminExtended extends UserAdmin
 {
@@ -64,20 +65,22 @@ class UserAdminExtended extends UserAdmin
         $listMapper
             ->addIdentifier('username')
             ->add('email')
-            ->add('groups')
+            ->add('company', null, array('label' => 'Societé'))
+            ->add('phoneNumber', 'text', array('label'  => 'Téléphone'))
+            ->add('url', 'url', array('label'  => 'Url du site'))
+            ->add('groups', 'entity', array())
             ->add('enabled', null, array('editable' => true))
-            ->add('locked', null, array('editable' => true))
             ->add('createdAt', null, array(
                 'label'  => 'Créé le',
                 'format' => 'd/m/Y',
             ))
         ;
 
-        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
-            $listMapper
-                ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
-            ;
-        }
+#        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
+#            $listMapper
+#                ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
+#            ;
+#        }
     }
 
     /**
@@ -88,7 +91,10 @@ class UserAdminExtended extends UserAdmin
         $filterMapper
             ->add('id')
             ->add('username')
-            ->add('locked')
+            ->add('company', null, array('label' => 'Société'))
+            ->add('enabled', null, array('label' => 'Activé'))
+            ->add('phoneNumber', null, array('label'  => 'Téléphone'))
+            ->add('url', null, array('label'  => 'Url site'))
             ->add('email')
             ->add('groups')
         ;
@@ -148,8 +154,28 @@ class UserAdminExtended extends UserAdmin
                     ->add('plainPassword', 'text', array(
                         'required' => (!$this->getSubject() || is_null($this->getSubject()->getId()))
                     ))
-                    ->add('firstname', null, array('required' => false))
-                    ->add('lastname', null, array('required' => false))
+                    ->add('firstname')
+                    ->add('lastname')
+                    ->add('company', null, array(
+                            'label' => 'Société'
+                    ))
+                    ->add('legalSituation', 'choice', array(
+                        'choices' => array(
+                            'ei' => 'Entreprises individuelles',
+                            'sc' => 'Sociétés civiles',
+                            'eurl' => 'EURL',
+                            'sarl' => 'SARL',
+                            'sas' => 'SAS',
+                            'sa' => 'SA'
+                        ),
+                        'label'  => 'Statut juridique :'
+                    ))
+                    ->add('activityType', 'choice', array(
+                        'choices' => array('editor' => 'Editeur Standard', 'mailer' => 'Emailer'),
+                        'label'  => 'Type d\'activité :'
+                    ))
+                    ->add('phoneNumber', 'text', array('label'  => 'Téléphone :'))
+                    ->add('url', 'url', array('label'  => 'Url de votre site :'))
                 ->end()
                 ->with('Groups', array('class' => 'col-md-6'))
                     ->add('groups', 'sonata_type_model', array(

@@ -61,6 +61,11 @@ class User extends BaseUser
      * @var string $phoneNumber
      *
      * @ORM\Column(name="phoneNumber", type="integer")
+     * @Assert\Regex(
+     *     pattern="/^((\+|00)33\s?|0)[1-9](\s?\d{2}){4}$/",
+     *     match=true,
+     *     message="Votre numéro de téléphone doit etre valide"
+     * )
      */
     protected $phoneNumber;
 

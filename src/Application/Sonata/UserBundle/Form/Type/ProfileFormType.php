@@ -1,12 +1,17 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: stanislas
+ * Date: 06/05/15
+ * Time: 11:48
+ */
 namespace Application\Sonata\UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
+use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
 use Symfony\Component\Form\AbstractType;
 
-class RegistrationFormType extends BaseType
+class ProfileFormType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,13 +24,13 @@ class RegistrationFormType extends BaseType
             ->add('company', 'text', array('label'  => 'Nom société :'))
             ->add('legalSituation', 'choice', array(
                 'choices' => array(
-                                    'ei' => 'Entreprises individuelles', 
-                                    'sc' => 'Sociétés civiles',
-                                    'eurl' => 'EURL',
-                                    'sarl' => 'SARL',
-                                    'sas' => 'SAS',
-                                    'sa' => 'SA'
-                                ),
+                    'ei' => 'Entreprises individuelles',
+                    'sc' => 'Sociétés civiles',
+                    'eurl' => 'EURL',
+                    'sarl' => 'SARL',
+                    'sas' => 'SAS',
+                    'sa' => 'SA'
+                ),
                 'label'  => 'Statut juridique :'
             ))
             ->add('activityType', 'choice', array(
@@ -41,13 +46,14 @@ class RegistrationFormType extends BaseType
     {
         $resolver->setDefaults(array(
             "data_class" => "Application\Sonata\UserBundle\Entity\User",
-            'validation_groups' => array('Default', 'Register')
+            'validation_groups' => array('Default', 'Profile'),
+            'intention' => 'profile'
         ));
     }
 
     public function getParent()
     {
-        return 'fos_user_registration';
+        return 'fos_user_profile';
     }
 
     public function getName()

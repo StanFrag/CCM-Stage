@@ -5,7 +5,6 @@ home:
         path: /login
         permanent: true
 
-
 # Admin
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
@@ -16,12 +15,11 @@ _sonata_admin:
     type: sonata_admin
     prefix: /admin
 
-sonata_user_admin:
+sonata_user:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
 
 # Hors admin
-
 sonata_user_security:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_security_1.xml"
 
@@ -29,14 +27,14 @@ sonata_user_resetting:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_resetting_1.xml"
     prefix: /resetting
 
+sonata_user_profile:
+    resource: "@SonataUserBundle/Resources/config/routing/sonata_profile_1.xml"
+    prefix: /profile
+
 sonata_user_register:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_registration_1.xml"
     prefix: /register
 
 sonata_user_change_password:
     resource: "@SonataUserBundle/Resources/config/routing/sonata_change_password_1.xml"
-    prefix: /profile
-
-sonata_profile:
-    resource: "@SonataUserBundle/Resources/config/routing/sonata_profile_1.xml"
     prefix: /profile

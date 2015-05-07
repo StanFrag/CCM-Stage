@@ -11,13 +11,16 @@ imports:
     - { resource: sonata/sonata_admin.yml }
     - { resource: sonata/sonata_user.yml }
 
+    # FOS Feature Bundles
+    - { resource: fos/fos_user.yml }
+
     # Services
     #- { resource: @AppBundle/Resources/config/admin.yml }
 
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ['en'] }
+    translator:      ~
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -27,6 +30,9 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
+        form:
+            resources:
+                - 'FrameworkBundle:FormTable'
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~
@@ -36,23 +42,6 @@ framework:
         handler_id:  ccmbenchmark.sharedance_handler
     fragments:       ~
     http_method_override: true
-
-
-fos_user:
-    db_driver:      orm # can be orm or odm
-    firewall_name:  main
-    user_class:     Application\Sonata\UserBundle\Entity\User
-
-    group:
-        group_class:   Application\Sonata\UserBundle\Entity\Group
-        group_manager: sonata.user.orm.group_manager
-
-    service:
-        user_manager: sonata.user.orm.user_manager
-
-    registration:
-        form:
-            type: public_user_registration
 
 # Twig Configuration
 twig:

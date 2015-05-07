@@ -12,3 +12,20 @@ sonata_user:
             class:          AppBundle\Admin\UserAdminExtended
             controller:     SonataAdminBundle:CRUD
             translation:    SonataUserBundle
+
+    class:
+            user:         Application\Sonata\UserBundle\Entity\User
+            group:        Application\Sonata\UserBundle\Entity\Group
+
+    profile:
+        # Customize user portal menu by setting links
+        menu:
+            - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}
+            - { route: 'sonata_user_profile_edit', label: 'link_edit_profile', domain: 'SonataUserBundle'}
+            - { route: 'sonata_user_profile_edit_authentication', label: 'link_edit_authentication', domain: 'SonataUserBundle'}
+
+        form:
+            type:               public_user_registration
+            handler:            sonata.user.profile.form.handler.default
+            name:               sonata_user_profile_form
+            validation_groups:  [Profile]

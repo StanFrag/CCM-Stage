@@ -10,6 +10,10 @@
                 <source>First Name</source>
                 <target>Prénom</target>
             </trans-unit>
+            <trans-unit id="1">
+                <source>Bad credentials.</source>
+                <target>Nom d'utilisateur ou Mot de passe invalide</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

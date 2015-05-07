@@ -33,7 +33,7 @@ sonata_admin:
                 class: col-md-12
                 type: sonata.block.service.text
                 settings:
-                    content: "<div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>Bienvenue sur CCM Benchmark Web2SMS</h3></div><div class='panel-body'>Outil de génération de campagnes SMS multi-sessions.</div></div>"
+                    content: "<div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>Bienvenue sur CCM Benchmark MD5</h3></div><div class='panel-body'>Outil de matching de bases de données MD5.</div></div>"
             -
                 position: left
                 type: sonata.admin.block.admin_list

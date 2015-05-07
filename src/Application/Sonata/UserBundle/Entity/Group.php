@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="fos_user_group", options={"collate"="utf8_general_ci"})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\GroupRepository")
  */
 class Group extends BaseGroup
 {

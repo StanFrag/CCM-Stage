@@ -46,7 +46,7 @@ class AppKernel extends Kernel
 
             new CCMBenchmark\SharedanceBundle\CCMBenchmarkSharedanceBundle(),
 
-            new AppBundle\AppBundle(),
+            new AppBundle\AppBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
