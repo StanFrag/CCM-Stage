@@ -1,8 +1,9 @@
 {% trans_default_domain 'FOSUserBundle' %}
+<div class="space"></div>
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <div class="panel panel-primary">
+        <div class="panel panel-md5">
 
             <div class="panel-heading">
                 <h2 class="panel-title">{{ 'title_user_registration'|trans({}, 'SonataUserBundle') }}</h2>
@@ -17,31 +18,19 @@
 
                 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
                     <div class="form-group">
-                        {% if form_errors(form.company) %}
-                            <div class="alert alert-danger alert-error">
-                                {{ form_errors(form.company) }}
-                            </div>
-                        {% endif %}
-                        {{ form_label(form.company) }}
-                        {{ form_widget(form.company) }}
-                    </div>
-                    <div class="form-group">
-                        {% if form_errors(form.legalSituation) %}
-                            <div class="alert alert-danger alert-error">
-                                {{ form_errors(form.legalSituation) }}
-                            </div>
-                        {% endif %}
-                        {{ form_label(form.legalSituation) }}
-                        {{ form_widget(form.legalSituation) }}
-                    </div>
-                    <div class="form-group">
                         {% if form_errors(form.lastname) %}
                             <div class="alert alert-danger alert-error">
                                 {{ form_errors(form.lastname) }}
                             </div>
                         {% endif %}
-                        {{ form_label(form.lastname) }}
-                        {{ form_widget(form.lastname) }}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.lastname) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.lastname) }}
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         {% if form_errors(form.firstname) %}
@@ -49,8 +38,14 @@
                                 {{ form_errors(form.firstname) }}
                             </div>
                         {% endif %}
-                        {{ form_label(form.firstname) }}
-                        {{ form_widget(form.firstname) }}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.firstname) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.firstname) }}
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         {% if form_errors(form.email) %}
@@ -58,8 +53,14 @@
                                 {{ form_errors(form.email) }}
                             </div>
                         {% endif %}
-                        {{ form_label(form.email) }}
-                        {{ form_widget(form.email) }}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.email) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.email) }}
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         {% if form_errors(form.phoneNumber) %}
@@ -67,8 +68,45 @@
                                 {{ form_errors(form.phoneNumber) }}
                             </div>
                         {% endif %}
-                        {{ form_label(form.phoneNumber) }}
-                        {{ form_widget(form.phoneNumber) }}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.phoneNumber) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.phoneNumber) }}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        {% if form_errors(form.company) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.company) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                            {{ form_label(form.company) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.company) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {% if form_errors(form.legalSituation) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.legalSituation) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.legalSituation) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.legalSituation) }}
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         {% if form_errors(form.activityType) %}
@@ -76,8 +114,14 @@
                                 {{ form_errors(form.activityType) }}
                             </div>
                         {% endif %}
-                        {{ form_label(form.activityType) }}
-                        {{ form_widget(form.activityType) }}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.activityType) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.activityType) }}
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         {% if form_errors(form.url) %}
@@ -85,8 +129,14 @@
                                 {{ form_errors(form.url) }}
                             </div>
                         {% endif %}
-                        {{ form_label(form.url) }}
-                        {{ form_widget(form.url) }}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.url) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.url) }}
+                            </div>
+                        </div>
                     </div>
 
                     <hr/>
@@ -97,8 +147,14 @@
                                 {{ form_errors(form.username) }}
                             </div>
                         {% endif %}
-                        {{ form_label(form.username) }}
-                        {{ form_widget(form.username) }}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.username) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.username) }}
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         {% if form_errors(form.plainPassword.first) %}
@@ -106,8 +162,14 @@
                                 {{ form_errors(form.plainPassword.first) }}
                             </div>
                         {% endif %}
-                        {{ form_label(form.plainPassword.first) }}
-                        {{ form_widget(form.plainPassword.first) }}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.plainPassword.first) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.plainPassword.first) }}
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         {% if form_errors(form.plainPassword.second) %}
@@ -115,20 +177,30 @@
                                 {{ form_errors(form.plainPassword.second) }}
                             </div>
                         {% endif %}
-                        {{ form_label(form.plainPassword.second) }}
-                        {{ form_widget(form.plainPassword.second) }}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.plainPassword.second) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.plainPassword.second) }}
+                            </div>
+                        </div>
                     </div>
-                    {{ form_rest(form) }}
                     <hr/>
-                    <div class="form-group">
-                        <p>
-                            <b>
-                                J'ai lu et j'accepte les conditions générales d'affiliation
-                            </b>
-                        </p>
-                        <br/>
-                        <input type="submit" class="btn btn-success" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+
+                    <div class="row">
+                        <div class="col-md-4 textRight"></div>
+                        <div class="col-md-8">
+                            <label for="remember_me">
+                                <input type="checkbox" id="remember_me" name="_remember_me" required="required" value="on"/>
+                                J'ai lu et j'accepte <a href="http://www.google.fr" class="underline">les conditions générales d'affiliation</a>
+                            </label>
+                            {{ form_rest(form) }}
+                            <br/><br/>
+                            <input type="submit" class="btn btn-success" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+                        </div>
                     </div>
+
                 </form>
             </div>
         </div>

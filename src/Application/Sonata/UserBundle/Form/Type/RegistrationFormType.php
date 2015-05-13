@@ -14,9 +14,41 @@ class RegistrationFormType extends BaseType
 
         // add your custom field
         $builder
-            ->add('lastname', 'text', array('label'  => 'Nom :'))
-            ->add('firstname', 'text', array('label'  => 'Prénom :'))
-            ->add('company', 'text', array('label'  => 'Nom société :'))
+            ->add('username', 'text', array(
+                'label'  => 'Nom d\'utilisateur :',
+                'attr' => array(
+                    'placeholder' => 'Pseudo...',
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('email', 'email', array(
+                'label'  => 'Adresse e-mail :',
+                'attr' => array(
+                    'placeholder' => 'E-mail...',
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('lastname', 'text', array(
+                'label'  => 'Nom :',
+                'attr' => array(
+                    'placeholder' => 'Nom...',
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('firstname', 'text', array(
+                'label'  => 'Prénom :',
+                'attr' => array(
+                    'placeholder' => 'Prénom...',
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('company', 'text', array(
+                'label'  => 'Nom société :',
+                'attr' => array(
+                    'placeholder' => 'Société...',
+                    'class' => 'form-control'
+                )
+            ))
             ->add('legalSituation', 'choice', array(
                 'choices' => array(
                                     'ei' => 'Entreprises individuelles', 
@@ -26,14 +58,56 @@ class RegistrationFormType extends BaseType
                                     'sas' => 'SAS',
                                     'sa' => 'SA'
                                 ),
-                'label'  => 'Statut juridique :'
+                'label'  => 'Statut juridique :',
+                'placeholder' => 'Veuillez choisir...',
+                'attr' => array(
+                    'class' => 'form-control'
+                )
             ))
             ->add('activityType', 'choice', array(
-                'choices' => array('editor' => 'Editeur Standard', 'mailer' => 'Emailer'),
-                'label'  => 'Type d\'activité :'
+                'choices' => array(
+                    'editor' => 'Editeur Standard',
+                    'mailer' => 'Emailer'
+                ),
+                'label'  => 'Type d\'activité :',
+                'placeholder' => 'Veuillez choisir...',
+                'attr' => array(
+                    'class' => 'form-control'
+                )
             ))
-            ->add('phoneNumber', 'text', array('label'  => 'Téléphone :'))
-            ->add('url', 'url', array('label'  => 'Url de votre site :'))
+            ->add('phoneNumber', 'text', array(
+                'label'  => 'Téléphone :',
+                'attr' => array(
+                    'placeholder' => 'Téléphone...',
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('url', 'url', array(
+                'label'  => 'Url de votre site :',
+                'attr' => array(
+                    'placeholder' => 'http://www.monsite.com',
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('plainPassword', 'repeated', array(
+                'type' => 'password',
+                'options' => array('translation_domain' => 'FOSUserBundle'),
+                'first_options' => array(
+                    'label' => 'form.password',
+                    'attr' => array(
+                        'placeholder' => 'Mot de passe...',
+                        'class' => 'form-control'
+                    )
+                ),
+                'second_options' => array(
+                    'label' => 'form.password_confirmation',
+                    'attr' => array(
+                        'placeholder' => 'Vérification mot de passe...',
+                        'class' => 'form-control'
+                    )
+                ),
+                'invalid_message' => 'fos_user.password.mismatch',
+            ))
             ->setAttribute('error_type', "inline");
     }
 
@@ -41,7 +115,8 @@ class RegistrationFormType extends BaseType
     {
         $resolver->setDefaults(array(
             "data_class" => "Application\Sonata\UserBundle\Entity\User",
-            'validation_groups' => array('Default', 'Register')
+            'validation_groups' => array('Default', 'Register'),
+            'intention'  => 'register'
         ));
     }
 

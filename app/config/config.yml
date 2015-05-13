@@ -20,7 +20,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      ~
+    translator:      { fallback: fr }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -56,7 +56,7 @@ mopa_bootstrap:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
+    #bundles:        []
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

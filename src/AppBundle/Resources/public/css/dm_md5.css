@@ -1,0 +1,33 @@
+.panel-md5{
+    border-color: #FF0000 !important;
+}
+
+.panel-md5>.panel-heading {
+    background-image: -webkit-linear-gradient(top,#FF0000 0,#b40000 100%);
+    background-image: -o-linear-gradient(top,#FF0000 0,#b40000 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#FF0000),to(#b40000));
+    background-image: linear-gradient(to bottom,#FF0000 0,#b40000 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffFF0000', endColorstr='#ffb40000', GradientType=0);
+    background-repeat: repeat-x;
+}
+.panel-md5>.panel-heading {
+    color: #fff;
+    background-color: #FF0000;
+    border-color: #b40000;
+}
+
+.textRight{
+    text-align: right;
+}
+
+.textCenter{
+    text-align: center;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+.space{
+    height:50px;
+}

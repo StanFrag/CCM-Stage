@@ -47,6 +47,7 @@ security:
                 use_forward:    false
                 check_path:     /admin/login_check
                 failure_path:   null
+                default_target_path: /admin/
             logout:
                 path:           /admin/logout
                 target:         /
@@ -57,12 +58,14 @@ security:
             pattern:             .*
             context:             user
             form_login:
+                always_use_default_target_path: true
                 provider:       fos_userbundle
                 login_path:     /login
                 use_forward:    false
                 check_path:     /login_check
                 failure_path:   null
                 default_target_path: /profile/
+                target_path_parameter: redirect_url
             logout:
                 path:           /logout
                 target:         /
