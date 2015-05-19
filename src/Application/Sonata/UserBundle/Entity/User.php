@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends BaseUser
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -20,7 +19,7 @@ class User extends BaseUser
     }
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -37,28 +36,28 @@ class User extends BaseUser
     protected $groups;
 
     /**
-     * @var string $company
+     * @var string
      *
      * @ORM\Column(name="company", type="string", length=255)
      */
     protected $company;
 
     /**
-     * @var string $legalSituation
+     * @var string
      *
      * @ORM\Column(name="legalSituation", type="string", length=255)
      */
     protected $legalSituation;
 
     /**
-     * @var string $activityType
+     * @var string
      *
      * @ORM\Column(name="activityType", type="string", length=255)
      */
     protected $activityType;
 
     /**
-     * @var string $phoneNumber
+     * @var string
      *
      * @ORM\Column(name="phoneNumber", type="integer")
      * @Assert\Regex(
@@ -70,63 +69,74 @@ class User extends BaseUser
     protected $phoneNumber;
 
     /**
-     * @var string $url
+     * @var string
      *
      * @ORM\Column(name="url", type="string")
      */
     protected $url;
-
 
     public function getId()
     {
         return $this->id;
     }
 
-    public function getLogin() {
+    public function getLogin()
+    {
         return $this->login;
     }
 
-    public function setLogin($login) {
+    public function setLogin($login)
+    {
         $this->login = $login;
     }
 
-    public function getCompany() {
+    public function getCompany()
+    {
         return $this->company;
     }
 
-    public function setCompany($company) {
+    public function setCompany($company)
+    {
         $this->company = $company;
     }
 
-    public function getLegalSituation() {
+    public function getLegalSituation()
+    {
         return $this->legalSituation;
     }
 
-    public function setLegalSituation($legalSituation) {
+    public function setLegalSituation($legalSituation)
+    {
         $this->legalSituation = $legalSituation;
     }
 
-    public function getActivityType() {
+    public function getActivityType()
+    {
         return $this->activityType;
     }
 
-    public function setActivityType($activityType) {
+    public function setActivityType($activityType)
+    {
         $this->activityType = $activityType;
     }
 
-    public function getPhoneNumber() {
+    public function getPhoneNumber()
+    {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber($phoneNumber) {
+    public function setPhoneNumber($phoneNumber)
+    {
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->url;
     }
 
-    public function setUrl($url) {
+    public function setUrl($url)
+    {
         $this->url = $url;
     }
 }

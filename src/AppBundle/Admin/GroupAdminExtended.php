@@ -20,7 +20,7 @@ use Sonata\UserBundle\Admin\Model\GroupAdmin;
 class GroupAdminExtended extends GroupAdmin
 {
     protected $formOptions = array(
-        'cascade_validation' => true
+        'cascade_validation' => true,
     );
 
     /**
@@ -64,7 +64,7 @@ class GroupAdminExtended extends GroupAdmin
                 ->add('roles', 'sonata_security_roles', array(
                     'expanded' => true,
                     'multiple' => true,
-                    'required' => false
+                    'required' => false,
                 ))
             ->end()
         ;

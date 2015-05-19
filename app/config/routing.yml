@@ -5,6 +5,11 @@ home:
         path: /login
         permanent: true
 
+cga_show:
+    path: /cga
+    defaults:  { _controller: AppBundle:Cga:show }
+
+
 # Admin
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'

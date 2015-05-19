@@ -193,7 +193,8 @@
                         <div class="col-md-8">
                             <label for="remember_me">
                                 <input type="checkbox" id="remember_me" name="_remember_me" required="required" value="on"/>
-                                J'ai lu et j'accepte <a href="http://www.google.fr" class="underline">les conditions générales d'affiliation</a>
+                                {% trans %}J'ai lu et j'accepte{% endtrans %}
+                                <a href="{{ path('cga_show') }}" class="underline">{% trans %}les conditions générales d'affiliation{% endtrans %}</a>
                             </label>
                             {{ form_rest(form) }}
                             <br/><br/>

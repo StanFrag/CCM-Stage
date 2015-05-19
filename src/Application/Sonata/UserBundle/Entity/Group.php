@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Group extends BaseGroup
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
