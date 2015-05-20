@@ -1,0 +1,39 @@
+sonata_block:
+    # context_manager: sonata.page.block.context_manager
+    default_contexts: [sonata_page_bundle]
+
+    http_cache:
+        listener: true
+
+    menus:
+        # "SonataDemoBundle:Builder:mainMenu": "Main Menu"
+
+    blocks:
+        # Enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+        sonata.admin.block.search_result:
+            contexts:   [admin]
+        sonata.admin_doctrine_orm.block.audit:
+            contexts:   [admin]
+
+        # Builtin Block
+        sonata.block.service.text:
+        sonata.block.service.container:
+        sonata.block.service.rss:
+        sonata.block.service.menu:
+        sonata.block.service.template:
+
+        # UserBundle's Blocks
+        sonata.user.block.account: # used to display menu option (login option)
+            cache: sonata.page.cache.js_async
+            #cache: sonata.page.cache.esi
+            contexts: [user]
+        sonata.user.block.menu:    # used to display the menu in profile pages
+            contexts: [user]
+
+        # Formatter
+        sonata.formatter.block.formatter:
+
+        # CSV Import
+        #appbundle.block.service.importcsv:

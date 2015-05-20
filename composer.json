@@ -25,7 +25,17 @@
         "sensio/distribution-bundle": "~3.0,>=3.0.12",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "ccmbenchmark/sharedance-bundle": "~1.0"
+        "ccmbenchmark/sharedance-bundle": "~1.0",
+
+        "sonata-project/admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "~2.3",
+        "sonata-project/user-bundle": "~2.2",
+        "jms/security-extra-bundle": "~1.5",
+        "jms/di-extra-bundle": "~1.4",
+        "jms/serializer-bundle": "~0.11",
+
+        "knplabs/knp-menu-bundle": "~2.0",
+        "sonata-project/intl-bundle": "~2.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
