@@ -81,7 +81,7 @@ doctrine:
 monolog:
     handlers:
         main:
-            ident: md5.ccmbdm.com
+            ident: md5.r-target.com
 #        app:
 #            facility: local3
 #            type:   syslog
