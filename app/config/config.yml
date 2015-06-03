@@ -54,7 +54,7 @@ mopa_bootstrap:
 
 # Assetic Configuration
 assetic:
-    use_controller: true
+    use_controller: false
 
 # Doctrine Configuration
 doctrine:
