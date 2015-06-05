@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dm_md5" default="install">
+    <property name="env.FRONTCORE_DIR" value="/var/www/frontcore" />
+    <property name="environment" value="dev" />
+    <property name="php" value="/usr/bin/php5" />
+
+    <property name="composer" value="/usr/local/bin/composer" />
+    <property name="composer-cmd" value="${composer} install" />
+
+    <if>
+        <equals arg1="${environment}" arg2="dev" />
+        <then>
+            <property name="composer-cmd" value="${composer-cmd} --dev --no-interaction" />
+        </then>
+        <else>
+            <property name="composer-cmd" value="${composer-cmd} -o --no-dev --no-ansi --no-interaction" />
+        </else>
+    </if>
+
+    <target name="composer">
+        <exec command=" export SYMFONY_ENV=${environment}; ${composer-cmd}" checkreturn="true" />
+    </target>
+
+    <target name="db">
+        <!-- DEV ONLY -->
+        <if>
+            <equals arg1="${environment}" arg2="dev" />
+            <then>
+                <echo msg="Executing database update" />
+                <exec command="export SYMFONY_ENV=${environment}; ${php} app/console doctrine:schema:update --force" checkreturn="true" />
+            </then>
+        </if>
+    </target>
+
+    <target name="install">
+        <phingcall target="composer" />
+        <phingcall target="db" />
+    </target>
+</project>
+
