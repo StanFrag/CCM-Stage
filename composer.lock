@@ -4,25 +4,25 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ef19119bdbd9ab5ccecba73c10a8986c",
+    "hash": "0329d27ea126447694b3d32b79e1beca",
     "packages": [
         {
             "name": "ccmbenchmark/sharedance-bundle",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:ccmbenchmark/sharedance_bundle.git",
-                "reference": "244049ace937a6247b02b1d67b0a7dc0cb9a5ff8"
+                "reference": "f4f367c3b30f467b3758fbeb21908c22573a3ff1"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://satis.admin2.ccmbg.com//dist/ccmbenchmark-sharedance-bundle-1.0.1-9ca267.tar",
-                "reference": "244049ace937a6247b02b1d67b0a7dc0cb9a5ff8",
-                "shasum": "8b33ef03a97952cd87e79c188839259257e2904a"
+                "url": "http://satis.admin2.ccmbg.com//dist/ccmbenchmark-sharedance-bundle-1.0.2-71eb88.tar",
+                "reference": "f4f367c3b30f467b3758fbeb21908c22573a3ff1",
+                "shasum": "24b03d119bb9e0d9593b798482ce20c5e06ed3c7"
             },
             "require": {
                 "php": ">=5.5.0",
-                "symfony/symfony": "2.6.*"
+                "symfony/symfony": "~2.5"
             },
             "type": "library",
             "autoload": {
@@ -34,7 +34,7 @@
                 "Apache-2.0"
             ],
             "description": "Add a sharedance session handler to symfony",
-            "time": "2015-03-17 16:20:20"
+            "time": "2015-06-11 12:34:26"
         },
         {
             "name": "cocur/slugify",
@@ -100,17 +100,17 @@
         },
         {
             "name": "craue/formflow-bundle",
-            "version": "2.1.7",
+            "version": "2.1.8",
             "target-dir": "Craue/FormFlowBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/craue/CraueFormFlowBundle.git",
-                "reference": "811edd320548c91ca24561ecda95c8cb36d6b8ab"
+                "reference": "00c56044b2c410c1e592e28191d8eef2fbfd64af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/811edd320548c91ca24561ecda95c8cb36d6b8ab",
-                "reference": "811edd320548c91ca24561ecda95c8cb36d6b8ab",
+                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/00c56044b2c410c1e592e28191d8eef2fbfd64af",
+                "reference": "00c56044b2c410c1e592e28191d8eef2fbfd64af",
                 "shasum": ""
             },
             "require": {
@@ -150,7 +150,7 @@
                 "Symfony2",
                 "form"
             ],
-            "time": "2015-03-06 08:30:00"
+            "time": "2015-06-11 10:56:52"
         },
         {
             "name": "doctrine/annotations",
@@ -2189,12 +2189,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phiamo/MopaBootstrapBundle.git",
-                "reference": "22bc280b9a254caa42c5b44b55f43eb33ab15426"
+                "reference": "4d4b6291b47fc70491a4f92105be39d6bcccbb95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/22bc280b9a254caa42c5b44b55f43eb33ab15426",
-                "reference": "22bc280b9a254caa42c5b44b55f43eb33ab15426",
+                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/4d4b6291b47fc70491a4f92105be39d6bcccbb95",
+                "reference": "4d4b6291b47fc70491a4f92105be39d6bcccbb95",
                 "shasum": ""
             },
             "require": {
@@ -2252,7 +2252,7 @@
                 "form",
                 "template"
             ],
-            "time": "2015-06-07 17:15:45"
+            "time": "2015-06-11 12:44:01"
         },
         {
             "name": "mopa/composer-bridge",
@@ -3810,25 +3810,26 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.6.9",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "b06539573ccf64dd3a62852685f052553d02c5ba"
+                "reference": "9975b1eca3de4db792a2c3e4e16f676a4aadcd46"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://satis.admin2.ccmbg.com//dist/symfony-symfony-b06539573ccf64dd3a62852685f052553d02c5ba-zip-fb451a.tar",
-                "reference": "b06539573ccf64dd3a62852685f052553d02c5ba",
-                "shasum": "632ed2c6bcb2d4d3a03d430e209a3bd6200ca4f4"
+                "url": "http://satis.admin2.ccmbg.com//dist/symfony-symfony-9975b1eca3de4db792a2c3e4e16f676a4aadcd46-zip-a2b707.tar",
+                "reference": "9975b1eca3de4db792a2c3e4e16f676a4aadcd46",
+                "shasum": "e2e6ea7f1f2f2c7631a374edeedf44fdeb7caf93"
             },
             "require": {
                 "doctrine/common": "~2.3",
-                "php": ">=5.3.3",
+                "php": ">=5.3.9",
                 "psr/log": "~1.0",
-                "twig/twig": "~1.12,>=1.12.3"
+                "twig/twig": "~1.18"
             },
             "replace": {
+                "symfony/asset": "self.version",
                 "symfony/browser-kit": "self.version",
                 "symfony/class-loader": "self.version",
                 "symfony/config": "self.version",
@@ -3852,7 +3853,6 @@
                 "symfony/monolog-bridge": "self.version",
                 "symfony/options-resolver": "self.version",
                 "symfony/process": "self.version",
-                "symfony/propel1-bridge": "self.version",
                 "symfony/property-access": "self.version",
                 "symfony/proxy-manager-bridge": "self.version",
                 "symfony/routing": "self.version",
@@ -3883,18 +3883,23 @@
                 "ircmaxell/password-compat": "~1.0",
                 "monolog/monolog": "~1.11",
                 "ocramius/proxy-manager": "~0.4|~1.0",
-                "propel/propel1": "~1.6",
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/phpunit-bridge": "self.version"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Symfony\\": "src/"
+                "psr-4": {
+                    "Symfony\\Bridge\\Doctrine\\": "src/Symfony/Bridge/Doctrine/",
+                    "Symfony\\Bridge\\Monolog\\": "src/Symfony/Bridge/Monolog/",
+                    "Symfony\\Bridge\\ProxyManager\\": "src/Symfony/Bridge/ProxyManager/",
+                    "Symfony\\Bridge\\Swiftmailer\\": "src/Symfony/Bridge/Swiftmailer/",
+                    "Symfony\\Bridge\\Twig\\": "src/Symfony/Bridge/Twig/",
+                    "Symfony\\Bundle\\": "src/Symfony/Bundle/",
+                    "Symfony\\Component\\": "src/Symfony/Component/"
                 },
                 "classmap": [
                     "src/Symfony/Component/HttpFoundation/Resources/stubs",
@@ -3923,7 +3928,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-05-29 22:55:07"
+            "time": "2015-05-30 16:52:28"
         },
         {
             "name": "twbs/bootstrap-sass",
