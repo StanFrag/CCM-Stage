@@ -20,7 +20,7 @@ use Sonata\UserBundle\Admin\Model\GroupAdmin;
 class GroupAdminExtended extends GroupAdmin
 {
     protected $formOptions = array(
-        'cascade_validation' => true
+        'cascade_validation' => true,
     );
 
     /**
@@ -58,20 +58,13 @@ class GroupAdminExtended extends GroupAdmin
             ->tab('Général')
                 ->with('Général')
                     ->add('name')
-                    ->add('contacts', 'sonata_type_collection', array(
-                        'label'  => 'Contacts'
-                    ), array(
-                        'edit'   => 'inline',
-                        'inline' => 'table',
-                        //'sortable' => 'position'
-                    ))
                 ->end()
             ->end()
             ->tab('Rôles')
                 ->add('roles', 'sonata_security_roles', array(
                     'expanded' => true,
                     'multiple' => true,
-                    'required' => false
+                    'required' => false,
                 ))
             ->end()
         ;

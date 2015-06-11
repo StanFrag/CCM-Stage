@@ -7,16 +7,23 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="fos_user_group", options={"collate"="utf8_general_ci"})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\GroupRepository")
  */
 class Group extends BaseGroup
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+     */
+    protected $users;
 }

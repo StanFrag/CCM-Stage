@@ -1,0 +1,210 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="space"></div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="panel panel-md5">
+
+            <div class="panel-heading">
+                <h2 class="panel-title">{{ 'title_user_registration'|trans({}, 'SonataUserBundle') }}</h2>
+            </div>
+            <div class="panel-body">
+
+                {% if form_errors(form) %}
+                    <div class="alert alert-danger alert-error">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
+
+                <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+                    <div class="form-group">
+                        {% if form_errors(form.lastname) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.lastname) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.lastname) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.lastname) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {% if form_errors(form.firstname) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.firstname) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.firstname) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.firstname) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {% if form_errors(form.email) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.email) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.email) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.email) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {% if form_errors(form.phoneNumber) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.phoneNumber) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.phoneNumber) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.phoneNumber) }}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        {% if form_errors(form.company) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.company) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                            {{ form_label(form.company) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.company) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {% if form_errors(form.legalSituation) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.legalSituation) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.legalSituation) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.legalSituation) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {% if form_errors(form.activityType) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.activityType) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.activityType) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.activityType) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {% if form_errors(form.url) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.url) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.url) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.url) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="form-group">
+                        {% if form_errors(form.username) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.username) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.username) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.username) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {% if form_errors(form.plainPassword.first) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.plainPassword.first) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.plainPassword.first) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.plainPassword.first) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {% if form_errors(form.plainPassword.second) %}
+                            <div class="alert alert-danger alert-error">
+                                {{ form_errors(form.plainPassword.second) }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-4 textRight">
+                                {{ form_label(form.plainPassword.second) }}
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.plainPassword.second) }}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+
+                    <div class="row">
+                        <div class="col-md-4 textRight"></div>
+                        <div class="col-md-8">
+                            <label for="remember_me">
+                                <input type="checkbox" id="remember_me" name="_remember_me" required="required" value="on"/>
+                                {% trans %}J'ai lu et j'accepte{% endtrans %}
+                                <a href="{{ path('cga_show') }}" class="underline">{% trans %}les conditions générales d'affiliation{% endtrans %}</a>
+                            </label>
+                            {{ form_rest(form) }}
+                            <br/><br/>
+                            <input type="submit" class="btn btn-success" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        </div>
+    <div class="col-md-2"></div>
+</div>

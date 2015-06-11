@@ -11,7 +11,6 @@
 
 namespace AppBundle\Admin;
 
-
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\UserBundle\Admin\Model\UserAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -22,7 +21,6 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class UserAdminExtended extends UserAdmin
 {
-
     /**
      * {@inheritdoc}
      */
@@ -33,7 +31,7 @@ class UserAdminExtended extends UserAdmin
         $options = $this->formOptions;
         $options['validation_groups'] = (!$this->getSubject() || is_null($this->getSubject()->getId())) ? 'Registration' : 'Profile';
 
-        $formBuilder = $this->getFormContractor()->getFormBuilder( $this->getUniqid(), $options);
+        $formBuilder = $this->getFormContractor()->getFormBuilder($this->getUniqid(), $options);
 
         $this->defineFormBuilder($formBuilder);
 
@@ -51,7 +49,7 @@ class UserAdminExtended extends UserAdmin
     public function getExportFields()
     {
         // avoid security field to be exported
-        return array_filter(parent::getExportFields(), function($v) {
+        return array_filter(parent::getExportFields(), function ($v) {
             return !in_array($v, array('password', 'salt'));
         });
     }
@@ -64,20 +62,22 @@ class UserAdminExtended extends UserAdmin
         $listMapper
             ->addIdentifier('username')
             ->add('email')
-            ->add('groups')
+            ->add('company', null, array('label' => 'Societé'))
+            ->add('phoneNumber', 'text', array('label' => 'Téléphone'))
+            ->add('url', 'url', array('label' => 'Url du site'))
+            ->add('groups', 'entity', array())
             ->add('enabled', null, array('editable' => true))
-            ->add('locked', null, array('editable' => true))
             ->add('createdAt', null, array(
-                'label'  => 'Créé le',
+                'label' => 'Créé le',
                 'format' => 'd/m/Y',
             ))
         ;
 
-        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
-            $listMapper
-                ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
-            ;
-        }
+#        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
+#            $listMapper
+#                ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
+#            ;
+#        }
     }
 
     /**
@@ -88,7 +88,10 @@ class UserAdminExtended extends UserAdmin
         $filterMapper
             ->add('id')
             ->add('username')
-            ->add('locked')
+            ->add('company', null, array('label' => 'Société'))
+            ->add('enabled', null, array('label' => 'Activé'))
+            ->add('phoneNumber', null, array('label' => 'Téléphone'))
+            ->add('url', null, array('label' => 'Url site'))
             ->add('email')
             ->add('groups')
         ;
@@ -146,16 +149,36 @@ class UserAdminExtended extends UserAdmin
                     ->add('username')
                     ->add('email')
                     ->add('plainPassword', 'text', array(
-                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId()))
+                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId())),
                     ))
-                    ->add('firstname', null, array('required' => false))
-                    ->add('lastname', null, array('required' => false))
+                    ->add('firstname')
+                    ->add('lastname')
+                    ->add('company', null, array(
+                            'label' => 'Société',
+                    ))
+                    ->add('legalSituation', 'choice', array(
+                        'choices' => array(
+                            'ei' => 'Entreprises individuelles',
+                            'sc' => 'Sociétés civiles',
+                            'eurl' => 'EURL',
+                            'sarl' => 'SARL',
+                            'sas' => 'SAS',
+                            'sa' => 'SA',
+                        ),
+                        'label' => 'Statut juridique :',
+                    ))
+                    ->add('activityType', 'choice', array(
+                        'choices' => array('editor' => 'Editeur Standard', 'mailer' => 'Emailer'),
+                        'label' => 'Type d\'activité :',
+                    ))
+                    ->add('phoneNumber', 'text', array('label' => 'Téléphone :'))
+                    ->add('url', 'url', array('label' => 'Url de votre site :'))
                 ->end()
                 ->with('Groups', array('class' => 'col-md-6'))
                     ->add('groups', 'sonata_type_model', array(
                         'required' => false,
                         'expanded' => true,
-                        'multiple' => true
+                        'multiple' => true,
                     ))
                 ->end()
         ;
@@ -172,15 +195,14 @@ class UserAdminExtended extends UserAdmin
         $formMapper
             ->end();
 
-
         if ($this->getSubject() && !$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
             $formMapper
                 ->tab('Rôles')
                     ->add('realRoles', 'sonata_security_roles', array(
-                        'label'    => false,
+                        'label' => false,
                         'expanded' => true,
                         'multiple' => true,
-                        'required' => false
+                        'required' => false,
                     ))
                 ->end()
             ;

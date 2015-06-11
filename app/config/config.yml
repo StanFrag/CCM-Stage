@@ -11,13 +11,16 @@ imports:
     - { resource: sonata/sonata_admin.yml }
     - { resource: sonata/sonata_user.yml }
 
+    # FOS Feature Bundles
+    - { resource: fos/fos_user.yml }
+
     # Services
     #- { resource: @AppBundle/Resources/config/admin.yml }
 
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallback: fr }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -27,6 +30,9 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
+        form:
+            resources:
+                - 'FrameworkBundle:FormTable'
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~
@@ -37,37 +43,18 @@ framework:
     fragments:       ~
     http_method_override: true
 
-
-fos_user:
-    db_driver:      orm # can be orm or odm
-    firewall_name:  main
-    user_class:     Application\Sonata\UserBundle\Entity\User
-
-    group:
-        group_class:   Application\Sonata\UserBundle\Entity\Group
-        group_manager: sonata.user.orm.group_manager
-
-    service:
-        user_manager: sonata.user.orm.user_manager
-
-
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
+mopa_bootstrap:
+    form:
+        templating: false # default is true
+
 # Assetic Configuration
 assetic:
-    debug:          "%kernel.debug%"
-    use_controller: false
-    bundles:        [ ]
-    #java: /usr/bin/java
-    filters:
-        cssrewrite: ~
-        #closure:
-        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
-        #yui_css:
-        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+    use_controller: true
 
 # Doctrine Configuration
 doctrine:

@@ -1,0 +1,30 @@
+fos_user:
+    db_driver:      orm # can be orm or odm
+    firewall_name:  main
+    user_class:     Application\Sonata\UserBundle\Entity\User
+
+    group:
+        group_class:   Application\Sonata\UserBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager
+
+    service:
+#        mailer: fos_user.mailer.default
+        user_manager: sonata.user.orm.user_manager
+
+    registration:
+#        confirmation:
+#            from_email: # Use this node only if you don't want the global email address for the confirmation email
+#                address:        stan1904@hotmail.fr
+#                sender_name:    Admin CCM Benchmark
+#            enabled:    true # change to true for required email confirmation
+#            template:   FOSUserBundle:Registration:email.txt.twig
+        form:
+            type: public_user_registration
+            validation_groups: [Register, Default, Registration]
+
+    profile:  # Authentication Form
+        form:
+            type:               fos_user_profile
+            handler:            fos_user.profile.form.handler.default
+            name:               fos_user_profile_form
+            validation_groups:  [ Authentication ]
