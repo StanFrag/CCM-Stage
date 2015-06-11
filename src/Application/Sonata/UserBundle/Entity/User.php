@@ -16,6 +16,8 @@ class User extends BaseUser
     {
         parent::__construct();
         // your own logic
+        $this->locked = true;
+        $this->enabled = false;
     }
 
     /**
