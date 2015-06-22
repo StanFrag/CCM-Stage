@@ -64,7 +64,6 @@ class UserAdminExtended extends UserAdmin
             ->add('email')
             ->add('company', null, array('label' => 'Societé'))
             ->add('phoneNumber', 'text', array('label' => 'Téléphone'))
-            ->add('url', 'url', array('label' => 'Url du site'))
             ->add('groups', 'entity', array())
             ->add('enabled', null, array('editable' => true))
             ->add('createdAt', null, array(

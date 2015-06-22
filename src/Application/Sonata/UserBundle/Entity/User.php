@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,7 +16,8 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+
+        $this->base = new ArrayCollection();
     }
 
     /**
@@ -34,6 +36,14 @@ class User extends BaseUser
      * @ORM\JoinTable(name="users_groups")
      */
     protected $groups;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Base", mappedBy="user")
+     * @ORM\OrderBy({"created_at" = "DESC"})
+     *
+     * @var ArrayCollection $base
+     */
+    protected $base;
 
     /**
      * @var string
@@ -75,19 +85,29 @@ class User extends BaseUser
      */
     protected $url;
 
+    /**
+     * Add base
+     *
+     * @param Base $base
+     */
+    public function addBase(Base $base)
+    {
+        $this->base[] = $base;
+    }
+
+    /**
+     * Get base
+     *
+     * @return ArrayCollection $base
+     */
+    public function getBase()
+    {
+        return $this->base;
+    }
+
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getLogin()
-    {
-        return $this->login;
-    }
-
-    public function setLogin($login)
-    {
-        $this->login = $login;
     }
 
     public function getCompany()

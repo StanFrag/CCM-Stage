@@ -1,6 +1,5 @@
 <?php
 
-// src/AppBundle/Controller/CgaController.php
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

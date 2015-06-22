@@ -9,6 +9,9 @@ cga_show:
     path: /cga
     defaults:  { _controller: AppBundle:Cga:show }
 
+base_upload:
+    path: /base
+    defaults:  { _controller: ApplicationSonataUserBundle:Base:upload }
 
 # Admin
 admin:
