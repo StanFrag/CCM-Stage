@@ -16,3 +16,15 @@ services:
     arguments: [%fos_user.model.user.class%]
     tags:
       - { name: form.type, alias: public_user_profile }
+
+  sonata.admin.base:
+    class: AppBundle\Admin\BaseAdmin
+    tags:
+        - name: sonata.admin
+          manager_type: orm
+          group: "Base"
+          label: "Bases"
+    arguments:
+        - ~
+        - Application\Sonata\UserBundle\Entity\Base
+        - ~

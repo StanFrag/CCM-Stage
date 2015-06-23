@@ -4,12 +4,14 @@ namespace Application\Sonata\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Base
  *
  * @ORM\Entity()
  * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\BaseRepository")
+ * @UniqueEntity("title")
  * @ORM\HasLifecycleCallbacks()
  */
 class Base
@@ -32,15 +34,13 @@ class Base
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=100)
+     * @ORM\Column(name="title", type="string", length=100, unique=true)
      * @Assert\NotBlank
      */
     protected $title;
 
     /**
      * @Assert\File(
-     *      mimeTypes = {"text/csv"},
-     *      mimeTypesMessage = "ce format de fichier n'est pas reconnu, veuillez uploader un fichier CSV.",
      *      uploadErrorMessage = "le fichier n'a pas pu etre upload pour une raison inconnu, veuillez contacter l'administrateur du site"
      * )
      * @Assert\NotBlank
@@ -91,14 +91,27 @@ class Base
 
     /**
      * @ORM\PrePersist
-     * @ORM\PreUpdate
      */
-    public function prePersist()
+    public function PrePersist()
     {
         //using Doctrine DateTime here
-        $this->created_at = new \DateTime('now');
-        $this->modificated_at = new \DateTime('now');
-        $this->state = 1;
+        $this->setCreatedAt();
+        $this->setModificatedAt();
+        $this->setState(1);
+
+        if (null !== $this->file) {
+            $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function PreUpdate()
+    {
+        //using Doctrine DateTime here
+        $this->setModificatedAt();
+        $this->setState(1);
 
         if (null !== $this->file) {
             $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
@@ -111,15 +124,11 @@ class Base
      */
     public function upload()
     {
-        // la propriété « file » peut être vide si le champ n'est pas requis
         if (null === $this->file) {
             return;
         }
 
-        // s'il y a une erreur lors du déplacement du fichier, une exception
-        // va automatiquement être lancée par la méthode move(). Cela va empêcher
-        // proprement l'entité d'être persistée dans la base de données si
-        // erreur il y a
+        // Move empeche l'entité de persisté en base de donnée si une erreur est recu
         $this->file->move($this->getUploadRootDir(), $this->path);
 
         unset($this->file);
@@ -147,7 +156,6 @@ class Base
 
     /**
      * Get id
-     *
      * @return integer 
      */
     public function getId()
@@ -156,8 +164,47 @@ class Base
     }
 
     /**
+     * Get created_at
+     * @return datetime
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set created_at
+     * @return Base
+     */
+    public function setCreatedAt()
+    {
+        $this->created_at = new \DateTime('now');
+
+        return $this;
+    }
+
+    /**
+     * Get modificated_at
+     * @return datetime
+     */
+    public function getModificatedAt()
+    {
+        return $this->modificated_at;
+    }
+
+    /**
+     * Set modificated_at
+     * @return Base
+     */
+    public function setModificatedAt()
+    {
+        $this->modificated_at = new \DateTime('now');
+
+        return $this;
+    }
+
+    /**
      * Get delimiter
-     *
      * @return string
      */
     public function getDelimiter()
@@ -242,6 +289,34 @@ class Base
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set state
+     *
+     * @param tinyint $state
+     * @return Base
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+    /**
+     * Get state
+     *
+     * @return tinyint
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 
     protected function getUploadRootDir()
