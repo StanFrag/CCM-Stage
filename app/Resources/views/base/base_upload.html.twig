@@ -1,7 +1,10 @@
-{% extends "SonataUserBundle:Profile:action.html.twig" %}
+{% extends "ApplicationSonataUserBundle:Profile:action.html.twig" %}
+
+{% block sonata_profile_title %}
+    {{ "title_user_account" | trans({}, 'SonataUserBundle')}} - {{ "title_user_edit_profile" | trans({}, 'SonataUserBundle')}}
+{% endblock %}
 
 {% block sonata_profile_content %}
-    <h1>Upload d'une base</h1>
 
     {% if form_errors(form) %}
         <div class="alert alert-danger alert-error">
@@ -9,9 +12,28 @@
         </div>
     {% endif %}
 
-    <form action="#" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+    {% form_theme form _self %}
+        <div class="panel panel-md5">
+            <h1>Upload d'une base</h1>
 
-        <input type="submit" value="Upload" />
-    </form>
+            <div class="panel-heading">
+                <h2 class="panel-title">{{ 'title_user_registration'|trans({}, 'SonataUserBundle') }}</h2>
+            </div>
+
+            <div class="panel-body">
+
+                {% if form_errors(form) %}
+                    <div class="alert alert-danger alert-error">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
+
+                <form action="#" method="post" {{ form_enctype(form) }}>
+                    {{ form_widget(form) }}
+
+                    <input type="submit" value="Upload" />
+                </form>
+
+            </div>
+        </div>
 {% endblock %}
