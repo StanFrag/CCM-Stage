@@ -47,13 +47,3 @@ monolog:
 
 assetic:
     use_controller: true
-
-swiftmailer:
-    delivery_address: fragniere.s@hotmail.fr
-    transport: smtp
-    host: smtp.gmail.com
-    encryption: ssl
-    port: 465
-    auth_mode:  login
-    username: sfragniere@commentcamarche.net
-    password: Fra898&S
