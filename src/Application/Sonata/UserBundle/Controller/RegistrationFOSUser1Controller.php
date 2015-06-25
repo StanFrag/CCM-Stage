@@ -63,23 +63,11 @@ class RegistrationFOSUser1Controller extends ContainerAware
                 ApplicationEvents::AFTER_REGISTER, $event
             );
 
-            $authUser = false;
-            if ($confirmationEnabled) {
-                $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
-                $route = 'fos_user_registration_check_email';
-            } else {
-                $authUser = true;
-                $route = $this->container->get('session')->get('sonata_basket_delivery_redirect', 'fos_user_security_login');
-                $this->container->get('session')->remove('sonata_basket_delivery_redirect');
-            }
+            $route = $this->container->get('session')->get('sonata_basket_delivery_redirect', 'fos_user_security_login');
+            $this->container->get('session')->remove('sonata_basket_delivery_redirect');
 
             $this->setFlash('fos_user_success', 'registration.admin_mail');
-
-            $url = ""; //$this->container->get('session')->get('sonata_user_redirect_url');
-
-            if (null === $url || "" === $url) {
-                $url = $this->container->get('router')->generate($route);
-            }
+            $url = $this->container->get('router')->generate($route);
 
             $response = new RedirectResponse($url);
 
