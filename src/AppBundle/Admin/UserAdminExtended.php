@@ -70,8 +70,13 @@ class UserAdminExtended extends UserAdmin
 #                'label' => 'Créé le',
 #                'format' => 'd/m/Y',
 #            ))
-            ->add('base', null, array(
+            ->add('base', 'sonata_type_collection', array(
                 'label' => 'Bases'
+            ),
+            array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'allow_delete' => true
             ))
         ;
 

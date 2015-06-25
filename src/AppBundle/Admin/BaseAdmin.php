@@ -35,7 +35,7 @@ class BaseAdmin extends Admin{
             ->add('user')
             ->add('created_at')
             ->add('modificated_at')
-            ->add('state')
+            ->add('state', null, ['editable' => true])
         ;
     }
 
@@ -76,6 +76,10 @@ class BaseAdmin extends Admin{
             ->with('General')
             ->add('title')
             ->add('header')
+            ->add('user', 'entity', array(
+                'class' => 'ApplicationSonataUserBundle:User',
+                'property' => 'username',
+            ))
             ->add('delimiter')
             ->add('file', 'file', array('required' => true))
             ->end()

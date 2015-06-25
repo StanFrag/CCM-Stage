@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 #}
 
-{% extends "SonataUserBundle:Profile:action.html.twig" %}
+{% extends "ApplicationSonataUserBundle:Profile:action.html.twig" %}
 
 {% block sonata_profile_title %}
     {{ "title_user_account" | trans({}, 'SonataUserBundle')}} - {{ "title_user_edit_profile" | trans({}, 'SonataUserBundle')}}
@@ -25,7 +25,7 @@ file that was distributed with this source code.
 
     {% form_theme form _self %}
 
-    <div class="panel panel-info">
+    <div class="panel panel-md5">
         <div class="panel-heading">
             <h3 class="panel-title">{{ "title_user_account" | trans({}, 'SonataUserBundle')}}</h3>
         </div>

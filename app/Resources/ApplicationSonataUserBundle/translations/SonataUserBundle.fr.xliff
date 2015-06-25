@@ -2,9 +2,25 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="" >
         <body>
+            <trans-unit id="title_user_base">
+                <source>title_user_base</source>
+                <target>Bases utilisateur</target>
+            </trans-unit>
+            <trans-unit id="title_base">
+                <source>title_base</source>
+                <target>Bases</target>
+            </trans-unit>
             <trans-unit id="base_upload_form">
                 <source>base_upload_form</source>
                 <target>Upload d'une base CSV</target>
+            </trans-unit>
+            <trans-unit id="base_submit">
+                <source>base_submit</source>
+                <target>Upload de la base</target>
+            </trans-unit>
+            <trans-unit id="upload.flash.success">
+                <source>upload.flash.success</source>
+                <target>Votre base de donnée à été correctement enregistré!</target>
             </trans-unit>
         </body>
     </file>
