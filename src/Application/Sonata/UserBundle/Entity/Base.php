@@ -12,7 +12,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity()
  * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\BaseRepository")
- * @UniqueEntity("title")
+ * @UniqueEntity(
+ *      fields = {"title"},
+ *      message = "Nom de base déja utilisé, veuillez le modifier pour continuer l'upload de la base"
+ * )
  * @ORM\HasLifecycleCallbacks()
  */
 class Base
@@ -60,7 +63,6 @@ class Base
      *      uploadErrorMessage = "le fichier n'a pas pu etre upload pour une raison inconnu, veuillez contacter l'administrateur du site",
      *      maxSize="1000M",
      * )
-     * @Assert\NotBlank
      */
     public $file;
 
@@ -77,12 +79,6 @@ class Base
     protected $modificated_at;
 
     /**
-     * @var boolean
-     * @ORM\Column(name="header", type="boolean", nullable=true)
-     */
-    protected $header;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="nbLine", type="integer", nullable=true)
@@ -90,16 +86,9 @@ class Base
     protected $nbLine;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="delimiter", type="string", length=1)
-     */
-    protected $delimiter;
-
-    /**
      * @ORM\Column(columnDefinition="tinyint UNSIGNED DEFAULT '1'", name="state")
      */
-    protected $state;
+    protected $state = 2;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -108,17 +97,29 @@ class Base
 
     /**
      * @ORM\PrePersist()
-     * @ORM\PreUpdate()
      */
     public function preUpload()
     {
         $this->setCreatedAt();
         $this->setModificatedAt();
-        $this->setState(1);
 
         if (null !== $this->file) {
             // générer un nom unique
-            $this->path = sha1(uniqid(mt_rand(), true)). $this->file->guessExtension();
+            $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->setModificatedAt();
+        $this->removeBaseDetailAll();
+
+        if (null !== $this->file) {
+            // générer un nom unique
+            $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
         }
     }
 
@@ -135,7 +136,7 @@ class Base
         // Move empeche l'entité de persisté en base de donnée si une erreur est recu
         $this->file->move($this->getUploadRootDir(), $this->path);
 
-        // Clean up the file property as you won't need it anymore
+        // On clean la variable file qui ne nous sert plus
         $this->file = null;
     }
 
@@ -222,51 +223,6 @@ class Base
     }
 
     /**
-     * Get delimiter
-     * @return string
-     */
-    public function getDelimiter()
-    {
-        return $this->delimiter;
-    }
-
-    /**
-     * Set delimiter
-     *
-     * @param string $delimiter
-     * @return Base
-     */
-    public function setDelimiter($delimiter)
-    {
-        $this->delimiter = $delimiter;
-
-        return $this;
-    }
-
-    /**
-     * Get header
-     *
-     * @return boolean
-     */
-    public function getHeader()
-    {
-        return $this->header;
-    }
-
-    /**
-     * Set header
-     *
-     * @param boolean $header
-     * @return Base
-     */
-    public function setHeader($header)
-    {
-        $this->header = $header;
-
-        return $this;
-    }
-
-    /**
      * Set user
      *
      * @param \Application\Sonata\UserBundle\Entity\User $user
@@ -331,6 +287,25 @@ class Base
     }
 
     /**
+     * Remove baseDetail
+     *
+     * @param \Application\Sonata\UserBundle\Entity\BaseDetail $baseDetail
+     */
+    public function removeBaseDetail(BaseDetail $baseDetail)
+    {
+        $this->baseDetail->removeElement($baseDetail);
+    }
+
+    /**
+     * Remove baseDetailAll
+     *
+     */
+    public function removeBaseDetailAll()
+    {
+        $this->baseDetail->clear();
+    }
+
+    /**
      * Get state
      *
      * @return tinyint
@@ -376,11 +351,6 @@ class Base
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
-
     /**
      * Set path
      *
@@ -397,20 +367,24 @@ class Base
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
         return $this->path;
     }
 
-    /**
-     * Remove baseDetail
-     *
-     * @param \Application\Sonata\UserBundle\Entity\BaseDetail $baseDetail
-     */
-    public function removeBaseDetail(BaseDetail $baseDetail)
+    public static function getStateList()
     {
-        $this->baseDetail->removeElement($baseDetail);
+        return array(
+            '1' => "Accepté",
+            '2' => "En attente",
+            '0' => "Refusé"
+        );
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

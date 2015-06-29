@@ -22,6 +22,10 @@
                 <source>upload.flash.success</source>
                 <target>Votre base de donnée à été correctement enregistré!</target>
             </trans-unit>
+            <trans-unit id="upload.flash.error">
+                <source>upload.flash.error</source>
+                <target>Problème dans l'import des données du fichier CSV, veuillez contacter l'administrateur si le probleme persiste</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

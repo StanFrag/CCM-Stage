@@ -24,13 +24,13 @@ class BaseDetail
     /**
      * @var string
      *
-     * @ORM\Column(name="md5", type="string", length=100)
+     * @ORM\Column(name="md5", type="string", length=32)
      */
     private $md5;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\Base", inversedBy="baseDetail")
-     * @ORM\JoinColumn(name="base_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="base_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $base;
 

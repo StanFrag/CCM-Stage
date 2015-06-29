@@ -2,10 +2,10 @@
 
 namespace Application\Sonata\UserBundle\Controller;
 
-use Application\Sonata\UserBundle\Entity\BaseDetail;
 use Application\Sonata\UserBundle\Entity\Base;
 use Application\Sonata\UserBundle\Form\Type\BaseType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -15,28 +15,39 @@ class BaseController extends Controller
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        // On crée un objet Base
+        // Création de l'objet Base
         $base = new Base();
 
+        // Creation du formulaire
         $form = $this->createForm(new BaseType(), $base);
         $form->handleRequest($request);
 
+        // Si le formulaire est submit et la validation correct
         if ($form->isValid()) {
-
+            // Recupération de l'entity manager
             $em = $this->getDoctrine()->getManager();
 
-            $base->setUser($user);
-
-            // Get file
+            // Recuperation du path du fichier soumis
             $filePath = $form->get('file')->getData()->getPathName();
 
-            $this->populateBaseDetail($filePath, $base, $base->getDelimiter(), $em);
+            // On récupère le service pour remplir la base de donnée des basesDetails
+            $populate = $this->container->get('public_user.populate');
+            $nb_line = $populate->fromCSV($filePath, $base);
 
-            $em->persist($base);
-            $em->flush();
+            // Si le service n'a pas rempli la base de donnée des Bases Details
+            if ($nb_line == 0) {
+                $this->setFlash('sonata_user_error', 'upload.flash.error');
+            }else{
+                // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
+                $base->setNbLine($nb_line);
+                $base->setUser($user);
 
-            $this->setFlash('sonata_user_success', 'upload.flash.success');
+                // Et on envoi les données
+                $em->persist($base);
+                $em->flush();
 
+                $this->setFlash('sonata_user_success', 'upload.flash.success');
+            }
             $this->redirect($this->generateUrl('base_upload'));
         }
 
@@ -45,31 +56,6 @@ class BaseController extends Controller
             'form' => $form->createView(),
 
         ));
-    }
-
-    public function populateBaseDetail($filePath, $base, $delimiter, $em){
-        $num = 0;
-
-        if (($handle = fopen($filePath, "r")) !== FALSE) {
-            while(($row = fgetcsv($handle, 100, $delimiter)) !== FALSE) {
-
-                $md5Array = count($row); // process the row.
-
-                for ($c=0; $c < $md5Array; $c++) {
-                    $num += 1;
-
-                    $baseDetail = new BaseDetail();
-                    $baseDetail->setBase($base);
-                    $baseDetail->setMd5($row[$c]);
-
-                    $em->persist($baseDetail);
-                }
-            }
-            $base->setNbLine($num);
-            fclose($handle);
-        }
-
-        return $num;
     }
 
     /**

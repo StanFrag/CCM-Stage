@@ -15,10 +15,13 @@ class BaseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('header')
-            ->add('delimiter')
-            ->add('file')
+            ->add('title', null, array(
+                'label' => 'Nom de la base')
+            )
+            ->add('file', 'file', array(
+                'required' => true,
+                'label' => 'Fichier à uploader')
+            )
         ;
     }
     

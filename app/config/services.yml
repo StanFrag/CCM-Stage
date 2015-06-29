@@ -28,3 +28,7 @@ services:
         - ~
         - Application\Sonata\UserBundle\Entity\Base
         - ~
+
+  public_user.populate:
+          class: Application\Sonata\UserBundle\Import\PopulateBD
+          arguments: [@doctrine.orm.entity_manager]

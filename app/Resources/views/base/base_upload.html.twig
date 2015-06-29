@@ -7,91 +7,75 @@
 {% block sonata_profile_content %}
 
     {% form_theme form _self %}
-        <div class="panel panel-md5">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-md5">
 
-            <div class="panel-heading">
-                <h2 class="panel-title">{{ 'base_upload_form'|trans({}, 'SonataUserBundle') }}</h2>
-            </div>
+                <div class="panel-heading">
+                    <h2 class="panel-title">{{ 'base_upload_form'|trans({}, 'SonataUserBundle') }}</h2>
+                </div>
 
-            <div class="panel-body">
+                <div class="panel-body">
 
-                {% if form_errors(form) %}
-                    <div class="alert alert-danger alert-error">
-                        {{ form_errors(form) }}
+                    <div class="well  well-sm">
+                        <ul class="noMargin">
+                            <li>Le fichier CSV doit contenir une unique colonne de données</li>
+                            <li>Les données contenant le fichier doivent impérativement etre un MD5</li>
+                            <li>Le fichier ne doit pas contenir d'entête de colonne</li>
+                        </ul>
                     </div>
-                {% endif %}
 
-                <form action="#" method="post" {{ form_enctype(form) }}>
+                    <form action="#" method="post" {{ form_enctype(form) }}>
 
-                    <div class="form-group">
-                        {% if form_errors(form.title) %}
-                            <div class="alert alert-danger alert-error">
-                                {{ form_errors(form.title) }}
-                            </div>
-                        {% endif %}
-                        <div class="row">
-                            <div class="col-md-2">
-                                {{ form_label(form.title) }}
-                            </div>
-                            <div class="col-md-10">
-                                {{ form_widget(form.title) }}
+                        <div class="form-group">
+                            {% if form_errors(form.title) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.title) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-4 textRight">
+                                    {{ form_label(form.title) }}
+                                </div>
+                                <div class="col-md-8">
+                                    {{ form_widget(form.title) }}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        {% if form_errors(form.header) %}
-                            <div class="alert alert-danger alert-error">
-                                {{ form_errors(form.header) }}
-                            </div>
-                        {% endif %}
-                        <div class="row">
-                            <div class="col-md-2">
-                                {{ form_label(form.header) }}
-                            </div>
-                            <div class="col-md-10">
-                                {{ form_widget(form.header) }}
+                        <div class="form-group">
+                            {% if form_errors(form.file) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.file) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-4 textRight">
+                                    {{ form_label(form.file) }}
+                                </div>
+                                <div class="col-md-8">
+                                    {{ form_widget(form.file) }}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        {% if form_errors(form.delimiter) %}
-                            <div class="alert alert-danger alert-error">
-                                {{ form_errors(form.delimiter) }}
-                            </div>
-                        {% endif %}
-                        <div class="row">
-                            <div class="col-md-2">
-                                {{ form_label(form.delimiter) }}
-                            </div>
-                            <div class="col-md-10">
-                                {{ form_widget(form.delimiter) }}
+                        {{ form_rest(form) }}
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="submit" class="btn btn-success" value="{{ 'base_submit'|trans({}, 'SonataUserBundle') }}" />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        {% if form_errors(form.file) %}
-                            <div class="alert alert-danger alert-error">
-                                {{ form_errors(form.file) }}
-                            </div>
-                        {% endif %}
-                        <div class="row">
-                            <div class="col-md-2">
-                                {{ form_label(form.file) }}
-                            </div>
-                            <div class="col-md-10">
-                                {{ form_widget(form.file) }}
-                            </div>
-                        </div>
-                    </div>
+                    </form>
 
-                    {{ form_rest(form) }}
-
-                    <input type="submit" class="btn btn-success" value="{{ 'base_submit'|trans({}, 'SonataUserBundle') }}" />
-                </form>
-
+                </div>
             </div>
         </div>
+        <div class="col-md-7"></div>
+    </div>
 {% endblock %}
