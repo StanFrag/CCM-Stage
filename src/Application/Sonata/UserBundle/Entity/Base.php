@@ -163,14 +163,12 @@ class Base
     protected function getUploadRootDir()
     {
         // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return '/var/nas/static/r-target.com/'.$this->getUploadDir();
     }
 
     protected function getUploadDir()
     {
-        // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
-        // le document dans la vue.
-        return 'uploads/documents';
+        return 'upload';
     }
 
     /**

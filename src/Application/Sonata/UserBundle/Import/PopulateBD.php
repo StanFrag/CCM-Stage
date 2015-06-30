@@ -49,6 +49,7 @@ class PopulateBD {
                     if(strlen($tmpObj) == 32){
                         // On crée un nouvelle obj Base Detail
                         $baseDetail = new BaseDetail();
+
                         // Et on rempli les variables de l'objet
                         $baseDetail->setBase($base);
                         $baseDetail->setMd5($tmpObj);
@@ -61,15 +62,15 @@ class PopulateBD {
                     }else{
                         // Si la ligne possede un nombre non egal à 32 caractere c'est que le fichier ne contient pas seulement des MD5
                         // On renvoi donc une erreur par le biais d'un nombre de MD5 traité null
-                        return 0;
+                        return null;
                     }
                 }
             }
             // On ferme la lecture du fichier CSV
             fclose($handle);
         }else{
-            // Si le CSV n'a pas pu etre ouvert, on renvoi une erreur
-            return 0;
+            // Si le CSV n'a pas pu etre ouvert, on renvoi une reponse null
+            return null;
         }
 
         // Si le traitement s'est deroulé correctement, on envoi le nombre de lignes traitées

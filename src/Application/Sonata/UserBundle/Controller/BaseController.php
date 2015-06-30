@@ -13,8 +13,6 @@ class BaseController extends Controller
 {
     public function uploadAction(Request $request)
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
         // Création de l'objet Base
         $base = new Base();
 
@@ -24,6 +22,9 @@ class BaseController extends Controller
 
         // Si le formulaire est submit et la validation correct
         if ($form->isValid()) {
+            // Recupération du user
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+
             // Recupération de l'entity manager
             $em = $this->getDoctrine()->getManager();
 
@@ -32,14 +33,12 @@ class BaseController extends Controller
 
             // On récupère le service pour remplir la base de donnée des basesDetails
             $populate = $this->container->get('public_user.populate');
-            $nb_line = $populate->fromCSV($filePath, $base);
+            $response = $populate->fromCSV($filePath, $base);
 
             // Si le service n'a pas rempli la base de donnée des Bases Details
-            if ($nb_line == 0) {
-                $this->setFlash('sonata_user_error', 'upload.flash.error');
-            }else{
+            if (null !== $response) {
                 // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
-                $base->setNbLine($nb_line);
+                $base->setNbLine($response);
                 $base->setUser($user);
 
                 // Et on envoi les données
@@ -47,14 +46,14 @@ class BaseController extends Controller
                 $em->flush();
 
                 $this->setFlash('sonata_user_success', 'upload.flash.success');
+            }else{
+                $this->setFlash('sonata_user_error', 'upload.flash.error');
             }
             $this->redirect($this->generateUrl('base_upload'));
         }
 
         return $this->render('base/base_upload.html.twig', array(
-
             'form' => $form->createView(),
-
         ));
     }
 

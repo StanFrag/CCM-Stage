@@ -32,9 +32,9 @@ class BaseAdmin extends Admin{
                 'format' => 'd/m/Y à H\hi'
             ))
             ->add('state', 'choice', array(
-                'choices' => Base::getStateList()
+                'choices' => Base::getStateList(),
+                'label'=> 'Etat'
             ))
-            ->add('baseDetail')
         ;
     }
 
@@ -51,7 +51,9 @@ class BaseAdmin extends Admin{
             ->add('user', null, [
                 'label' => 'Utilisateur'
             ])
-            ->add('state', 'doctrine_orm_string', array(), 'choice', array('choices' => Base::getStateList()))
+            ->add('state', 'doctrine_orm_string', array('label'=> 'Etat'), 'choice', array(
+                'choices' => Base::getStateList()
+            ))
         ;
     }
 
@@ -86,7 +88,8 @@ class BaseAdmin extends Admin{
                 'label' => 'Utilisateur'
             ))
             ->add('state', 'choice', array(
-                'choices' => [0 => 'Refusé', 1 => 'Accepté', 2 => 'En attente']
+                'choices' => [0 => 'Refusé', 1 => 'Accepté', 2 => 'En attente'],
+                'label'=> 'Etat'
             ))
             ->add('file', 'file', array(
                 'required' => false,
@@ -98,46 +101,44 @@ class BaseAdmin extends Admin{
 
     public function prePersist($base) {
         // Lors de la création d'une nouvelle Base coté Admin
-
-        // Si un fichier à été soumis durant le formulaire
-        if(null !== $this->getForm()->get('file')->getData()){
-
-            // On récupère le service qui popule la Base de ses Bases Details
-            $populate = $this->getConfigurationPool()->getContainer()->get('public_user.populate');
-            $nb_line = $populate->fromCSV($this->getForm()->get('file')->getData()->getPathName(), $base);
-
-            // Si le service renvoi une erreur
-            if ($nb_line == 0) {
-                $this->setFlash('sonata_user_error', 'upload.flash.error');
-            }else{
-                // Sinon on incremente le nombre de ligne par le nombre de ligne du fichier
-                $base->setNbLine($nb_line);
-                $this->setFlash('sonata_user_success', 'upload.flash.success');
-            }
-        }
-
+        $this->populateBaseDetail($base);
     }
 
     public function preUpdate($base) {
         // Lors de l'update d'une nouvelle Base coté Admin
+        $this->populateBaseDetail($base, true);
+    }
+
+    /**
+     * @param boolean $updateAction
+     * @param Base $base
+     */
+    protected function populateBaseDetail($base, $updateAction = false)
+    {
+        $file = $this->getForm()->get('file')->getData();
 
         // Si un fichier à été soumis durant le formulaire
-        if(null !== $this->getForm()->get('file')->getData()){
+        if(null !== $file){
 
-            // On supprime les entités de base detail du fichier precedent
-            $base->removeBaseDetailAll();
+            $filePath = $this->getForm()->get('file')->getData()->getPathName();
 
-            // On récupère le service
+            // S'il s'agit d'un update, on vide la base de ses baseDetails
+            if($updateAction == true){
+                // On supprime les entités de base detail du fichier precedent
+                $base->removeBaseDetailAll();
+            }
+
+            // On récupère le service qui popule la Base de ses Bases Details
             $populate = $this->getConfigurationPool()->getContainer()->get('public_user.populate');
-            $nb_line = $populate->fromCSV($this->getForm()->get('file')->getData()->getPathName(), $base);
+            $responsePopulate = $populate->fromCSV($filePath, $base);
 
-            // Si le service renvoi une erreur
-            if ($nb_line == 0) {
-                $this->setFlash('sonata_user_error', 'upload.flash.error');
+            // Si le service renvoi une valeur null
+            if (null !== $responsePopulate) {
+                // Sinon on incremente le nombre de ligne par le nombre de ligne du fichier
+                $base->setNbLine($responsePopulate);
             }else{
-                // On update le nombre de ligne par le nombre de valeurs inserés
-                $base->setNbLine($nb_line);
-                $this->setFlash('sonata_user_success', 'upload.flash.success');
+                //$this->setFlash('sonata_user_error', 'upload.flash.error');
+                throw new AdminException("Problème dans l'import du fichier CSV: $file, veuillez enregistrer un fichier valide");
             }
         }
     }
