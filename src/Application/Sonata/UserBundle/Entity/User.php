@@ -18,6 +18,8 @@ class User extends BaseUser
         parent::__construct();
 
         $this->base = new ArrayCollection();
+        $this->locked = true;
+        $this->enabled = false;
     }
 
     /**

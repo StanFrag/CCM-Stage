@@ -65,6 +65,9 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
+swiftmailer:
+    delivery_address: admin@r-target.com
+
 monolog:
     handlers:
         main:
