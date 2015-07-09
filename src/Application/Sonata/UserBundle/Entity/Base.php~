@@ -12,11 +12,16 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity()
  * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\BaseRepository")
- * @UniqueEntity("title")
+ * @UniqueEntity(
+ *      fields = {"title"},
+ *      message = "Nom de base déja utilisé, veuillez le modifier pour continuer l'upload de la base"
+ * )
  * @ORM\HasLifecycleCallbacks()
  */
 class Base
 {
+
+    protected $em;
 
     public function __construct()
     {
@@ -33,13 +38,13 @@ class Base
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="base", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="base")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\BaseDetail", mappedBy="base", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\BaseDetail", mappedBy="base", cascade={"all"}, orphanRemoval=true)
      *
      * @var ArrayCollection $baseDetail
      */
@@ -58,7 +63,6 @@ class Base
      *      uploadErrorMessage = "le fichier n'a pas pu etre upload pour une raison inconnu, veuillez contacter l'administrateur du site",
      *      maxSize="1000M",
      * )
-     * @Assert\NotBlank
      */
     public $file;
 
@@ -75,12 +79,6 @@ class Base
     protected $modificated_at;
 
     /**
-     * @var boolean
-     * @ORM\Column(name="header", type="boolean", nullable=true)
-     */
-    protected $header;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="nbLine", type="integer", nullable=true)
@@ -88,16 +86,9 @@ class Base
     protected $nbLine;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="delimiter", type="string", length=1)
-     */
-    protected $delimiter;
-
-    /**
      * @ORM\Column(columnDefinition="tinyint UNSIGNED DEFAULT '1'", name="state")
      */
-    protected $state;
+    protected $state = 2;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -106,17 +97,29 @@ class Base
 
     /**
      * @ORM\PrePersist()
-     * @ORM\PreUpdate()
      */
     public function preUpload()
     {
         $this->setCreatedAt();
         $this->setModificatedAt();
-        $this->setState(1);
 
         if (null !== $this->file) {
             // générer un nom unique
-            $this->path = sha1(uniqid(mt_rand(), true)). $this->file->guessExtension();;
+            $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->setModificatedAt();
+        $this->removeBaseDetailAll();
+
+        if (null !== $this->file) {
+            // générer un nom unique
+            $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
         }
     }
 
@@ -133,7 +136,8 @@ class Base
         // Move empeche l'entité de persisté en base de donnée si une erreur est recu
         $this->file->move($this->getUploadRootDir(), $this->path);
 
-        #unset($this->file);
+        // On clean la variable file qui ne nous sert plus
+        $this->file = null;
     }
 
     /**
@@ -159,14 +163,12 @@ class Base
     protected function getUploadRootDir()
     {
         // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return '/var/nas/static/r-target.com/'.$this->getUploadDir();
     }
 
     protected function getUploadDir()
     {
-        // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
-        // le document dans la vue.
-        return 'uploads/documents';
+        return 'upload';
     }
 
     /**
@@ -214,51 +216,6 @@ class Base
     public function setModificatedAt()
     {
         $this->modificated_at = new \DateTime('now');
-
-        return $this;
-    }
-
-    /**
-     * Get delimiter
-     * @return string
-     */
-    public function getDelimiter()
-    {
-        return $this->delimiter;
-    }
-
-    /**
-     * Set delimiter
-     *
-     * @param string $delimiter
-     * @return Base
-     */
-    public function setDelimiter($delimiter)
-    {
-        $this->delimiter = $delimiter;
-
-        return $this;
-    }
-
-    /**
-     * Get header
-     *
-     * @return boolean
-     */
-    public function getHeader()
-    {
-        return $this->header;
-    }
-
-    /**
-     * Set header
-     *
-     * @param boolean $header
-     * @return Base
-     */
-    public function setHeader($header)
-    {
-        $this->header = $header;
 
         return $this;
     }
@@ -313,6 +270,7 @@ class Base
      */
     public function addBaseDetail(BaseDetail $baseDetail)
     {
+        $baseDetail->setBase($this);
         $this->baseDetail[] = $baseDetail;
     }
 
@@ -324,6 +282,25 @@ class Base
     public function getBaseDetail()
     {
         return $this->baseDetail;
+    }
+
+    /**
+     * Remove baseDetail
+     *
+     * @param \Application\Sonata\UserBundle\Entity\BaseDetail $baseDetail
+     */
+    public function removeBaseDetail(BaseDetail $baseDetail)
+    {
+        $this->baseDetail->removeElement($baseDetail);
+    }
+
+    /**
+     * Remove baseDetailAll
+     *
+     */
+    public function removeBaseDetailAll()
+    {
+        $this->baseDetail->clear();
     }
 
     /**
@@ -370,6 +347,38 @@ class Base
         $this->nbLine = $nbLine;
 
         return $this;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return Base
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    public static function getStateList()
+    {
+        return array(
+            '1' => "Accepté",
+            '2' => "En attente",
+            '0' => "Refusé"
+        );
     }
 
     public function __toString()

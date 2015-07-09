@@ -160,4 +160,14 @@ class User extends BaseUser
     {
         $this->url = $url;
     }
+
+    /**
+     * Remove base
+     *
+     * @param \Application\Sonata\UserBundle\Entity\Base $base
+     */
+    public function removeBase(\Application\Sonata\UserBundle\Entity\Base $base)
+    {
+        $this->base->removeElement($base);
+    }
 }

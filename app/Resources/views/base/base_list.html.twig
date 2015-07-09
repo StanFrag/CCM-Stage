@@ -1,0 +1,45 @@
+{% extends "ApplicationSonataUserBundle:Profile:action.html.twig" %}
+
+{% block sonata_profile_title %}
+    {{ "title_user_base" | trans({}, 'SonataUserBundle')}}
+{% endblock %}
+
+{% block sonata_profile_content %}
+
+    <a href="{{ path('base_upload') }}" class="btn btn-primary" role="button">Ajout d'une base</a>
+    <hr/>
+    {% if listBases %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr class="alert-danger">
+                    <th>Nom de base</th>
+                    <th>Nombre de ligne</th>
+                    <th>Etat</th>
+                    <th>Modifié le</th>
+                    <th>Actions</th>
+                </tr>
+                {% for base in listBases %}
+                    <tr>
+                        <td>{{ base.title }}</td>
+                        <td>{{ base.nbLine }}</td>
+                        <td>{{ base.state|replace({1: 'Accepté', 2: 'En attente', 0: 'Refusé'})}}</td>
+                        <td>{{ base.modificatedat | date("d/m/Y à H\\hi") }}</td>
+                        <td>
+                            <a href="{{ path('base_details', { 'id': base.id }) }}">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true" style="color:dodgerblue; margin: 5px"></span>
+                            </a>
+                            <a href="{{ path('base_update', { 'id': base.id }) }}">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true" style="color:green; margin: 5px"></span>
+                            </a>
+                            <a href="{{ path('base_remove', { 'id': base.id }) }}">
+                                <span class="glyphicon glyphicon-remove danger" aria-hidden="true" style="color:red; margin: 5px"></span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <p>{{ "base_not_found" | trans({}, 'SonataUserBundle')}}</p>
+    {% endif %}
+{% endblock %}

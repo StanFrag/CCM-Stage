@@ -38,7 +38,7 @@ class User extends BaseUser
     protected $groups;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Base", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Base", mappedBy="user", cascade={"all"}, orphanRemoval=true)
      * @ORM\OrderBy({"created_at" = "DESC"})
      *
      * @var ArrayCollection $base
@@ -92,6 +92,7 @@ class User extends BaseUser
      */
     public function addBase(Base $base)
     {
+        $base->setUser($this);
         $this->base[] = $base;
     }
 

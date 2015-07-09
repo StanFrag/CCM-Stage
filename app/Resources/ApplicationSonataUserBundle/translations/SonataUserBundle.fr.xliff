@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="title_base">
                 <source>title_base</source>
-                <target>Bases</target>
+                <target>Bases de données</target>
             </trans-unit>
             <trans-unit id="base_upload_form">
                 <source>base_upload_form</source>
@@ -25,6 +25,14 @@
             <trans-unit id="upload.flash.error">
                 <source>upload.flash.error</source>
                 <target>Problème dans l'import des données du fichier CSV, veuillez contacter l'administrateur si le probleme persiste</target>
+            </trans-unit>
+            <trans-unit id="remove.base.success">
+                <source>remove.base.success</source>
+                <target>Votre base de donnée à été correctement supprimé!</target>
+            </trans-unit>
+            <trans-unit id="base_not_found">
+                <source>base_not_found</source>
+                <target>Aucune base de données trouvé, veuillez ajouter une base</target>
             </trans-unit>
         </body>
     </file>

@@ -1,0 +1,24 @@
+{% extends "ApplicationSonataUserBundle:Profile:action.html.twig" %}
+
+{% block sonata_profile_title %}
+    {{ "title_user_base" | trans({}, 'SonataUserBundle')}}
+{% endblock %}
+
+{% block sonata_profile_content %}
+    {% if listBasesDetails %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr class="alert-danger">
+                    <th>MD5</th>
+                </tr>
+                {% for basedetail in listBasesDetails %}
+                    <tr>
+                        <td>{{ basedetail.md5 }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <p>{{ "base_not_found" | trans({}, 'SonataUserBundle')}}</p>
+    {% endif %}
+{% endblock %}

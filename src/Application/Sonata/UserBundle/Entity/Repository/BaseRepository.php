@@ -3,6 +3,7 @@
 namespace Application\Sonata\UserBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Application\Sonata\UserBundle\Entity\User;
 
 /**
  * BaseRepository
@@ -12,4 +13,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class BaseRepository extends EntityRepository
 {
+    public function findBasesByUserId(User $user)
+    {
+        return $this->createQueryBuilder('b')
+        ->where('b.user = :user')
+        ->setParameter('user', $user)
+        ->addOrderBy('b.modificated_at', "DESC");
+    }
 }
