@@ -85,27 +85,6 @@ class User extends BaseUser
      */
     protected $url;
 
-    /**
-     * Add base
-     *
-     * @param Base $base
-     */
-    public function addBase(Base $base)
-    {
-        $base->setUser($this);
-        $this->base[] = $base;
-    }
-
-    /**
-     * Get base
-     *
-     * @return ArrayCollection $base
-     */
-    public function getBase()
-    {
-        return $this->base;
-    }
-
     public function getId()
     {
         return $this->id;

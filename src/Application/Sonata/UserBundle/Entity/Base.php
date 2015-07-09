@@ -60,7 +60,7 @@ class Base
 
     /**
      * @Assert\File(
-     *      uploadErrorMessage = "le fichier n'a pas pu etre upload pour une raison inconnu, veuillez contacter l'administrateur du site",
+     *      uploadErrorMessage = "le fichier n'a pas pu etre uploadé pour une raison inconnu, veuillez contacter l'administrateur du site",
      *      maxSize="1000M",
      * )
      */
