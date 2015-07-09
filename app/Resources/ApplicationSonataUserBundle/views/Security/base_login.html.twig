@@ -26,6 +26,8 @@ file that was distributed with this source code.
 
                 <div class="panel-body">
 
+                    {% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
+
                     {% if error %}
                         <div class="alert alert-danger alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
                     {% endif %}
