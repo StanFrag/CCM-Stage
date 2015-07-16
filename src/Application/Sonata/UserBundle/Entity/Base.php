@@ -18,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * )
  * @ORM\HasLifecycleCallbacks()
  */
-class Base
+class Base extends AbstractBase
 {
 
     protected $em;
@@ -91,22 +91,12 @@ class Base
     protected $state = 2;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $path;
-
-    /**
      * @ORM\PrePersist()
      */
     public function preUpload()
     {
         $this->setCreatedAt();
         $this->setModificatedAt();
-
-        if (null !== $this->file) {
-            // générer un nom unique
-            $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
-        }
     }
 
     /**
@@ -116,59 +106,6 @@ class Base
     {
         $this->setModificatedAt();
         $this->removeBaseDetailAll();
-
-        if (null !== $this->file) {
-            // générer un nom unique
-            $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
-        }
-    }
-
-    /**
-     * @ORM\PostPersist
-     * @ORM\PostUpdate
-     */
-    public function upload()
-    {
-        if (!$this->file) {
-            return;
-        }
-
-        // Move empeche l'entité de persisté en base de donnée si une erreur est recu
-        $this->file->move($this->getUploadRootDir(), $this->path);
-
-        // On clean la variable file qui ne nous sert plus
-        $this->file = null;
-    }
-
-    /**
-     * @ORM\PostRemove
-     */
-    public function removeUpload()
-    {
-        if ($file = $this->getAbsolutePath()) {
-            unlink($file);
-        }
-    }
-
-    public function getAbsolutePath()
-    {
-        return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
-    }
-
-    public function getWebPath()
-    {
-        return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
-    }
-
-    protected function getUploadRootDir()
-    {
-        // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
-        return '/var/nas/static/r-target.com/'.$this->getUploadDir();
-    }
-
-    protected function getUploadDir()
-    {
-        return 'upload';
     }
 
     /**
@@ -350,26 +287,13 @@ class Base
     }
 
     /**
-     * Set path
+     * Get file
      *
-     * @param string $path
-     * @return Base
+     * @return Assert\File
      */
-    public function setPath($path)
+    public function getFile()
     {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
+        return $this->file;
     }
 
     public static function getStateList()
