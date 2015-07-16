@@ -72,6 +72,10 @@ monolog:
     handlers:
         main:
             ident: md5.r-target.com
+
+parameters:
+    public_user.file_directory : /var/nas/md5.r-target.com/upload
+
 #        app:
 #            facility: local3
 #            type:   syslog

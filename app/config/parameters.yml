@@ -2,4 +2,3 @@
 parameters:
     locale: fr
     secret: 'The randomness comes from atmospheric noise'
-    public_user.file_directory: '/var/nas/static/r-target.com/upload'
