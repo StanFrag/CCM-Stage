@@ -17,11 +17,16 @@ class CampaignAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('title')
-            ->add('description')
+            ->add('title', null, [
+                'label' => 'Nom de la campagne'
+            ])
+            ->add('description', null, [
+                'label' => 'Description'
+            ])
             ->add('created_at')
             ->add('modificated_at')
             ->add('state')
+            ->add('base')
         ;
     }
 
@@ -30,19 +35,33 @@ class CampaignAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+
         $listMapper
             ->add('id')
             ->add('title')
             ->add('description')
-            ->add('created_at')
-            ->add('modificated_at')
-            ->add('state')
+            ->add('created_at', null, array(
+                'label' => 'Modifié le',
+                'format' => 'd/m/Y à H\hi'
+            ))
+            ->add('modificated_at', null, array(
+                'label' => 'Modifié le',
+                'format' => 'd/m/Y à H\hi'
+            ))
+            ->add('state', 'choice', array(
+                'choices' => array(0 => 'Fermée', 1 => 'En cours'),
+                'label' => 'Etat'
+            ))
+            ->add('base')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
+            ))
+            ->add('img', null, array(
+                'template' => 'ApplicationSonataUserBundle:Admin:image_show.html.twig'
             ))
         ;
     }
@@ -53,12 +72,21 @@ class CampaignAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
-            ->add('title')
-            ->add('description')
-            ->add('created_at')
-            ->add('modificated_at')
-            ->add('state')
+            ->add('title', null, [
+                'label' => 'Nom de la campagne'
+            ])
+            ->add('description', 'textarea', [
+                'label' => 'Description'
+            ])
+            ->add('img', 'file', [
+                'label' => 'Image',
+                'required' => false
+            ])
+            ->add('base')
+            ->add('state', 'choice', array(
+                'choices' => array(0 => 'Fermée', 1 => 'En cours'),
+                'label' => 'Etat de la campagne'
+            ))
         ;
     }
 
