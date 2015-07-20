@@ -23,9 +23,7 @@ class CampaignAdmin extends Admin
             ->add('description', null, [
                 'label' => 'Description'
             ])
-            ->add('created_at')
-            ->add('modificated_at')
-            ->add('state')
+            ->add('state', 'doctrine_orm_string', array(), 'choice', array('choices' => array(0 => 'Fermée', 1 => 'En cours')))
             ->add('base')
         ;
     }
@@ -38,7 +36,9 @@ class CampaignAdmin extends Admin
 
         $listMapper
             ->add('id')
-            ->add('title')
+            ->add('title', null, [
+                'label' => 'Titre'
+            ])
             ->add('description')
             ->add('created_at', null, array(
                 'label' => 'Modifié le',
@@ -61,7 +61,8 @@ class CampaignAdmin extends Admin
                 )
             ))
             ->add('img', null, array(
-                'template' => 'ApplicationSonataUserBundle:Admin:image_show.html.twig'
+                'template' => 'ApplicationSonataUserBundle:Admin:image_show.html.twig',
+                'label' => 'Image'
             ))
         ;
     }
@@ -97,11 +98,27 @@ class CampaignAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('title')
+            ->add('title', null, [
+                'label' => 'Nom de la campagne'
+            ])
             ->add('description')
-            ->add('created_at')
-            ->add('modificated_at')
-            ->add('state')
+            ->add('created_at', null, array(
+                'label' => 'Modifié le',
+                'format' => 'd/m/Y à H\hi'
+            ))
+            ->add('modificated_at', null, array(
+                'label' => 'Modifié le',
+                'format' => 'd/m/Y à H\hi'
+            ))
+            ->add('state', 'choice', array(
+                'choices' => array(0 => 'Fermée', 1 => 'En cours'),
+                'label' => 'Etat'
+            ))
+            ->add('base')
+            ->add('img', null, array(
+                'template' => 'ApplicationSonataUserBundle:Admin:image_show.html.twig',
+                'label' => 'Image'
+            ))
         ;
     }
 }
