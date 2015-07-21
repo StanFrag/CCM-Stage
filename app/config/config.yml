@@ -77,3 +77,25 @@ monolog:
 #            ident: md5.ccmbdm.com
 #            formatter: log.iso_formatter
 #            channels: ["app"]
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     localhost
+            port:     5672
+            user:     guest
+            password: guest
+            vhost:    /
+            lazy:     false
+    producers:
+            match:
+                connection: default
+                exchange_options:
+                    name: 'match_exchange'
+                    type: direct
+    consumers:
+            match_traitement:
+                connection:       default
+                exchange_options: { name: 'match_exchange', type: direct }
+                queue_options:    { name: 'match_exchange' }
+                callback:         db_consumer

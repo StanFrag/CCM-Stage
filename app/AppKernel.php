@@ -46,6 +46,8 @@ class AppKernel extends Kernel
 
             new CCMBenchmark\SharedanceBundle\CCMBenchmarkSharedanceBundle(),
 
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+
             new AppBundle\AppBundle()
         );
 

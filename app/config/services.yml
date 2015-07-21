@@ -42,3 +42,14 @@ services:
       - ~
       - Application\Sonata\UserBundle\Entity\Campaign
       - SonataAdminBundle:CRUD
+
+####  RABBIT MQ EXCHANGE  ####
+  db_sender:
+    class: Application\Sonata\UserBundle\Match\dbSender
+    arguments:
+      - dbTarget
+      - dbArray
+      - @old_sound_rabbit_mq.db_sender_producer
+
+  db_consumer:
+    class: Application\Sonata\UserBundle\Match\dbConsumer
