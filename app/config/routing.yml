@@ -9,6 +9,11 @@ cga_show:
     path: /cga/
     defaults:  { _controller: AppBundle:Cga:show }
 
+# Matching
+match_list:
+    path: /matching/
+    defaults:  { _controller: ApplicationSonataUserBundle:Matching:show }
+
 # Base
 base_list:
     path: /bases/

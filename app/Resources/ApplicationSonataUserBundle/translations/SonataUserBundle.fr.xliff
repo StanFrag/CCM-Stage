@@ -10,6 +10,10 @@
                 <source>title_base</source>
                 <target>Bases de données</target>
             </trans-unit>
+            <trans-unit id="title_match">
+                <source>title_match</source>
+                <target>Matching des bases</target>
+            </trans-unit>
             <trans-unit id="base_upload_form">
                 <source>base_upload_form</source>
                 <target>Upload d'une base CSV</target>

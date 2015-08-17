@@ -81,21 +81,19 @@ monolog:
 old_sound_rabbit_mq:
     connections:
         default:
-            host:     localhost
+            host:     md5.local.ccmbdm.com
             port:     5672
-            user:     guest
-            password: guest
+            user:     test
+            password: test
             vhost:    /
             lazy:     false
     producers:
-            match:
+            add_match_exchange:
                 connection: default
-                exchange_options:
-                    name: 'match_exchange'
-                    type: direct
+                exchange_options: { name: 'match-exchange', type: direct }
     consumers:
-            match_traitement:
+            get_match_exchange:
                 connection:       default
-                exchange_options: { name: 'match_exchange', type: direct }
-                queue_options:    { name: 'match_exchange' }
-                callback:         db_consumer
+                exchange_options: { name: 'match-exchange', type: direct }
+                queue_options:    { name: 'match-exchange' }
+                callback:         match_exchange_service

@@ -55,6 +55,7 @@ sonata_admin:
                     - sonata.user.admin.group
                     - sonata.admin.base
                     - sonata.admin.campaign
+                    - sonata.admin.matching
                     #- sonata.page.admin.site
                     #- sonata.notification.admin.message
 

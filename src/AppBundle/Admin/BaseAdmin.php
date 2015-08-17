@@ -3,11 +3,13 @@
 namespace AppBundle\Admin;
 
 use Application\Sonata\UserBundle\Entity\Base;
+use Application\Sonata\UserBundle\Entity\Campaign;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Admin\Admin;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BaseAdmin extends Admin{
 
@@ -31,9 +33,15 @@ class BaseAdmin extends Admin{
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('state', 'choice', array(
-                'choices' => Base::getStateList(),
-                'label'=> 'Etat'
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'show' => array(),
+                    'edit' => array(),
+                    'delete' => array(),
+                )
+            ))
+            ->add('campaign', null, array(
+                'label' => 'Campagne associé'
             ))
         ;
     }
@@ -51,9 +59,6 @@ class BaseAdmin extends Admin{
             ->add('user', null, [
                 'label' => 'Utilisateur'
             ])
-            ->add('state', 'doctrine_orm_string', array('label'=> 'Etat'), 'choice', array(
-                'choices' => Base::getStateList()
-            ))
         ;
     }
 
@@ -66,6 +71,16 @@ class BaseAdmin extends Admin{
             ->with('General')
             ->add('id')
             ->add('title')
+            ->add('created_at', null, array(
+                'label' => 'Créé le',
+                'format' => 'd/m/Y à H\hi'
+            ))
+            ->add('modificated_at', null, array(
+                'label' => 'Modifié le',
+                'format' => 'd/m/Y à H\hi'
+            ))
+            ->add('campaign')
+            ->add('baseDetail')
             ->end()
         ;
 
@@ -87,10 +102,6 @@ class BaseAdmin extends Admin{
                 'property' => 'username',
                 'label' => 'Utilisateur'
             ))
-            ->add('state', 'choice', array(
-                'choices' => [0 => 'Refusé', 1 => 'Accepté', 2 => 'En attente'],
-                'label'=> 'Etat'
-            ))
             ->add('file', 'file', array(
                 'required' => false,
                 'label' => 'Fichier'
@@ -107,6 +118,110 @@ class BaseAdmin extends Admin{
     public function preUpdate($base) {
         // Lors de l'update d'une nouvelle Base coté Admin
         $this->populateBaseDetail($base, true);
+    }
+
+    public function postPersist($base) {
+        $this->sendMatching($base);
+    }
+
+    public function postUpdate($base) {
+        $this->removePreviousBaseMatching($base);
+
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $campaign = $em->getRepository('ApplicationSonataUserBundle:Campaign')->findCampaignByBase($base);
+
+        if(null == $campaign){
+            $this->sendMatching($base);
+        }else{
+            foreach($campaign as $targetCampaign){
+                $this->removePreviousCampaignMatching($targetCampaign);
+                $this->sendCampaignMatching($targetCampaign);
+            }
+        }
+    }
+
+    public function removePreviousBaseMatching(Base $base)
+    {
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByBase($base);
+
+        if (null == $matchs) {
+            return;
+        }else{
+            $tem = $em->getEntityManager();
+
+            foreach($matchs as $match){
+                $tem->remove($match);
+            }
+
+            $tem->flush();
+        }
+    }
+
+    public function removePreviousCampaignMatching(Campaign $campaign)
+    {
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByCampaign($campaign);
+
+        if (null == $matchs) {
+            return;
+        }else{
+            $tem = $em->getEntityManager();
+
+            foreach($matchs as $match){
+                $tem->remove($match);
+            }
+
+            $tem->flush();
+        }
+    }
+
+    protected function sendCampaignMatching($campaign){
+        // Apres la persistance/update d'une campagne
+
+        $idBases = array();
+
+        // On recupere l'ensemble des bases actives
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $bases = $em->getRepository('ApplicationSonataUserBundle:Base')->findConsumerBases();
+
+        if(null == $bases){
+            return;
+        }else{
+            // Pour chaque base on recupere son id
+            foreach($bases as $base){
+                $id = $base['id'];
+                array_push($idBases, $id);
+            }
+
+            // On récupère le service qui va envoyer le match
+            $sendMatching = $this->getConfigurationPool()->getContainer()->get('match_exchange_sender');
+            $sendMatching->sendDB($campaign->getId(), $idBases, 'base');
+        }
+    }
+
+    protected function sendMatching(Base $base){
+        // Apres la persistance/update d'une campagne
+
+        $idArray = array();
+
+        // On recupere l'ensemble des bases actives
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $campaigns = $em->getRepository('ApplicationSonataUserBundle:Campaign')->findActiveCampaign();
+
+        if(null == $campaigns){
+            return;
+        }else{
+            // Pour chaque base on recupere son id
+            foreach($campaigns as $campaign){
+                $id = $campaign['id'];
+                array_push($idArray, $id);
+            }
+
+            // On récupère le service qui va envoyer le match
+            $sendMatching = $this->getConfigurationPool()->getContainer()->get('match_exchange_sender');
+            $sendMatching->sendDB($base->getId(), $idArray, 'campaign');
+        }
     }
 
     /**

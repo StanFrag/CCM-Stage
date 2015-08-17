@@ -1,5 +1,6 @@
 services:
 
+
 ####  PUBLIC  ####
   public_user.registration.form.type:
     class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
@@ -17,6 +18,7 @@ services:
   public_user.populate:
             class: Application\Sonata\UserBundle\Import\PopulateBD
             arguments: [@doctrine.orm.entity_manager]
+
 
 ####  ADMIN  ####
   sonata.admin.base:
@@ -43,13 +45,18 @@ services:
       - Application\Sonata\UserBundle\Entity\Campaign
       - SonataAdminBundle:CRUD
 
-####  RABBIT MQ EXCHANGE  ####
-  db_sender:
-    class: Application\Sonata\UserBundle\Match\dbSender
-    arguments:
-      - dbTarget
-      - dbArray
-      - @old_sound_rabbit_mq.db_sender_producer
+  sonata.admin.matching:
+          class: AppBundle\Admin\MatchingAdmin
+          arguments: [~, Application\Sonata\UserBundle\Entity\Matching, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: admin, label: Matching}
 
-  db_consumer:
+
+####  MATCHING  ####
+  match_exchange_sender:
+    class: Application\Sonata\UserBundle\Match\dbSender
+    arguments: ['@service_container']
+
+  match_exchange_service:
     class: Application\Sonata\UserBundle\Match\dbConsumer
+    arguments: ['@service_container', @doctrine.orm.entity_manager]

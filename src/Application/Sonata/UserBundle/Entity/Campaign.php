@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Campaign
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\CampaignRepository")
+ * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\CampaignRepository")
  * @UniqueEntity(
  *      fields = {"title"},
  *      message = "Nom de Campagne déja utilisé, veuillez le modifier pour continuer l'upload de la base"
@@ -43,9 +44,17 @@ class Campaign
     protected $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\Base", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\Base", inversedBy="campaign")
+     * @ORM\JoinColumn(name="base_id", referencedColumnName="id")
      */
     protected $base;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Matching", mappedBy="campaign")
+     *
+     * @var ArrayCollection $match
+     */
+    protected $match;
 
     /**
      * @Assert\File(
@@ -56,15 +65,15 @@ class Campaign
 
     /**
      * @var datetime
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="createdAt", type="datetime")
      */
-    protected $created_at;
+    protected $createdAt;
 
     /**
      * @var datetime
-     * @ORM\Column(name="modificated_at", type="datetime")
+     * @ORM\Column(name="modificatedAt", type="datetime")
      */
-    protected $modificated_at;
+    protected $modificatedAt;
 
     /**
      * @var boolean
@@ -137,37 +146,37 @@ class Campaign
     }
 
     /**
-     * Set created_at
+     * Set createdAt
      *
      * @param \DateTime $createdAt
      * @return Campaign
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get created_at
+     * Get createdAt
      *
      * @return \DateTime 
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * Set modificated_at
+     * Set modificatedAt
      *
      * @param \DateTime $modificatedAt
      * @return Campaign
      */
     public function setModificatedAt($modificatedAt)
     {
-        $this->modificated_at = $modificatedAt;
+        $this->modificatedAt = $modificatedAt;
 
         return $this;
     }
@@ -179,7 +188,7 @@ class Campaign
      */
     public function getModificatedAt()
     {
-        return $this->modificated_at;
+        return $this->modificatedAt;
     }
 
     /**
@@ -203,6 +212,16 @@ class Campaign
     public function getState()
     {
         return $this->state;
+    }
+
+    /**
+     * Get match
+     *
+     * @return ArrayCollection
+     */
+    public function getMatch()
+    {
+        return $this->match;
     }
 
     /**
@@ -369,5 +388,10 @@ class Campaign
         if ($file) {
             unlink($file);
         }
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

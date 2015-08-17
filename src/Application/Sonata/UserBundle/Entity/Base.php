@@ -44,11 +44,25 @@ class Base
     protected $user;
 
     /**
+     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Matching", mappedBy="base")
+     *
+     * @var ArrayCollection $match
+     */
+    protected $match;
+
+    /**
      * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\BaseDetail", mappedBy="base", cascade={"all"}, orphanRemoval=true)
      *
      * @var ArrayCollection $baseDetail
      */
     protected $baseDetail;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Campaign", mappedBy="base")
+     *
+     * @var ArrayCollection $baseDetail
+     */
+    protected $campaign;
 
     /**
      * @var string
@@ -84,11 +98,6 @@ class Base
      * @ORM\Column(name="nbLine", type="integer", nullable=true)
      */
     protected $nbLine;
-
-    /**
-     * @ORM\Column(columnDefinition="tinyint UNSIGNED DEFAULT '1'", name="state")
-     */
-    protected $state = 2;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -288,6 +297,16 @@ class Base
     }
 
     /**
+     * Get campaign
+     *
+     * @return ArrayCollection $campaign
+     */
+    public function getCampaign()
+    {
+        return $this->campaign;
+    }
+
+    /**
      * Remove baseDetail
      *
      * @param \Application\Sonata\UserBundle\Entity\BaseDetail $baseDetail
@@ -304,29 +323,6 @@ class Base
     public function removeBaseDetailAll()
     {
         $this->baseDetail->clear();
-    }
-
-    /**
-     * Get state
-     *
-     * @return tinyint
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * Set state
-     *
-     * @param tinyint $state
-     * @return Base
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-
-        return $this;
     }
 
     /**
@@ -373,15 +369,6 @@ class Base
     public function getPath()
     {
         return $this->path;
-    }
-
-    public static function getStateList()
-    {
-        return array(
-            '1' => "Accepté",
-            '2' => "En attente",
-            '0' => "Refusé"
-        );
     }
 
     public function __toString()

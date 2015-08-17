@@ -90,4 +90,10 @@ class MatchingDetail
     {
         return $this->id_matching;
     }
+
+    public function __toString()
+    {
+        return $this->getMd5();
+    }
+
 }

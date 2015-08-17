@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Matching
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\MatchingRepository")
  */
 class Matching
 {
@@ -29,14 +29,16 @@ class Matching
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\Base", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\Base", inversedBy="match")
+     * @ORM\JoinColumn(name="base_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $id_base;
+    protected $base;
 
     /**
-     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\Campaign", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\Campaign", inversedBy="match")
+     * @ORM\JoinColumn(name="campaign_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $id_campaign;
+    protected $campaign;
 
     /**
      * @var \DateTime
@@ -73,12 +75,11 @@ class Matching
     /**
      * Set date_maj
      *
-     * @param \DateTime $dateMaj
      * @return Matching
      */
-    public function setDateMaj($dateMaj)
+    public function setDateMaj()
     {
-        $this->date_maj = $dateMaj;
+        $this->date_maj = new \DateTime('now');;
 
         return $this;
     }
@@ -119,12 +120,12 @@ class Matching
     /**
      * Set id_base
      *
-     * @param \Application\Sonata\UserBundle\Entity\Base $idBase
+     * @param \Application\Sonata\UserBundle\Entity\Base $Base
      * @return Matching
      */
-    public function setIdBase(Base $idBase = null)
+    public function setBase(Base $Base)
     {
-        $this->id_base = $idBase;
+        $this->base = $Base;
 
         return $this;
     }
@@ -134,20 +135,20 @@ class Matching
      *
      * @return \Application\Sonata\UserBundle\Entity\Base 
      */
-    public function getIdBase()
+    public function getBase()
     {
-        return $this->id_base;
+        return $this->base;
     }
 
     /**
      * Set id_campaign
      *
-     * @param \Application\Sonata\UserBundle\Entity\Campaign $idCampaign
+     * @param \Application\Sonata\UserBundle\Entity\Campaign $Campaign
      * @return Matching
      */
-    public function setIdCampaign(Campaign $idCampaign = null)
+    public function setCampaign(Campaign $Campaign)
     {
-        $this->id_campaign = $idCampaign;
+        $this->campaign = $Campaign;
 
         return $this;
     }
@@ -157,9 +158,9 @@ class Matching
      *
      * @return \Application\Sonata\UserBundle\Entity\Campaign 
      */
-    public function getIdCampaign()
+    public function getCampaign()
     {
-        return $this->id_campaign;
+        return $this->campaign;
     }
 
     /**

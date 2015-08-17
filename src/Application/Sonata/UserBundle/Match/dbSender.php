@@ -1,35 +1,41 @@
 <?php
 
-use OldSound\RabbitMqBundle\RabbitMq\Producer;
+namespace Application\Sonata\UserBundle\Match;
 
-class dbSender {
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-    private $dbTarget;
-    private $dbArray;
+class dbSender{
 
-    private $producer;
+    private $container;
 
-    public function __construct($dbTarget, array $dbArray, Producer $producer)
+    public function __construct($container)
     {
-        $this->dbTarget = $dbTarget;
-        $this->dbArray = $dbArray;
-
-        $this->producer = $producer;
+        $this->container = $container;
     }
 
-    public function process()
+    public function sendDB($dbTarget, $dbArray, $OneIsArray)
     {
-        foreach ($this->dbArray as $dbDist)
+        foreach ($dbArray as $dbDist)
         {
-            $msgToPublish = array
-            (
-                'campaign' => $this->dbTarget,
-                'base' => $dbDist
-            );
+            $msgToPublish = [];
+
+            if($OneIsArray == 'base'){
+                $msgToPublish = array
+                (
+                    'campaign' => $dbTarget,
+                    'base' => $dbDist
+                );
+            }else if($OneIsArray == 'campaign'){
+                $msgToPublish = array
+                (
+                    'campaign' => $dbDist,
+                    'base' => $dbTarget
+                );
+            }
 
             // Publish message
-            $msg = json_encode($msgToPublish);
-            $this->producer->publish($msg);
+            $msg = serialize($msgToPublish);
+            $this->container->get('old_sound_rabbit_mq.add_match_exchange_producer')->publish($msg);
         }
     }
 }

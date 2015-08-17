@@ -1,0 +1,54 @@
+{% extends "ApplicationSonataUserBundle:Profile:action.html.twig" %}
+
+{% block sonata_profile_title %}
+    {{ "title_user_base" | trans({}, 'SonataUserBundle')}}
+{% endblock %}
+
+{% block sonata_profile_content %}
+
+    <a href="{{ path('base_upload') }}" class="btn btn-primary" role="button">Ajout d'une base</a>
+    <hr/>
+    {% if listMatch %}
+            {% for match in listMatch %}
+
+                <div class="panel panel-md5">
+
+                    <div class="panel-heading">
+                        <h1 class="panel-title"><b>{{ match.campaign }}</b></h1>
+                    </div>
+                    <div class="panel-body">
+
+                        <p><b>Nom de la campagne:</b> {{ match.campaign }}</p>
+                        <p><b>Description:</b> {{ match.campaign.description }}</p>
+                        <p><b>Crée le:</b> {{ match.campaign.createdAt | date("d/m/Y à H\\hi")}}</p>
+                        <p><b>Modifié le:</b> {{ match.campaign.modificatedAt | date("d/m/Y à H\\hi")}}</p>
+                        {% if match.match %}
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <tr class="alert-danger">
+                                        <th>Base</th>
+                                        <th>Volume matché</th>
+                                        <th>Modifié le</th>
+                                        <th>Postuler</th>
+                                    </tr>
+                                    {% for t in match.match %}
+                                        <tr>
+                                            <td>{{ t.title }}</td>
+                                            <td>{{ t.nb_match }}</td>
+                                            <td>{{ t.date_maj | date("d/m/Y à H\\hi")}}</td>
+                                            <td>Bouton de postulation</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        {% else %}
+                            <p>Matching avec la campagne encore non effectué. Veuillez patienter.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% endfor %}
+    {% else %}
+        <p>{{ "base_not_found" | trans({}, 'SonataUserBundle')}}</p>
+    {% endif %}
+{% endblock %}
