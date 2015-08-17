@@ -2,6 +2,8 @@
 
 namespace Application\Sonata\UserBundle\Controller;
 
+use Application\Sonata\UserBundle\Event\MailEvent;
+use Application\Sonata\UserBundle\ApplicationEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -31,5 +33,23 @@ class MatchingController extends Controller
         return $this->render('match/match_list.html.twig', array(
             'listMatch' => $matchArray,
         ));
+    }
+
+    public function populateAction($base, $campaign)
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        // nouveau mail event
+        $event = new MailEvent();
+
+        $event->setUserName("$user");
+        $event->setBase("$base");
+        $event->setCampaign("$campaign");
+
+        $dispatcher = $this->container->get('event_dispatcher');
+
+        $dispatcher->dispatch(
+            ApplicationEvents::AFTER_POPULATE, $event
+        );
     }
 }
