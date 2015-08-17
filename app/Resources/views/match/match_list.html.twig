@@ -6,8 +6,6 @@
 
 {% block sonata_profile_content %}
 
-    <a href="{{ path('base_upload') }}" class="btn btn-primary" role="button">Ajout d'une base</a>
-    <hr/>
     {% if listMatch %}
             {% for match in listMatch %}
 
@@ -18,10 +16,26 @@
                     </div>
                     <div class="panel-body">
 
-                        <p><b>Nom de la campagne:</b> {{ match.campaign }}</p>
-                        <p><b>Description:</b> {{ match.campaign.description }}</p>
-                        <p><b>Crée le:</b> {{ match.campaign.createdAt | date("d/m/Y à H\\hi")}}</p>
-                        <p><b>Modifié le:</b> {{ match.campaign.modificatedAt | date("d/m/Y à H\\hi")}}</p>
+                    <div class="row row-fluid">
+                        <div class="span6 col-lg-6">
+                            <p><b>Nom de la campagne:</b> {{ match.campaign }}</p>
+                            <p><b>Description:</b> {{ match.campaign.description }}</p>
+                            <p><b>Crée le:</b> {{ match.campaign.createdAt | date("d/m/Y à H\\hi")}}</p>
+                            <p><b>Modifié le:</b> {{ match.campaign.modificatedAt | date("d/m/Y à H\\hi")}}</p>
+
+                            <p><b>Thématique:</b> {{ match.campaign.theme }}</p>
+                            <p><b>Type de rémuneration:</b> {{ match.campaign.remunerationType }}</p>
+                            <p><b>Montant de la rémuneration:</b> {{ match.campaign.remunerationAmount }}</p>
+                            <p><b>Phrase objet:</b> {{ match.campaign.objectSentence }}</p>
+                            <p><b>Expéditeur:</b> {{ match.campaign.sender }}</p>
+                            <p><b>Date de début:</b> {{ match.campaign.beginDate | date("d/m/Y à H\\hi")}}</p>
+                            <p><b>Date de fin:</b> {{ match.campaign.endDate | date("d/m/Y à H\\hi")}}</p>
+                        </div>
+                        <div class="span6 col-lg-6">
+                            <img src="{{ asset('uploads/documents/' ~ match.campaign.path) }}" style="width: 40%" alt="" class="pull-right"/>
+                        </div>
+                    </div>
+
                         {% if match.match %}
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">

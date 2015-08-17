@@ -82,6 +82,28 @@ class CampaignAdmin extends Admin
             ->add('description', 'textarea', [
                 'label' => 'Description'
             ])
+            ->add('theme', null, [
+                'label' => 'Thématique'
+            ])
+            ->add('remunerationType', null, [
+                'label' => 'Type de rémuneration'
+            ])
+            ->add('remunerationAmount', null, [
+                'label' => 'Montant de la rémuneration',
+                'required' => false
+            ])
+            ->add('objectSentence', 'textarea', [
+                'label' => 'Phrase objet'
+            ])
+            ->add('sender', null, [
+                'label' => 'Expéditeur'
+            ])
+            ->add('beginDate', 'date', [
+                'label' => 'Date de début'
+            ])
+            ->add('endDate', 'date', [
+                'label' => 'Date de fin'
+            ])
             ->add('img', 'file', [
                 'label' => 'Image',
                 'required' => false
@@ -117,6 +139,27 @@ class CampaignAdmin extends Admin
                 'choices' => array(0 => 'Fermée', 1 => 'En cours'),
                 'label' => 'Etat'
             ))
+            ->add('theme', null, [
+                'label' => 'Thématique'
+            ])
+            ->add('remunerationType', null, [
+                'label' => 'Type de rémuneration'
+            ])
+            ->add('remunerationAmount', null, [
+                'label' => 'Montant de la rémuneration'
+            ])
+            ->add('objectSentence', 'textarea', [
+                'label' => 'Phrase objet'
+            ])
+            ->add('sender', null, [
+                'label' => 'Expéditeur'
+            ])
+            ->add('beginDate', 'date', [
+                'label' => 'Date de début'
+            ])
+            ->add('endDate', 'date', [
+                'label' => 'Date de fin'
+            ])
             ->add('base')
             ->add('img', null, array(
                 'template' => 'ApplicationSonataUserBundle:Admin:image_show.html.twig',

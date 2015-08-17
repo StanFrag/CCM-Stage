@@ -44,6 +44,48 @@ class Campaign
     protected $description;
 
     /**
+     * @var string
+     * @ORM\Column(name="theme", type="string")
+     */
+    protected $theme;
+
+    /**
+     * @var string
+     * @ORM\Column(name="remunerationType", type="string")
+     */
+    protected $remunerationType;
+
+    /**
+     * @var string
+     * @ORM\Column(name="remunerationAmount", type="string")
+     */
+    protected $remunerationAmount;
+
+    /**
+     * @var string
+     * @ORM\Column(name="objectSentence", type="string")
+     */
+    protected $objectSentence;
+
+    /**
+     * @var string
+     * @ORM\Column(name="sender", type="string")
+     */
+    protected $sender;
+
+    /**
+     * @var datetime
+     * @ORM\Column(name="beginDate", type="datetime")
+     */
+    protected $beginDate;
+
+    /**
+     * @var datetime
+     * @ORM\Column(name="endDate", type="datetime")
+     */
+    protected $endDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\Base", inversedBy="campaign")
      * @ORM\JoinColumn(name="base_id", referencedColumnName="id")
      */
@@ -393,5 +435,196 @@ class Campaign
     public function __toString()
     {
         return $this->getTitle();
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->match = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set theme
+     *
+     * @param string $theme
+     * @return Campaign
+     */
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * Get theme
+     *
+     * @return string 
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    /**
+     * Set remunerationType
+     *
+     * @param string $remunerationType
+     * @return Campaign
+     */
+    public function setRemunerationType($remunerationType)
+    {
+        $this->remunerationType = $remunerationType;
+
+        return $this;
+    }
+
+    /**
+     * Get remunerationType
+     *
+     * @return string 
+     */
+    public function getRemunerationType()
+    {
+        return $this->remunerationType;
+    }
+
+    /**
+     * Set remunerationAmount
+     *
+     * @param string $remunerationAmount
+     * @return Campaign
+     */
+    public function setRemunerationAmount($remunerationAmount)
+    {
+        $this->remunerationAmount = $remunerationAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get remunerationAmount
+     *
+     * @return string 
+     */
+    public function getRemunerationAmount()
+    {
+        return $this->remunerationAmount;
+    }
+
+    /**
+     * Set objectSentence
+     *
+     * @param string $objectSentence
+     * @return Campaign
+     */
+    public function setObjectSentence($objectSentence)
+    {
+        $this->objectSentence = $objectSentence;
+
+        return $this;
+    }
+
+    /**
+     * Get objectSentence
+     *
+     * @return string 
+     */
+    public function getObjectSentence()
+    {
+        return $this->objectSentence;
+    }
+
+    /**
+     * Set sender
+     *
+     * @param string $sender
+     * @return Campaign
+     */
+    public function setSender($sender)
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    /**
+     * Get sender
+     *
+     * @return string 
+     */
+    public function getSender()
+    {
+        return $this->sender;
+    }
+
+    /**
+     * Set beginDate
+     *
+     * @param \DateTime $beginDate
+     * @return Campaign
+     */
+    public function setBeginDate($beginDate)
+    {
+        $this->beginDate = $beginDate;
+
+        return $this;
+    }
+
+    /**
+     * Get beginDate
+     *
+     * @return \DateTime 
+     */
+    public function getBeginDate()
+    {
+        return $this->beginDate;
+    }
+
+    /**
+     * Set endDate
+     *
+     * @param \DateTime $endDate
+     * @return Campaign
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    /**
+     * Get endDate
+     *
+     * @return \DateTime 
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * Add match
+     *
+     * @param \Application\Sonata\UserBundle\Entity\Matching $match
+     * @return Campaign
+     */
+    public function addMatch(\Application\Sonata\UserBundle\Entity\Matching $match)
+    {
+        $this->match[] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove match
+     *
+     * @param \Application\Sonata\UserBundle\Entity\Matching $match
+     */
+    public function removeMatch(\Application\Sonata\UserBundle\Entity\Matching $match)
+    {
+        $this->match->removeElement($match);
     }
 }
