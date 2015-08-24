@@ -69,7 +69,6 @@ class BaseController extends Controller
                 // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
                 $base->setNbLine($response);
                 $base->setUser($user);
-                $base->setState(2);
 
                 // Et on envoi les données
                 $em->persist($base);

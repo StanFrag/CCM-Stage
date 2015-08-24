@@ -12,3 +12,5 @@
 /composer.phar
 /.idea/
 /src/web/
+/src/www/
+/web/uploads/
