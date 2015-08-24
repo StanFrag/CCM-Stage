@@ -54,6 +54,19 @@
                 <source>action</source>
                 <target>Actions</target>
             </trans-unit>
+
+            <trans-unit id="upload_rule_one">
+                <source>upload_rule_one</source>
+                <target>Le fichier CSV doit contenir une unique colonne de données</target>
+            </trans-unit>
+            <trans-unit id="upload_rule_two">
+                <source>upload_rule_two</source>
+                <target>Les données du fichier doivent impérativement être en MD5</target>
+            </trans-unit>
+            <trans-unit id="upload_rule_tree">
+                <source>upload_rule_tree</source>
+                <target>Le fichier ne doit pas contenir d'entêtes de colonne</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
