@@ -33,4 +33,20 @@ class BaseRepository extends EntityRepository
 
         return $query->execute(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
     }
+
+    public function findNonAdminBases(){
+
+        $qb = $this->createQueryBuilder('b');
+
+        $t = $qb->select('b')
+            ->leftJoin('b.user', 'bu')
+            ->leftJoin('bu.groups', 'g')
+            ->where('g.name IS NOT NULL')
+            ->orderBy('b.modificated_at','DESC');
+
+
+        $query = $t->getQuery();
+
+        return $query; // instanceof Doctrine\ODM\MongoDB\EagerCursor
+    }
 }

@@ -41,7 +41,7 @@ class BaseAdmin extends Admin{
                 )
             ))
             ->add('campaign', null, array(
-                'label' => 'Campagne associé'
+                'label' => 'Campagne associée'
             ))
         ;
     }

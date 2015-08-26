@@ -7,66 +7,119 @@
 {% block sonata_profile_content %}
 
     {% if listMatch %}
+
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
             {% for match in listMatch %}
 
-                <div class="panel panel-md5">
+                <div class="panel pannelHead panel-md5-light">
 
-                    <div class="panel-heading">
-                        <h1 class="panel-title"><b>{{ match.campaign }}</b></h1>
-                    </div>
-                    <div class="panel-body">
-
-                    <div class="row row-fluid">
-                        <div class="span6 col-lg-6">
-                            <p><b>Nom de la campagne:</b> {{ match.campaign }}</p>
-                            <p><b>Description:</b> {{ match.campaign.description }}</p>
-                            <p><b>Crée le:</b> {{ match.campaign.createdAt | date("d/m/Y à H\\hi")}}</p>
-                            <p><b>Modifié le:</b> {{ match.campaign.modificatedAt | date("d/m/Y à H\\hi")}}</p>
-
-                            <p><b>Thématique:</b> {{ match.campaign.theme }}</p>
-                            <p><b>Type de rémuneration:</b> {{ match.campaign.remunerationType }}</p>
-                            <p><b>Montant de la rémuneration:</b> {{ match.campaign.remunerationAmount }}</p>
-                            <p><b>Phrase objet:</b> {{ match.campaign.objectSentence }}</p>
-                            <p><b>Expéditeur:</b> {{ match.campaign.sender }}</p>
-                            <p><b>Date de début:</b> {{ match.campaign.beginDate | date("d/m/Y à H\\hi")}}</p>
-                            <p><b>Date de fin:</b> {{ match.campaign.endDate | date("d/m/Y à H\\hi")}}</p>
-                        </div>
-                        <div class="span6 col-lg-6">
-                            <img src="{{ asset('uploads/documents/' ~ match.campaign.path) }}" style="width: 40%" alt="" class="pull-right"/>
-                        </div>
+                    <div class="panel-heading" role="tab" id="heading{{ match.campaign }}">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ match.campaign }}" aria-expanded="false" aria-controls="collapse{{ match.campaign }}">
+                            <h4 class="panel-title">
+                                    {{ match.campaign }}
+                                    <span class="accordion-glyph glyphicon glyphicon-chevron-down pull-right" aria-hidden="true"></span>
+                            </h4>
+                        </a>
                     </div>
 
-                        {% if match.match %}
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <tr class="alert-danger">
-                                        <th>Base</th>
-                                        <th>Volume matché</th>
-                                        <th>Modifié le</th>
-                                        <th>Postuler</th>
-                                    </tr>
-                                    {% for t in match.match %}
-                                        <tr>
-                                            <td>{{ t.title }}</td>
-                                            <td>{{ t.nb_match }}</td>
-                                            <td>{{ t.date_maj | date("d/m/Y à H\\hi")}}</td>
-                                            <td>
-                                                <a href="{{ path('match_populate', { 'base': t.title, 'campaign': match.campaign}) }}">
-                                                    Postuler
-                                                    <span class="glyphicon glyphicon-send" aria-hidden="true" style="color:dodgerblue; margin: 5px"></span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
+
+                    <div id="collapse{{ match.campaign }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ match.campaign }}">
+                        <div class="panel-body">
+                            <div class="row row-fluid">
+                                <div class="span6 col-lg-6">
+
+                                    {% if match.campaign.description %}
+                                        <p>
+                                            <b>
+                                                {{ "description" | trans({}, 'SonataUserBundle')}}:
+                                            </b>
+                                            {{ match.campaign.description }}
+                                        </p>
+                                    {% endif %}
+
+                                    <p>
+                                        <b>{{ "theme" | trans({}, 'SonataUserBundle')}}:</b>
+                                        {{ match.campaign.theme }}
+                                    </p>
+
+                                    <br/>
+
+                                    <p>
+                                        <b>{{ "begin_date" | trans({}, 'SonataUserBundle')}}:</b>
+                                        {{ match.campaign.beginDate | date("d/m/Y à H\\hi")}}
+                                    </p>
+                                    <p>
+                                        <b>{{ "end_date" | trans({}, 'SonataUserBundle')}}:</b>
+                                        {{ match.campaign.endDate | date("d/m/Y à H\\hi")}}
+                                    </p>
+
+                                    <br/>
+
+                                    <p>
+                                        <b>{{ "remuneration_type" | trans({}, 'SonataUserBundle')}}:</b>
+                                        {{ match.campaign.remunerationType }}
+                                    </p>
+                                    {% if match.campaign.remunerationAmount %}
+                                        <p>
+                                            <b>{{ "remuneration_amount" | trans({}, 'SonataUserBundle')}}:</b>
+                                            {{ match.campaign.remunerationAmount }}
+                                        </p>
+                                    {% endif %}
+
+                                    <p>
+                                        <b>{{ "object_sentence" | trans({}, 'SonataUserBundle')}}:</b>
+                                        {{ match.campaign.objectSentence }}
+                                    </p>
+                                    <p>
+                                        <b>{{ "sender" | trans({}, 'SonataUserBundle')}}:</b>
+                                        {{ match.campaign.sender }}
+                                    </p>
+
+                                </div>
+                                <div class="span6 col-lg-6">
+                                    <a href="{{ asset('uploads/documents/' ~ match.campaign.path) }}">
+                                        <img src="{{ asset('uploads/documents/' ~ match.campaign.path) }}" style="width: 30%" alt="" class="pull-right"/>
+                                    </a>
+                                </div>
                             </div>
-                        {% else %}
-                            <p>Matching avec la campagne encore non effectué. Veuillez patienter.</p>
-                        {% endif %}
+
+                            {% if match.match %}
+                                <div class="table-responsive" style="margin-top: 15px">
+                                    <table class="table table-bordered table-striped">
+                                        <tr class="alert-danger">
+                                            <th>{{ "title_base" | trans({}, 'SonataUserBundle')}}</th>
+                                            <th>{{ "match_amount" | trans({}, 'SonataUserBundle')}}</th>
+                                            <th>{{ "modificated_at" | trans({}, 'SonataUserBundle')}}</th>
+                                            <th>{{ "postulate" | trans({}, 'SonataUserBundle')}}</th>
+                                        </tr>
+                                        {% for t in match.match %}
+                                            <tr>
+                                                <td>{{ t.title }}</td>
+                                                <td>{{ t.nb_match }}</td>
+                                                <td>{{ t.date_maj | date("d/m/Y à H\\hi")}}</td>
+                                                <td>
+                                                    <a href="{{ path('match_populate', { 'base': t.title, 'campaign': match.campaign}) }}">
+                                                        {{ "postulate" | trans({}, 'SonataUserBundle')}}
+                                                        <span class="glyphicon glyphicon-send" aria-hidden="true" style="color:dodgerblue; margin: 5px"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            {% else %}
+                                <hr/>
+                                <h4>
+                                    {{ "match_not_done" | trans({}, 'SonataUserBundle')}}
+                                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" style="margin-left: 5px"></span>
+                                </h4>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-
             {% endfor %}
+        </div>
     {% else %}
         <p>{{ "base_not_found" | trans({}, 'SonataUserBundle')}}</p>
     {% endif %}
