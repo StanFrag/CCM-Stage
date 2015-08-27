@@ -31,10 +31,6 @@ class BaseAdmin extends Admin{
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('state', 'choice', array(
-                'choices' => Base::getStateList(),
-                'label'=> 'Etat'
-            ))
         ;
     }
 
@@ -51,9 +47,6 @@ class BaseAdmin extends Admin{
             ->add('user', null, [
                 'label' => 'Utilisateur'
             ])
-            ->add('state', 'doctrine_orm_string', array('label'=> 'Etat'), 'choice', array(
-                'choices' => Base::getStateList()
-            ))
         ;
     }
 
@@ -86,10 +79,6 @@ class BaseAdmin extends Admin{
                 'class' => 'ApplicationSonataUserBundle:User',
                 'property' => 'username',
                 'label' => 'Utilisateur'
-            ))
-            ->add('state', 'choice', array(
-                'choices' => [0 => 'Refusé', 1 => 'Accepté', 2 => 'En attente'],
-                'label'=> 'Etat'
             ))
             ->add('file', 'file', array(
                 'required' => false,

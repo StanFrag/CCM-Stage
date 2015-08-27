@@ -9,8 +9,25 @@ cga_show:
     path: /cga/
     defaults:  { _controller: AppBundle:Cga:show }
 
+# Base
+base_list:
+    path: /bases/
+    defaults:  { _controller: ApplicationSonataUserBundle:Base:show }
+
+base_update:
+    path: /bases/update/{id}
+    defaults:  { _controller: ApplicationSonataUserBundle:Base:update }
+
+base_remove:
+    path: /bases/remove/{id}
+    defaults:  { _controller: ApplicationSonataUserBundle:Base:remove }
+
+base_details:
+    path: /bases/details/{id}
+    defaults:  { _controller: ApplicationSonataUserBundle:Base:details }
+
 base_upload:
-    path: /base/
+    path: /bases/upload/
     defaults:  { _controller: ApplicationSonataUserBundle:Base:upload }
 
 # Admin

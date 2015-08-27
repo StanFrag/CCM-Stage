@@ -26,4 +26,54 @@ class Group extends BaseGroup
      * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
      */
     protected $users;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $users
+     * @return Group
+     */
+    public function addUser(\Application\Sonata\UserBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $users
+     */
+    public function removeUser(\Application\Sonata\UserBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }

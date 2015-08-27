@@ -12,7 +12,7 @@
 /.idea/
 /src/web/
 /src/www/
+/web/uploads/
+/web/css/
+/web/js/
 git
-web/css/
-web/js/
-web/uploads/
