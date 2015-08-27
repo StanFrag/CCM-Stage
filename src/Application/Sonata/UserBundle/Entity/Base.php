@@ -18,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * )
  * @ORM\HasLifecycleCallbacks()
  */
-class Base extends AbstractBase
+class Base
 {
 
     protected $em;
@@ -294,6 +294,29 @@ class Base extends AbstractBase
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return Base
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 
     public static function getStateList()

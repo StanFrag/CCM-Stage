@@ -27,7 +27,6 @@ class UploadBase {
         }
         $fileName = $this->generateFilename($file, $randomize);
 
-        //$file->move($base->getUploadRootDir(), $fileName);
         $file->move($this->directory, $fileName);
 
         $base->setPath($fileName);
@@ -45,7 +44,6 @@ class UploadBase {
 
         $fileName = $this->generateFilename($file, $randomize);
 
-        //$file->move($base->getUploadRootDir(), $fileName);
         $file->move($this->directory, $fileName);
 
         $base->setPath($fileName);
