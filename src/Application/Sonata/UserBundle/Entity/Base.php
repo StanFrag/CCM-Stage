@@ -73,7 +73,7 @@ class Base
     protected $created_at;
 
     /**
-     * @var datetimez
+     * @var datetime
      * @ORM\Column(name="modificated_at", type="datetime")
      */
     protected $modificated_at;
