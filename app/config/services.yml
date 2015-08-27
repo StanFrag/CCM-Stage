@@ -30,5 +30,17 @@ services:
         - ~
 
   public_user.populate:
-          class: Application\Sonata\UserBundle\Import\PopulateBD
-          arguments: [@doctrine.orm.entity_manager]
+    class: Application\Sonata\UserBundle\Import\PopulateBD
+    arguments: [@doctrine.orm.entity_manager]
+
+  public_user.upload_base:
+    class: Application\Sonata\UserBundle\Import\UploadBase
+    arguments: [%public_user.file_directory%]
+
+  application_user_bundle.mail_subscriber:
+    class: Application\Sonata\UserBundle\EventListener\MailSubscriber
+    arguments:
+        templating: "@twig"
+        mailer: "@mailer"
+    tags:
+      - { name: kernel.event_subscriber }

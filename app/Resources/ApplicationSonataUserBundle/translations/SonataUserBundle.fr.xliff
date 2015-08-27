@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="upload.flash.success">
                 <source>upload.flash.success</source>
-                <target>Votre base de donnée à été correctement enregistré!</target>
+                <target>Votre base de données à été correctement enregistrée!</target>
             </trans-unit>
             <trans-unit id="upload.flash.error">
                 <source>upload.flash.error</source>
@@ -54,7 +54,6 @@
                 <source>action</source>
                 <target>Actions</target>
             </trans-unit>
-
             <trans-unit id="upload_rule_one">
                 <source>upload_rule_one</source>
                 <target>Le fichier CSV doit contenir une unique colonne de données</target>

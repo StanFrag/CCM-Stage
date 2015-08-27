@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="dm_md5" default="install">
-    <property name="env.FRONTCORE_DIR" value="/var/www/frontcore" />
+    <!-- overriden at call time -->
+    <property file="/etc/quidea/phing.properties" />
+    <available file="../../vagrant-devbox/puphpet/files/conf/quidea/phing.properties" property="vagrant_file" />
     <property name="environment" value="dev" />
-    <property name="php" value="/usr/bin/php5" />
-
-    <property name="composer" value="/usr/local/bin/composer" />
-    <property name="composer-cmd" value="${composer} install" />
+    <property name="cache_dir" value="/var/cache/sf2/md5.r-target.com/cache/${environment}" />
 
     <if>
-        <equals arg1="${environment}" arg2="dev" />
+        <isset property="vagrant_file"/>
         <then>
-            <property name="composer-cmd" value="${composer-cmd} --dev --no-interaction" />
+            <!-- This include is here to allow IDE's to do their job with properties included -->
+            <property file="../../vagrant-devbox/puphpet/files/conf/quidea/phing.properties" />
         </then>
-        <else>
-            <property name="composer-cmd" value="${composer-cmd} -o --no-dev --no-ansi --no-interaction" />
-        </else>
     </if>
 
+    <target name="sf2_remove_cache">
+        <if>
+            <equals arg1="${environment}" arg2="dev" />
+            <then>
+                <property name="cache_dir" value="app/cache/${environment}" override="true" />
+            </then>
+        </if>
+        <delete dir="${cache_dir}" includeemptydirs="true" />
+    </target>
+
+    <target name="sf2_create_cache">
+        <exec command="${php} app/console cache:clear --env=${environment}" checkreturn="true" />
+    </target>
+
     <target name="composer">
-        <exec command=" export SYMFONY_ENV=${environment}; ${composer-cmd}" checkreturn="true" />
+        <uptodate property="composer.notRequired" targetfile="vendor/autoload.php">
+            <fileset dir="${project.basedir}" includes="composer.*">
+            </fileset>
+        </uptodate>
+        <if>
+            <not><isset property="composer.notRequired"/></not>
+            <then>
+                <echo msg="Composer install" />
+                <exec command="export SYMFONY_ENV=${environment}; ${php} ${composer} install ${composer_options}" checkreturn="true" />
+            </then>
+            <else>
+                <phingcall target="sf2_create_cache" />
+            </else>
+        </if>
     </target>
 
     <target name="db">
@@ -33,6 +57,7 @@
     </target>
 
     <target name="install">
+        <phingcall target="sf2_remove_cache" />
         <phingcall target="composer" />
         <phingcall target="db" />
     </target>

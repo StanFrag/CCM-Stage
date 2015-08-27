@@ -91,11 +91,17 @@ class BaseAdmin extends Admin{
     public function prePersist($base) {
         // Lors de la création d'une nouvelle Base coté Admin
         $this->populateBaseDetail($base);
+
+        // Upload de la base
+        $this->getConfigurationPool()->getContainer()->get('public_user.upload_base')->upload($base);
     }
 
     public function preUpdate($base) {
         // Lors de l'update d'une nouvelle Base coté Admin
         $this->populateBaseDetail($base, true);
+
+        // Upload de la base
+        $this->getConfigurationPool()->getContainer()->get('public_user.upload_base')->update($base);
     }
 
     /**

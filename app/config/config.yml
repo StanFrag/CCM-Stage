@@ -65,10 +65,17 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
+swiftmailer:
+    delivery_address: admin@r-target.com
+
 monolog:
     handlers:
         main:
             ident: md5.r-target.com
+
+parameters:
+    public_user.file_directory : /var/nas/md5.r-target.com/upload
+
 #        app:
 #            facility: local3
 #            type:   syslog

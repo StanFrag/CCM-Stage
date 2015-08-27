@@ -4,3 +4,7 @@
 # Register
 "J'ai lu et j'accepte": J'ai lu et j'accepte
 "tititutu": les conditions générales d'affiliation
+
+# Registration
+registration:
+    admin_mail: Votre compte à été crée avec succès. Il sera disponible une fois qu'il aura été activé par l'administrateur.
