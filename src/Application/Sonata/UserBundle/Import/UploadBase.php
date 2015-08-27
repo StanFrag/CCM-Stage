@@ -32,6 +32,23 @@ class UploadBase {
         $base->setPath($fileName);
     }
 
+    public function remove(Base $base)
+    {
+        $file = $base->getPath();
+
+        if (!$file) {
+            throw new \InvalidArgumentException(
+                'There is no file to delete!'
+            );
+        }
+
+        if (file_exists($this->directory)) {
+            if ($file = $this->directory) {
+                unlink($file);
+            }
+        }
+    }
+
     public function upload(Base $base, $randomize = true)
     {
         $file = $base->getFile();

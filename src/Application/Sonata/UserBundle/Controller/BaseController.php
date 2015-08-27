@@ -130,6 +130,9 @@ class BaseController extends Controller
         $em->remove($base);
         $em->flush();
 
+        // Remove de la base
+        $this->get('public_user.upload_base')->remove($base);
+
         $this->setFlash('sonata_user_success', 'remove.base.success');
 
         return $this->redirect($this->generateUrl('base_list'));
