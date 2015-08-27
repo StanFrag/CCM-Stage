@@ -17,6 +17,26 @@ services:
     tags:
       - { name: form.type, alias: public_user_profile }
 
+  sonata.admin.base:
+    class: AppBundle\Admin\BaseAdmin
+    tags:
+        - name: sonata.admin
+          manager_type: orm
+          group: "Base"
+          label: "Bases"
+    arguments:
+        - ~
+        - Application\Sonata\UserBundle\Entity\Base
+        - ~
+
+  public_user.populate:
+    class: Application\Sonata\UserBundle\Import\PopulateBD
+    arguments: [@doctrine.orm.entity_manager]
+
+  public_user.upload_base:
+    class: Application\Sonata\UserBundle\Import\UploadBase
+    arguments: [%public_user.file_directory%]
+
   application_user_bundle.mail_subscriber:
     class: Application\Sonata\UserBundle\EventListener\MailSubscriber
     arguments:

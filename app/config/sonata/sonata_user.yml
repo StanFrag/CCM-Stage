@@ -22,6 +22,7 @@ sonata_user:
         menu:
             - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}
             - { route: 'sonata_user_profile_edit', label: 'link_edit_profile', domain: 'SonataUserBundle'}
+            - { route: 'base_upload', label: 'title_base', domain: 'SonataUserBundle'}
 
         form:
             type:               public_user_registration

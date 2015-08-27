@@ -1,7 +1,6 @@
 /web/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
-/app/config/parameters.yml
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
@@ -11,3 +10,9 @@
 /bin/
 /composer.phar
 /.idea/
+/src/web/
+/src/www/
+git
+web/css/
+web/js/
+web/uploads/

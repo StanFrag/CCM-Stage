@@ -1,0 +1,81 @@
+{% extends "ApplicationSonataUserBundle:Profile:action.html.twig" %}
+
+{% block sonata_profile_title %}
+    {{ "title_user_base" | trans({}, 'SonataUserBundle')}}
+{% endblock %}
+
+{% block sonata_profile_content %}
+
+    {% form_theme form _self %}
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-md5">
+
+                <div class="panel-heading">
+                    <h2 class="panel-title">{{ 'base_upload_form'|trans({}, 'SonataUserBundle') }}</h2>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="well  well-sm">
+                        <ul class="noMargin">
+                            <li>{{ 'csv_one_colon'|trans({}, 'SonataUserBundle') }}</li>
+                            <li>{{ 'csv_full_md5'|trans({}, 'SonataUserBundle') }}</li>
+                            <li>{{ 'csv_no_head'|trans({}, 'SonataUserBundle') }}</li>
+                        </ul>
+                    </div>
+
+                    <form action="#" method="post" {{ form_enctype(form) }}>
+
+                        <div class="form-group">
+                            {% if form_errors(form.title) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.title) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-4 textRight">
+                                    {{ form_label(form.title) }}
+                                </div>
+                                <div class="col-md-8">
+                                    {{ form_widget(form.title) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {% if form_errors(form.file) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.file) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-4 textRight">
+                                    {{ form_label(form.file) }}
+                                </div>
+                                <div class="col-md-8">
+                                    {{ form_widget(form.file) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="submit" class="btn btn-success" value="{{ 'base_submit'|trans({}, 'SonataUserBundle') }}" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7"></div>
+    </div>
+{% endblock %}

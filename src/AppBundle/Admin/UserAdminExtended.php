@@ -64,14 +64,20 @@ class UserAdminExtended extends UserAdmin
             ->add('email')
             ->add('company', null, array('label' => 'Societé'))
             ->add('phoneNumber', 'text', array('label' => 'Téléphone'))
-            ->add('url', 'url', array('label' => 'Url du site'))
             ->add('groups', 'entity', array())
             ->add('locked', null, array('editable' => true))
             ->add('createdAt', null, array(
                 'label' => 'Créé le',
                 'format' => 'd/m/Y',
             ))
-        ;
+            ->add('base', 'sonata_type_collection', array(
+                'label' => 'Bases'
+            ),
+            array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'allow_delete' => true
+            ));
 
 #        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
 #            $listMapper
@@ -93,6 +99,7 @@ class UserAdminExtended extends UserAdmin
             ->add('phoneNumber', null, array('label' => 'Téléphone'))
             ->add('url', null, array('label' => 'Url site'))
             ->add('email')
+            ->add('base', null, array('label' => 'Base'))
             ->add('groups')
         ;
     }
