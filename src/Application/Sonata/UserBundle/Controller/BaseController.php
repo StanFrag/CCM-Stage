@@ -69,7 +69,6 @@ class BaseController extends Controller
                 // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
                 $base->setNbLine($response);
                 $base->setUser($user);
-                $base->setState(2);
 
                 // Et on envoi les données
                 $em->persist($base);
@@ -130,6 +129,9 @@ class BaseController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $em->remove($base);
         $em->flush();
+
+        // Remove de la base
+        $this->get('public_user.upload_base')->remove($base);
 
         $this->setFlash('sonata_user_success', 'remove.base.success');
 
