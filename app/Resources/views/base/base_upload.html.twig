@@ -19,9 +19,9 @@
 
                     <div class="well  well-sm">
                         <ul class="noMargin">
-                            <li>Le fichier CSV doit contenir une unique colonne de données</li>
-                            <li>Les données contenant le fichier doivent impérativement etre un MD5</li>
-                            <li>Le fichier ne doit pas contenir d'entête de colonne</li>
+                            <li>{{ 'csv_one_colon'|trans({}, 'SonataUserBundle') }}</li>
+                            <li>{{ 'csv_full_md5'|trans({}, 'SonataUserBundle') }}</li>
+                            <li>{{ 'csv_no_head'|trans({}, 'SonataUserBundle') }}</li>
                         </ul>
                     </div>
 

@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="upload.flash.success">
                 <source>upload.flash.success</source>
-                <target>Votre base de donnée à été correctement enregistré!</target>
+                <target>Votre base de données à été correctement enregistrée!</target>
             </trans-unit>
             <trans-unit id="upload.flash.error">
                 <source>upload.flash.error</source>
@@ -33,6 +33,18 @@
             <trans-unit id="base_not_found">
                 <source>base_not_found</source>
                 <target>Aucune base de données trouvé, veuillez ajouter une base</target>
+            </trans-unit>
+            <trans-unit id="csv_one_colon">
+                <source>csv_one_colon</source>
+                <target>Le fichier CSV doit contenir une unique colonne de données</target>
+            </trans-unit>
+            <trans-unit id="csv_full_md5">
+                <source>csv_full_md5</source>
+                <target>Les données contenant le fichier doivent impérativement etre un MD5</target>
+            </trans-unit>
+            <trans-unit id="csv_no_head">
+                <source>csv_no_head</source>
+                <target>Le fichier ne doit pas contenir d'entête de colonne</target>
             </trans-unit>
         </body>
     </file>

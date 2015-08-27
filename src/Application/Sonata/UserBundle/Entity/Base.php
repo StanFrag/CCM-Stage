@@ -60,7 +60,7 @@ class Base
 
     /**
      * @Assert\File(
-     *      uploadErrorMessage = "le fichier n'a pas pu etre upload pour une raison inconnu, veuillez contacter l'administrateur du site",
+     *      uploadErrorMessage = "le fichier n'a pas pu etre uploadé pour une raison inconnu, veuillez contacter l'administrateur du site",
      *      maxSize="1000M",
      * )
      */
@@ -86,27 +86,12 @@ class Base
     protected $nbLine;
 
     /**
-     * @ORM\Column(columnDefinition="tinyint UNSIGNED DEFAULT '1'", name="state")
-     */
-    protected $state = 2;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $path;
-
-    /**
      * @ORM\PrePersist()
      */
     public function preUpload()
     {
         $this->setCreatedAt();
         $this->setModificatedAt();
-
-        if (null !== $this->file) {
-            // générer un nom unique
-            $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
-        }
     }
 
     /**
@@ -116,62 +101,6 @@ class Base
     {
         $this->setModificatedAt();
         $this->removeBaseDetailAll();
-
-        if (null !== $this->file) {
-            // générer un nom unique
-            $this->path = sha1(uniqid(mt_rand(), true)).'.csv';
-        }
-    }
-
-    /**
-     * @ORM\PostPersist
-     * @ORM\PostUpdate
-     */
-    public function upload()
-    {
-        if (!$this->file) {
-            return;
-        }
-
-        // Move empeche l'entité de persisté en base de donnée si une erreur est recu
-        $this->file->move($this->getUploadRootDir(), $this->path);
-
-        // On clean la variable file qui ne nous sert plus
-        $this->file = null;
-    }
-
-    /**
-     * @ORM\PostRemove
-     */
-    public function removeUpload()
-    {
-        if ($file = $this->getAbsolutePath()) {
-            unlink($file);
-        }
-    }
-
-    public function getAbsolutePath()
-    {
-        return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
-    }
-
-    public function getWebPath()
-    {
-        return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
-    }
-
-    protected function getUploadRootDir()
-    {
-        // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
-
-        //return '/var/nas/static/r-target.com/'.$this->getUploadDir();
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
-    protected function getUploadDir()
-    {
-        //return 'upload';
-        return 'uploads/documents';
     }
 
     /**
@@ -307,29 +236,6 @@ class Base
     }
 
     /**
-     * Get state
-     *
-     * @return tinyint
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * Set state
-     *
-     * @param tinyint $state
-     * @return Base
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    /**
      * Get nbLine
      *
      * @return integer
@@ -353,6 +259,16 @@ class Base
     }
 
     /**
+     * Get file
+     *
+     * @return Assert\File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
      * Set path
      *
      * @param string $path
@@ -373,15 +289,6 @@ class Base
     public function getPath()
     {
         return $this->path;
-    }
-
-    public static function getStateList()
-    {
-        return array(
-            '1' => "Accepté",
-            '2' => "En attente",
-            '0' => "Refusé"
-        );
     }
 
     public function __toString()

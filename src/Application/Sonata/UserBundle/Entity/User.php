@@ -18,6 +18,8 @@ class User extends BaseUser
         parent::__construct();
 
         $this->base = new ArrayCollection();
+        $this->locked = true;
+        $this->enabled = false;
     }
 
     /**
@@ -84,27 +86,6 @@ class User extends BaseUser
      * @ORM\Column(name="url", type="string")
      */
     protected $url;
-
-    /**
-     * Add base
-     *
-     * @param Base $base
-     */
-    public function addBase(Base $base)
-    {
-        $base->setUser($this);
-        $this->base[] = $base;
-    }
-
-    /**
-     * Get base
-     *
-     * @return ArrayCollection $base
-     */
-    public function getBase()
-    {
-        return $this->base;
-    }
 
     public function getId()
     {
