@@ -1,6 +1,5 @@
 services:
 
-
 ####  PUBLIC  ####
   public_user.registration.form.type:
     class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
@@ -19,6 +18,9 @@ services:
             class: Application\Sonata\UserBundle\Import\PopulateBD
             arguments: [@doctrine.orm.entity_manager]
 
+  public_user.exportCsv:
+              class: Application\Sonata\UserBundle\Export\ExportCSV
+              arguments: [@doctrine.orm.entity_manager]
 
 ####  ADMIN  ####
   sonata.admin.base:
