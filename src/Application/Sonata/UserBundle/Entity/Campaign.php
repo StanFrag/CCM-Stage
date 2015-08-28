@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Campaign
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\CampaignRepository")
+ * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\CampaignRepository")
  * @UniqueEntity(
  *      fields = {"title"},
  *      message = "Nom de Campagne déja utilisé, veuillez le modifier pour continuer l'upload de la base"
