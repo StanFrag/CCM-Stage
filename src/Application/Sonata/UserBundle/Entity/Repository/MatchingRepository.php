@@ -36,7 +36,7 @@ class MatchingRepository extends EntityRepository{
     public function findAllFromCampaign(User $user, Campaign $campaign){
         $qb = $this->createQueryBuilder('m');
 
-        $fields = array('b.title', 'm.date_maj', 'm.nb_match');
+        $fields = array('b.title', 'm.date_maj', 'm.nb_match', 'm.id');
 
         $t = $qb->select($fields)
             ->leftJoin('m.base','b')

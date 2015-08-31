@@ -9,6 +9,7 @@ class MailEvent extends Event
     protected $userName = null;
     protected $base = null;
     protected $campaign = null;
+    protected $matchingId = null;
 
     public function setUserName($userName)
     {
@@ -38,6 +39,16 @@ class MailEvent extends Event
     public function getCampaign()
     {
         return $this->campaign;
+    }
+
+    public function setMatchingId($matchingId)
+    {
+        $this->matchingId = $matchingId;
+    }
+
+    public function getMatchingId()
+    {
+        return $this->matchingId;
     }
 
 

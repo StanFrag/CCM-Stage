@@ -32,8 +32,9 @@ class MailSubscriber implements EventSubscriberInterface
         $userName = $event->getUserName();
         $base = $event->getBase();
         $campaign = $event->getCampaign();
+        $matchId = $event->getMatchingId();
 
-        $body = $this->renderPopulateTemplate($userName, $base, $campaign);
+        $body = $this->renderPopulateTemplate($userName, $base, $campaign, $matchId);
 
         $message = \Swift_Message::newInstance()
             ->setSubject('L\'utilisateur ' .$userName. ' souhaite postuler à une base')
@@ -61,7 +62,7 @@ class MailSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function renderPopulateTemplate($name, $base, $campaign)
+    public function renderPopulateTemplate($name, $base, $campaign, $matchId)
     {
         return $this->twig->render(
             'mail/populate_mail.html.twig',
@@ -69,6 +70,7 @@ class MailSubscriber implements EventSubscriberInterface
                 'name' => $name,
                 'base' => $base,
                 'campaign' => $campaign,
+                'matchId' => $matchId
             )
         );
     }

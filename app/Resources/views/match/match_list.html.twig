@@ -99,7 +99,7 @@
                                                 <td>{{ t.nb_match }}</td>
                                                 <td>{{ t.date_maj | date("d/m/Y à H\\hi")}}</td>
                                                 <td>
-                                                    <a href="{{ path('match_populate', { 'base': t.title, 'campaign': match.campaign}) }}">
+                                                    <a href="{{ path('match_populate', { 'base': t.title, 'campaign': match.campaign, 'matchId': t.id}) }}">
                                                         {{ "postulate" | trans({}, 'SonataUserBundle')}}
                                                         <span class="glyphicon glyphicon-send" aria-hidden="true" style="color:dodgerblue; margin: 5px"></span>
                                                     </a>

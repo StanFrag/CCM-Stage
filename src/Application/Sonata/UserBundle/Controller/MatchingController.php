@@ -35,7 +35,7 @@ class MatchingController extends Controller
         ));
     }
 
-    public function populateAction($base, $campaign)
+    public function populateAction($base, $campaign, $matchId)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -45,6 +45,7 @@ class MatchingController extends Controller
         $event->setUserName("$user");
         $event->setBase("$base");
         $event->setCampaign("$campaign");
+        $event->setMatchingId("$matchId");
 
         $dispatcher = $this->container->get('event_dispatcher');
 
