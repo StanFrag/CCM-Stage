@@ -2,14 +2,11 @@
 
 namespace Application\Sonata\UserBundle\Export;
 
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportCSV {
-
-    private $em;
 
     public function __construct(Container $container)
     {

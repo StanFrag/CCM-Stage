@@ -113,7 +113,7 @@ class RegistrationFormType extends BaseType
     public function setDefaultOption(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => "Application\Sonata\UserBundle\Entity\User",
+            'data_class' => 'Application\Sonata\UserBundle\Entity\User',
             'validation_groups' => array('Default', 'Register'),
             'intention' => 'register',
         ));

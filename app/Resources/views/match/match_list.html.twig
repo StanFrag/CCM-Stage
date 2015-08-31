@@ -78,9 +78,11 @@
 
                                 </div>
                                 <div class="span6 col-lg-6">
-                                    <a href="{{ asset('uploads/documents/' ~ match.campaign.path) }}">
-                                        <img src="{{ asset('uploads/documents/' ~ match.campaign.path) }}" style="width: 30%" alt="" class="pull-right"/>
-                                    </a>
+                                    {% if match.campaign.path %}
+                                        <a href="{{ asset('uploads/documents/' ~ match.campaign.path) }}">
+                                            <img src="{{ asset('uploads/documents/' ~ match.campaign.path) }}" style="width: 30%" alt="" class="pull-right"/>
+                                        </a>
+                                    {% endif %}
                                 </div>
                             </div>
 
@@ -99,7 +101,7 @@
                                                 <td>{{ t.nb_match }}</td>
                                                 <td>{{ t.date_maj | date("d/m/Y à H\\hi")}}</td>
                                                 <td>
-                                                    <a href="{{ path('match_populate', { 'base': t.title, 'campaign': match.campaign, 'matchId': t.id}) }}">
+                                                    <a href="{{ path('match_postulate', { 'base': t.title, 'campaign': match.campaign, 'matchId': t.id}) }}">
                                                         {{ "postulate" | trans({}, 'SonataUserBundle')}}
                                                         <span class="glyphicon glyphicon-send" aria-hidden="true" style="color:dodgerblue; margin: 5px"></span>
                                                     </a>

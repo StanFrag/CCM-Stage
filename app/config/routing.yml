@@ -14,9 +14,9 @@ match_list:
     path: /matching/
     defaults:  { _controller: ApplicationSonataUserBundle:Matching:show }
 
-match_populate:
-    path: /matching/{base}/{campaign}
-    defaults:  { _controller: ApplicationSonataUserBundle:Matching:populate }
+match_postulate:
+    path: /matching/{base}/{campaign}/{matchId}
+    defaults:  { _controller: ApplicationSonataUserBundle:Matching:postulate }
 
 # Base
 base_list:

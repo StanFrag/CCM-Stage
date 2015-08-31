@@ -23,18 +23,18 @@ class MailSubscriber implements EventSubscriberInterface
         // Liste des évènements écoutés et méthodes à appeler
         return array(
             ApplicationEvents::AFTER_REGISTER => 'sentMailAfterRegister',
-            ApplicationEvents::AFTER_POPULATE => 'sentMailAfterPopulate'
+            ApplicationEvents::AFTER_POSTULATE => 'sentMailAfterPostulate'
         );
     }
 
-    public function sentMailAfterPopulate(MailEvent $event)
+    public function sentMailAfterPostulate(MailEvent $event)
     {
         $userName = $event->getUserName();
         $base = $event->getBase();
         $campaign = $event->getCampaign();
         $matchId = $event->getMatchingId();
 
-        $body = $this->renderPopulateTemplate($userName, $base, $campaign, $matchId);
+        $body = $this->renderPostulateTemplate($userName, $base, $campaign, $matchId);
 
         $message = \Swift_Message::newInstance()
             ->setSubject('L\'utilisateur ' .$userName. ' souhaite postuler à une base')
@@ -62,10 +62,10 @@ class MailSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function renderPopulateTemplate($name, $base, $campaign, $matchId)
+    public function renderPostulateTemplate($name, $base, $campaign, $matchId)
     {
         return $this->twig->render(
-            'mail/populate_mail.html.twig',
+            'mail/postulate_mail.html.twig',
             array(
                 'name' => $name,
                 'base' => $base,

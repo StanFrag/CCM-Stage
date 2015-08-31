@@ -5,8 +5,6 @@ namespace Application\Sonata\UserBundle\Controller;
 use Application\Sonata\UserBundle\Event\MailEvent;
 use Application\Sonata\UserBundle\ApplicationEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MatchingController extends Controller
@@ -35,7 +33,7 @@ class MatchingController extends Controller
         ));
     }
 
-    public function populateAction($base, $campaign, $matchId)
+    public function postulateAction($base, $campaign, $matchId)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
@@ -50,7 +48,7 @@ class MatchingController extends Controller
         $dispatcher = $this->container->get('event_dispatcher');
 
         $dispatcher->dispatch(
-            ApplicationEvents::AFTER_POPULATE, $event
+            ApplicationEvents::AFTER_POSTULATE, $event
         );
     }
 }
