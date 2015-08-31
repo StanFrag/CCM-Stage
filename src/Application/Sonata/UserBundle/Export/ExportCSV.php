@@ -2,17 +2,18 @@
 
 namespace Application\Sonata\UserBundle\Export;
 
-use Application\Sonata\UserBundle\Entity\Matching;
-use Application\Sonata\UserBundle\Entity\MatchingDetail;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportCSV {
 
     private $em;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(Container $container)
     {
-        $this->em = $entityManager;
+        $this->container = $container;
     }
 
     /**
@@ -23,22 +24,26 @@ class ExportCSV {
      */
     public function fromMatching($matchingId){
 
-        $answers = $this->em->getRepository('ApplicationSonataUserBundle:MatchingDetail')->findByIdMatching($matchingId);
+        $container = $this->container;
+        $response = new StreamedResponse(function() use($container, $matchingId) {
 
-        $handle = fopen('php://memory', 'r+');
-        $header = array();
+            $em = $container->get('doctrine')->getManager();
 
-        foreach ($answers as $answer) {
-            fputcsv($handle, $answer->getData());
-        }
+            $results = $em->getRepository('ApplicationSonataUserBundle:MatchingDetail')->findByIdMatching($matchingId);
+            $handle = fopen('php://output', 'r+');
 
-        rewind($handle);
-        $content = stream_get_contents($handle);
-        fclose($handle);
+            foreach ($results as $row) {
+                fputcsv($handle, $row);
+            }
 
-        return new Response($content, 200, array(
-            'Content-Type' => 'application/force-download',
-            'Content-Disposition' => 'attachment; filename="export.csv"'
-        ));
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'application/force-download');
+        $response->headers->set('Content-Disposition','attachment; filename="Matching-'.$matchingId.'.csv"');
+
+        $response->send();
+
+        return $response;
     }
 }

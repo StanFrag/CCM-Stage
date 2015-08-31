@@ -20,7 +20,7 @@ services:
 
   public_user.exportCsv:
               class: Application\Sonata\UserBundle\Export\ExportCSV
-              arguments: [@doctrine.orm.entity_manager]
+              arguments: [@service_container]
 
 ####  ADMIN  ####
   sonata.admin.base:
@@ -49,10 +49,9 @@ services:
 
   sonata.admin.matching:
           class: AppBundle\Admin\MatchingAdmin
-          arguments: [~, Application\Sonata\UserBundle\Entity\Matching, SonataAdminBundle:CRUD]
+          arguments: [~, Application\Sonata\UserBundle\Entity\Matching, AppBundle:CRUD]
           tags:
               - {name: sonata.admin, manager_type: orm, group: admin, label: Matching}
-
 
 ####  MATCHING  ####
   match_exchange_sender:

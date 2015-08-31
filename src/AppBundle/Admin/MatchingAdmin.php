@@ -17,7 +17,8 @@ class MatchingAdmin extends Admin
             ->remove('create')
             ->remove('edit')
             ->remove('delete')
-            ->clearExcept(array('list', 'show'));
+            ->clearExcept(array('list', 'show'))
+            ->add('downloadMatch', $this->getRouterIdParameter().'/downloadMatch')
         ;
 
     }
@@ -57,7 +58,10 @@ class MatchingAdmin extends Admin
             ))
             ->add('_action', 'actions', array(
                 'actions' => array(
-                    'show' => array()
+                    'show' => array(),
+                    'downloadMatch' => array(
+                        'template' => 'AppBundle:CRUD:list__action_download.html.twig'
+                    )
                 )
             ))
         ;
