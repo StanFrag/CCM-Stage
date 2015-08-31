@@ -46,6 +46,9 @@ class MatchingAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('base')
+            ->add('base.user', null, array(
+                'label'=>'Utilisateur'
+            ))
             ->add('campaign', null, array(
                 'label'=> 'Campagne'
             ))
