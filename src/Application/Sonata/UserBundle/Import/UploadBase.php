@@ -5,6 +5,7 @@ namespace Application\Sonata\UserBundle\Import;
 
 use Application\Sonata\UserBundle\Entity\Base;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\File;
 
 class UploadBase {
@@ -31,13 +32,12 @@ class UploadBase {
         if(!is_dir($this->directory)) {
             if(!mkdir($this->directory, 0777, true)) {
                 // If the destination directory could not be created stop processing
-                return false;
+                throw new NotFoundHttpException("Impossible de créer le repertoire d'upload");
             }
         }
 
-        $file->move($this->directory, $fileName);
-
         $base->setPath($fileName);
+        $file->move($this->directory, $fileName);
     }
 
     public function remove(Base $base)
@@ -73,7 +73,7 @@ class UploadBase {
         if(!is_dir($this->directory)) {
             if(!mkdir($this->directory, 0777, true)) {
                 // If the destination directory could not be created stop processing
-                return false;
+                throw new NotFoundHttpException("Impossible de créer le repertoire d'upload");
             }
         }
 
