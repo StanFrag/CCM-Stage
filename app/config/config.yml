@@ -11,15 +11,13 @@ imports:
     - { resource: sonata/sonata_admin.yml }
     - { resource: sonata/sonata_user.yml }
 
-    # Rabbit MQ
+    # Imports
     - { resource: /etc/quidea/prod/rabbitmq.yml }
+    - { resource: /etc/quidea/prod/mailing.yml }
+    - { resource: /etc/quidea/prod/db_md5.yml }
 
     # FOS Feature Bundles
     - { resource: fos/fos_user.yml }
-
-    # Services
-    #- { resource: @AppBundle/Resources/config/admin.yml }
-
 
 framework:
     #esi:             ~

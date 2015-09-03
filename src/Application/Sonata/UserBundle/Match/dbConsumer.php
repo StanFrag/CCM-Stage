@@ -36,7 +36,7 @@ class dbConsumer implements ConsumerInterface{
 
         // On verifie que les id recuperée ne sont pas null
         if(null == $object['campaign'] || null == $object['base']){
-            return false;
+            return true;
         }
 
         // On recupere la base liée a l'id recuperée
@@ -60,7 +60,7 @@ class dbConsumer implements ConsumerInterface{
 
         // Si la base est vide on renvoi une erreur
         if (!$baseDetails) {
-            return false;
+            return true;
         }
 
         // On recupere la campagne liée à l'id recuperée
@@ -73,7 +73,7 @@ class dbConsumer implements ConsumerInterface{
 
         // Si la base est null on renvoi une erreur
         if (!$campaignBase) {
-            return false;
+            return true;
         }
 
         // On recupere les details de la base ciblé
@@ -92,14 +92,14 @@ class dbConsumer implements ConsumerInterface{
 
         // Si le base ne contient pas de données on renvoi une erreur
         if (!$baseDetailsFromCampaign) {
-            return false;
+            return true;
         }
 
         // Lancement du matching entre les deux bases
         $dataMatch = $this->match($baseDetails, $baseDetailsFromCampaign);
 
         if (!$dataMatch) {
-            return false;
+            return true;
         }
 
         // Population de l'entité matching
