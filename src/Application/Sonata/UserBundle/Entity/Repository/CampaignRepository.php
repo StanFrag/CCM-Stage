@@ -55,7 +55,8 @@ class CampaignRepository extends EntityRepository
 
         $t = $qb->select('c')
             ->where('c.state = :etat')
-            ->setParameter('etat', true);
+            ->setParameter('etat', true)
+            ->orderBy('c.createdAt','DESC');
 
         $query = $t->getQuery();
 

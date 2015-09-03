@@ -18,4 +18,20 @@ class MatchingDetailRepository extends EntityRepository{
 
         return $query->execute(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
     }
+
+    public function countMatchingDetailByUser(User $user){
+
+        $null = null;
+        $qb = $this->createQueryBuilder('md');
+
+        $t = $qb->select('COUNT(md)')
+            ->leftJoin('md.id_matching', 'm')
+            ->leftJoin('m.base', 'b')
+            ->where('b.user = :user')
+            ->setParameter('user', $user);
+
+        $query = $t->getQuery();
+
+        return $query->getSingleScalarResult(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
+    }
 }

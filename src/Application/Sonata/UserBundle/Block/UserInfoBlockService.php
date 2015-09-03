@@ -66,6 +66,8 @@ class UserInfoBlockService extends BaseBlockService
 
         $info['count_base'] = $this->em->getRepository("ApplicationSonataUserBundle:Base")->countConsumerBases($user_current);
         $info['count_campaign'] = $this->em->getRepository("ApplicationSonataUserBundle:Campaign")->countActiveCampaign();
+        $info['count_md5'] = $this->em->getRepository("ApplicationSonataUserBundle:BaseDetail")->countBaseDetailByUser($user_current);
+        $info['count_match'] = $this->em->getRepository("ApplicationSonataUserBundle:MatchingDetail")->countMatchingDetailByUser($user_current);
 
         // merge settings
         $settings = array_merge($this->getDefaultSettings(), $blockContext->getSettings());
