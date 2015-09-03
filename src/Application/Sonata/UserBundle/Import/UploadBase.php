@@ -27,8 +27,12 @@ class UploadBase {
         }
         $fileName = $this->generateFilename($file, $randomize);
 
-        if (!file_exists($this->directory)) {
-            mkdir($this->directory, 0777, true);
+        // If the destination directory does not exist create it
+        if(!is_dir($this->directory)) {
+            if(!mkdir($this->directory, 0777, true)) {
+                // If the destination directory could not be created stop processing
+                return false;
+            }
         }
 
         $file->move($this->directory, $fileName);
@@ -65,8 +69,12 @@ class UploadBase {
 
         $fileName = $this->generateFilename($file, $randomize);
 
-        if (!file_exists($this->directory)) {
-            mkdir($this->directory, 0777, true);
+        // If the destination directory does not exist create it
+        if(!is_dir($this->directory)) {
+            if(!mkdir($this->directory, 0777, true)) {
+                // If the destination directory could not be created stop processing
+                return false;
+            }
         }
 
         $file->move($this->directory, $fileName);
