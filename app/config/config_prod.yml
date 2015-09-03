@@ -4,6 +4,7 @@ imports:
     - { resource: /etc/quidea/prod/syslog.yml }
     - { resource: /etc/quidea/prod/mailing.yml }
     - { resource: /etc/quidea/prod/db_md5.yml }
+    - { resource: /etc/quidea/prod/rabbitmq.yml }
 
 #framework:
 #    validation:
