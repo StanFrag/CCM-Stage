@@ -27,6 +27,10 @@ class UploadBase {
         }
         $fileName = $this->generateFilename($file, $randomize);
 
+        if (!file_exists($this->directory)) {
+            mkdir($this->directory, 0777, true);
+        }
+
         $file->move($this->directory, $fileName);
 
         $base->setPath($fileName);
@@ -60,6 +64,10 @@ class UploadBase {
         }
 
         $fileName = $this->generateFilename($file, $randomize);
+
+        if (!file_exists($this->directory)) {
+            mkdir($this->directory, 0777, true);
+        }
 
         $file->move($this->directory, $fileName);
 
