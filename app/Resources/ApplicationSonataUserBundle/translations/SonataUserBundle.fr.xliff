@@ -38,6 +38,10 @@
                 <source>base_not_found</source>
                 <target>Aucune base de données trouvé, veuillez ajouter une base</target>
             </trans-unit>
+            <trans-unit id="base_not_found">
+                <source>campaign_not_found</source>
+                <target>Aucune campagne n'est actuellement en cours</target>
+            </trans-unit>
             <trans-unit id="name_base">
                 <source>name_base</source>
                 <target>Nom de base</target>
