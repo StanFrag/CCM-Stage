@@ -62,7 +62,7 @@ services:
 
   match_exchange_service:
     class: Application\Sonata\UserBundle\Match\dbConsumer
-    arguments: ['@service_container', @doctrine.orm.entity_manager]
+    arguments: ['@service_container', @doctrine.orm.entity_manager, @old_sound_rabbit_mq.get_match_exchange_consumer]
 
   application_user_bundle.mail_subscriber:
     class: Application\Sonata\UserBundle\EventListener\MailSubscriber

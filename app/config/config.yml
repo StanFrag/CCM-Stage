@@ -11,6 +11,9 @@ imports:
     - { resource: sonata/sonata_admin.yml }
     - { resource: sonata/sonata_user.yml }
 
+    # Rabbit MQ
+    - { resource: /etc/quidea/prod/rabbitmq.yml }
+
     # FOS Feature Bundles
     - { resource: fos/fos_user.yml }
 
@@ -76,24 +79,7 @@ monolog:
 parameters:
     public_user.file_directory : /var/nas/md5.r-target.com/upload
 
-#        app:
-#            facility: local3
-#            type:   syslog
-#            level:  debug
-#            handler: syslog
-#            ident: md5.ccmbdm.com
-#            formatter: log.iso_formatter
-#            channels: ["app"]
-
 old_sound_rabbit_mq:
-    connections:
-        default:
-            host:     md5.local.ccmbdm.com
-            port:     5672
-            user:     test
-            password: test
-            vhost:    /
-            lazy:     false
     producers:
             add_match_exchange:
                 connection: default
