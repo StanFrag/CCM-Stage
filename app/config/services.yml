@@ -22,6 +22,10 @@ services:
               class: Application\Sonata\UserBundle\Export\ExportCSV
               arguments: [@service_container]
 
+  public_user.util.user_manipulator:
+            class: Application\Sonata\UserBundle\Util\UserManipulator
+            arguments: [@fos_user.user_manager]
+
 ####  ADMIN  ####
   sonata.admin.base:
     class: AppBundle\Admin\BaseAdmin

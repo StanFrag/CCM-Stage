@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\UserBundle\Entity\Repository;
 
+use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 
