@@ -37,11 +37,7 @@ class PopulateBD {
                 // Pour chaque ligne
                 for ($c=0; $c < $md5Array; $c++) {
 
-                    // On retire les espaces qui pourrait etre present dans la ligne qui pourrait compter comme un caracter
-                    $replacedSpace = str_replace(' ', '', $row[$c]);
-
-                    // Et les points virgules vu que le fichier ne doit comporter qu'une seule colonne dans tout les cas
-                    $tmpObj = str_replace(';', '', $replacedSpace);
+                    $tmpObj = str_replace([' ', ';'], '', $row[$c]);
 
                     // Si la ligne prise en compte n'est pas egal à 32 caractere c'est qu'il ne s'agit pas d'un MD5
                     // donc en annule le traitement

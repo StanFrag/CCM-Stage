@@ -134,6 +134,9 @@ class BaseController extends Controller
         $em->remove($base);
         $em->flush();
 
+        // Remove de la base
+        $this->get('public_user.upload_base')->remove($base);
+
         $this->setFlash('sonata_user_success', 'remove.base.success');
 
         return $this->redirect($this->generateUrl('base_list'));
@@ -165,6 +168,9 @@ class BaseController extends Controller
 
             // Si le service n'a pas rempli la base de donnée des Bases Details
             if (null !== $response) {
+                // Upload de la base
+                $this->get('public_user.upload_base')->upload($base);
+
                 // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
                 $base->setNbLine($response);
                 $base->setUser($user);
