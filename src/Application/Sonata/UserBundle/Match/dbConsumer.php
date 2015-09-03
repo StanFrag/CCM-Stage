@@ -29,7 +29,7 @@ class dbConsumer implements ConsumerInterface{
         // Decode message
         $object = unserialize($msg->body);
 
-        if (isset($data['message']) && $data['message'] === 'shutdown') {
+        if (isset($object['message']) && $object['message'] === 'shutdown') {
             $this->consumer->forceStopConsumer();
             return true;
         }
