@@ -13,24 +13,27 @@ class dbSender{
         $this->container = $container;
     }
 
-    public function sendDB($dbTarget, $dbArray, $OneIsArray)
+    public function sendDB($dbTarget, $dbArray, $IsArray)
     {
         foreach ($dbArray as $dbDist)
         {
             $msgToPublish = [];
 
-            if($OneIsArray == 'base'){
-                $msgToPublish = array
-                (
-                    'campaign' => $dbTarget,
-                    'base' => $dbDist
-                );
-            }else if($OneIsArray == 'campaign'){
-                $msgToPublish = array
-                (
-                    'campaign' => $dbDist,
-                    'base' => $dbTarget
-                );
+            switch ($IsArray) {
+                case 'base':
+                    $msgToPublish = array
+                    (
+                        'campaign' => $dbTarget,
+                        'base' => $dbDist
+                    );
+                    break;
+                case 'campaign':
+                    $msgToPublish = array
+                    (
+                        'campaign' => $dbDist,
+                        'base' => $dbTarget
+                    );
+                    break;
             }
 
             // Publish message
