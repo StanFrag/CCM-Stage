@@ -4,11 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "hash": "22b34624b99fd831aefd52cf1f78bef7",
-=======
     "hash": "0329d27ea126447694b3d32b79e1beca",
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
     "packages": [
         {
             "name": "ccmbenchmark/sharedance-bundle",
@@ -855,30 +851,17 @@
         },
         {
             "name": "friendsofsymfony/rest-bundle",
-<<<<<<< HEAD
             "version": "1.7.1",
-=======
-            "version": "1.6.1",
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
             "target-dir": "FOS/RestBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-<<<<<<< HEAD
-                "reference": "3fb2d30c58cde59213dbddd031bc36171b8b68b6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/3fb2d30c58cde59213dbddd031bc36171b8b68b6",
-                "reference": "3fb2d30c58cde59213dbddd031bc36171b8b68b6",
-=======
                 "reference": "46a18702ad7ea33678c50914512ef5bf530e043b"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/46a18702ad7ea33678c50914512ef5bf530e043b",
                 "reference": "46a18702ad7ea33678c50914512ef5bf530e043b",
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
                 "shasum": ""
             },
             "require": {
@@ -917,11 +900,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
                     "dev-master": "1.7-dev"
-=======
-                    "dev-master": "1.6-dev"
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
                 }
             },
             "autoload": {
@@ -952,11 +931,7 @@
             "keywords": [
                 "rest"
             ],
-<<<<<<< HEAD
             "time": "2015-06-16 08:39:26"
-=======
-            "time": "2015-06-04 07:49:44"
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1907,21 +1882,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
-<<<<<<< HEAD
                 "reference": "84accca9c921dcbdc9c4be3ba0366a25f8d779b3"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/84accca9c921dcbdc9c4be3ba0366a25f8d779b3",
                 "reference": "84accca9c921dcbdc9c4be3ba0366a25f8d779b3",
-=======
-                "reference": "800eb12f225573869b6f04d77a6e329a6da9110f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/800eb12f225573869b6f04d77a6e329a6da9110f",
-                "reference": "800eb12f225573869b6f04d77a6e329a6da9110f",
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
                 "shasum": ""
             },
             "require": {
@@ -1969,11 +1935,7 @@
                 "pagination",
                 "paginator"
             ],
-<<<<<<< HEAD
             "time": "2015-06-26 10:10:25"
-=======
-            "time": "2015-05-20 15:09:02"
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
         },
         {
             "name": "kriswallsmith/assetic",
@@ -2051,7 +2013,6 @@
         },
         {
             "name": "kriswallsmith/buzz",
-<<<<<<< HEAD
             "version": "v0.15",
             "source": {
                 "type": "git",
@@ -2062,18 +2023,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/d4041666c3ffb379af02a92dabe81c904b35fab8",
                 "reference": "d4041666c3ffb379af02a92dabe81c904b35fab8",
-=======
-            "version": "v0.14",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kriswallsmith/Buzz.git",
-                "reference": "f802a9b9d01b53496f50c9c5e09b5c779cbbd300"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/f802a9b9d01b53496f50c9c5e09b5c779cbbd300",
-                "reference": "f802a9b9d01b53496f50c9c5e09b5c779cbbd300",
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
                 "shasum": ""
             },
             "require": {
@@ -2108,11 +2057,7 @@
                 "curl",
                 "http client"
             ],
-<<<<<<< HEAD
             "time": "2015-06-25 17:26:56"
-=======
-            "time": "2015-06-02 16:48:29"
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
         },
         {
             "name": "michelf/php-markdown",
@@ -2248,21 +2193,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phiamo/MopaBootstrapBundle.git",
-<<<<<<< HEAD
                 "reference": "c34671a55b2585e20a35ab5c6e1ad13a7e220b01"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/c34671a55b2585e20a35ab5c6e1ad13a7e220b01",
                 "reference": "c34671a55b2585e20a35ab5c6e1ad13a7e220b01",
-=======
-                "reference": "4d4b6291b47fc70491a4f92105be39d6bcccbb95"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/4d4b6291b47fc70491a4f92105be39d6bcccbb95",
-                "reference": "4d4b6291b47fc70491a4f92105be39d6bcccbb95",
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
                 "shasum": ""
             },
             "require": {
@@ -2320,11 +2256,7 @@
                 "form",
                 "template"
             ],
-<<<<<<< HEAD
             "time": "2015-07-18 01:03:07"
-=======
-            "time": "2015-06-11 12:44:01"
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
         },
         {
             "name": "mopa/composer-bridge",
@@ -2454,7 +2386,6 @@
                 "rest"
             ],
             "time": "2015-05-16 17:16:14"
-<<<<<<< HEAD
         },
         {
             "name": "oldsound/rabbitmq-bundle",
@@ -2516,8 +2447,6 @@
                 "rabbitmq"
             ],
             "time": "2015-05-11 15:33:28"
-=======
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
         },
         {
             "name": "phpcollection/phpcollection",
@@ -3071,7 +3000,6 @@
         },
         {
             "name": "sonata-project/core-bundle",
-<<<<<<< HEAD
             "version": "2.3.4",
             "source": {
                 "type": "git",
@@ -3083,19 +3011,6 @@
                 "url": "http://satis.admin2.ccmbg.com//dist/sonata-project-core-bundle-ebb05829aaa9f0fc0afa904bf6b6441ea34cf638-zip-df71bc.tar",
                 "reference": "ebb05829aaa9f0fc0afa904bf6b6441ea34cf638",
                 "shasum": "061d23f6dbe253e611c41bd01dd60a90d3a825d3"
-=======
-            "version": "2.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sonata-project/SonataCoreBundle.git",
-                "reference": "360942d98ac7441dc9b06b089ef8636721e37f9c"
-            },
-            "dist": {
-                "type": "tar",
-                "url": "http://satis.admin2.ccmbg.com//dist/sonata-project-core-bundle-360942d98ac7441dc9b06b089ef8636721e37f9c-zip-308b22.tar",
-                "reference": "360942d98ac7441dc9b06b089ef8636721e37f9c",
-                "shasum": "5d2105b8e054a0aaaf73f0212ab71e0a8f787540"
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
             },
             "require": {
                 "cocur/slugify": "*",
@@ -3150,11 +3065,7 @@
             "keywords": [
                 "sonata"
             ],
-<<<<<<< HEAD
             "time": "2015-06-16 14:06:45"
-=======
-            "time": "2015-05-18 14:31:37"
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
         },
         {
             "name": "sonata-project/doctrine-extensions",
@@ -3975,7 +3886,6 @@
         },
         {
             "name": "symfony/symfony",
-<<<<<<< HEAD
             "version": "v2.7.2",
             "source": {
                 "type": "git",
@@ -3987,19 +3897,6 @@
                 "url": "http://satis.admin2.ccmbg.com//dist/symfony-symfony-969d709ad428076bf1084e386dc26dd904d9fb84-zip-e15527.tar",
                 "reference": "969d709ad428076bf1084e386dc26dd904d9fb84",
                 "shasum": "fa9a659babe336fe32285627d030d45b4395e1e1"
-=======
-            "version": "v2.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/symfony.git",
-                "reference": "9975b1eca3de4db792a2c3e4e16f676a4aadcd46"
-            },
-            "dist": {
-                "type": "tar",
-                "url": "http://satis.admin2.ccmbg.com//dist/symfony-symfony-9975b1eca3de4db792a2c3e4e16f676a4aadcd46-zip-a2b707.tar",
-                "reference": "9975b1eca3de4db792a2c3e4e16f676a4aadcd46",
-                "shasum": "e2e6ea7f1f2f2c7631a374edeedf44fdeb7caf93"
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
             },
             "require": {
                 "doctrine/common": "~2.3",
@@ -4107,11 +4004,7 @@
             "keywords": [
                 "framework"
             ],
-<<<<<<< HEAD
             "time": "2015-07-13 19:27:49"
-=======
-            "time": "2015-05-30 16:52:28"
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
         },
         {
             "name": "twbs/bootstrap-sass",
@@ -4274,7 +4167,6 @@
                 "templating"
             ],
             "time": "2015-06-06 23:31:24"
-<<<<<<< HEAD
         },
         {
             "name": "videlalvaro/php-amqplib",
@@ -4329,8 +4221,6 @@
                 "rabbitmq"
             ],
             "time": "2015-06-16 08:18:39"
-=======
->>>>>>> 48a9a26a2b5cc3af6b92578f6d483e373c01ff2a
         },
         {
             "name": "willdurand/jsonp-callback-validator",
