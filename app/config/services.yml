@@ -70,3 +70,10 @@ services:
       mailer: "@mailer"
     tags:
       - { name: kernel.event_subscriber }
+
+####  BLOCKS  ####
+  sonata.block.service.infouser:
+      class: Application\Sonata\UserBundle\Block\UserInfoBlockService
+      arguments: [ "sonata.block.service.infouser", @templating, @sonata.admin.pool, @doctrine.orm.entity_manager, @security.context]
+      tags:
+          - { name: sonata.block}

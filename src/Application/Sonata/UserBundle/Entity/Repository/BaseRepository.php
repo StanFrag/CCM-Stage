@@ -34,6 +34,19 @@ class BaseRepository extends EntityRepository
         return $query->execute(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
     }
 
+    public function countConsumerBases(User $user){
+        $null = null;
+        $qb = $this->createQueryBuilder('b');
+
+        $t = $qb->select('COUNT(b)')
+            ->where('b.user = :user')
+            ->setParameter('user', $user);
+
+        $query = $t->getQuery();
+
+        return $query->getSingleScalarResult(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
+    }
+
     public function findNonAdminBases(){
 
         $qb = $this->createQueryBuilder('b');

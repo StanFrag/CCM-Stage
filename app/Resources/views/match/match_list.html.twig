@@ -15,7 +15,7 @@
                 <div class="panel pannelHead panel-md5-light">
 
                     <div class="panel-heading" role="tab" id="heading{{ match.campaign }}">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ match.campaign }}" aria-expanded="false" aria-controls="collapse{{ match.campaign }}">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ match.campaign.id }}" aria-expanded="false" aria-controls="collapse{{ match.campaign }}">
                             <h4 class="panel-title">
                                     {{ match.campaign }}
                                     <span class="accordion-glyph glyphicon glyphicon-chevron-down pull-right" aria-hidden="true"></span>
@@ -24,10 +24,10 @@
                     </div>
 
 
-                    <div id="collapse{{ match.campaign }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ match.campaign }}">
+                    <div id="collapse{{ match.campaign.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ match.campaign }}">
                         <div class="panel-body">
                             <div class="row row-fluid">
-                                <div class="span6 col-lg-6">
+                                <div class="col-md-6">
 
                                     {% if match.campaign.description %}
                                         <p>
@@ -77,10 +77,10 @@
                                     </p>
 
                                 </div>
-                                <div class="span6 col-lg-6">
+                                <div class="col-md-6">
                                     {% if match.campaign.path %}
                                         <a href="{{ asset('uploads/documents/' ~ match.campaign.path) }}">
-                                            <img src="{{ asset('uploads/documents/' ~ match.campaign.path) }}" style="width: 30%" alt="" class="pull-right"/>
+                                            <img src="{{ asset('uploads/documents/' ~ match.campaign.path) }}" style="width: 50%" alt="" class="pull-right"/>
                                         </a>
                                     {% endif %}
                                 </div>
