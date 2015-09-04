@@ -24,4 +24,4 @@ monolog:
 old_sound_rabbit_mq:
     connections:
         default:
-            vhost:    md5.r-target.com_qlf
+            vhost:    dm_md5_qlf
