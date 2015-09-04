@@ -122,6 +122,22 @@
                 <source>postulate_sent</source>
                 <target>Le mail de postulance a bien été transmis, veuillez attendre une réponse du support.</target>
             </trans-unit>
+            <trans-unit id="info_nb_base">
+                <source>info_nb_base</source>
+                <target>Nombre de bases uploadé</target>
+            </trans-unit>
+            <trans-unit id="info_nb_active_campaign">
+                <source>info_nb_active_campaign</source>
+                <target>Nombre de campagnes en cours</target>
+            </trans-unit>
+            <trans-unit id="info_nb_base_detail">
+                <source>info_nb_base_detail</source>
+                <target>Volume total de cibles dans les bases client</target>
+            </trans-unit>
+            <trans-unit id="info_nb_matching_detail">
+                <source>info_nb_matching_detail</source>
+                <target>Volume total de cibles matchées</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

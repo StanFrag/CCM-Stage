@@ -6,10 +6,10 @@
 
             <div class="sonata-feeds-container">
                 <br/>
-                <p><b>Nombre de bases uploadé:&nbsp;</b><span style="color:red;">{{ info['count_base'] }}</span></p>
-                <p><b>Nombre de campagnes en cours:&nbsp;</b><span style="color:red;">{{ info['count_campaign'] }}</span></p>
-                <p><b>Volume total de cibles dans les bases client:&nbsp;</b><span style="color:red;">{{ info['count_md5'] }}</span></p>
-                <p><b>Volume total de cibles matchées:&nbsp;</b><span style="color:red;">{{ info['count_match'] }}</span></p>
+                <p><b>{{ "info_nb_base" | trans({}, 'SonataUserBundle')}}:&nbsp;</b><span style="color:red;">{{ info['count_base'] }}</span></p>
+                <p><b>{{ "info_nb_active_campaign" | trans({}, 'SonataUserBundle')}}:&nbsp;</b><span style="color:red;">{{ info['count_campaign'] }}</span></p>
+                <p><b>{{ "info_nb_base_detail" | trans({}, 'SonataUserBundle')}}:&nbsp;</b><span style="color:red;">{{ info['count_md5'] }}</span></p>
+                <p><b>{{ "info_nb_matching_detail" | trans({}, 'SonataUserBundle')}}:&nbsp;</b><span style="color:red;">{{ info['count_match'] }}</span></p>
             </div>
         </div>
 {% endblock %}
