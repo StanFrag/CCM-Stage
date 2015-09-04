@@ -52,4 +52,13 @@ class MatchingController extends Controller
         $this->setFlash('sonata_user_success', 'postulate_sent');
         $this->redirect($this->generateUrl('match_list'));
     }
+
+    /**
+     * @param string $action
+     * @param string $value
+     */
+    protected function setFlash($action, $value)
+    {
+        $this->container->get('session')->getFlashBag()->set($action, $value);
+    }
 }
