@@ -18,15 +18,10 @@ services:
             class: Application\Sonata\UserBundle\Import\PopulateBD
             arguments: [@doctrine.orm.entity_manager]
 
-<<<<<<< HEAD
   public_user.exportCsv:
               class: Application\Sonata\UserBundle\Export\ExportCSV
               arguments: [@service_container]
 
-  public_user.util.user_manipulator:
-            class: Application\Sonata\UserBundle\Util\UserManipulator
-            arguments: [@fos_user.user_manager]
-=======
   public_user.upload_base:
       class: Application\Sonata\UserBundle\Import\UploadBase
       arguments: [%public_user.file_directory%]
@@ -34,7 +29,6 @@ services:
   public_user.util.user_manipulator:
       class: Application\Sonata\UserBundle\Util\UserManipulator
       arguments: [@fos_user.user_manager]
->>>>>>> 77d2f9c2b8297c481eb4a2a295f45e301060bf30
 
 ####  ADMIN  ####
   sonata.admin.base:
@@ -74,8 +68,7 @@ services:
 
   match_exchange_service:
     class: Application\Sonata\UserBundle\Match\dbConsumer
-<<<<<<< HEAD
-    arguments: ['@service_container', @doctrine.orm.entity_manager]
+    arguments: ['@service_container', @doctrine.orm.entity_manager, @old_sound_rabbit_mq.get_match_exchange_consumer]
 
 ####  EVENTS  ####
   application_user_bundle.mail_subscriber:
@@ -92,14 +85,3 @@ services:
       arguments: [ "sonata.block.service.infouser", @templating, @sonata.admin.pool, @doctrine.orm.entity_manager, @security.context]
       tags:
           - { name: sonata.block}
-=======
-    arguments: ['@service_container', @doctrine.orm.entity_manager, @old_sound_rabbit_mq.get_match_exchange_consumer]
-
-  application_user_bundle.mail_subscriber:
-    class: Application\Sonata\UserBundle\EventListener\MailSubscriber
-    arguments:
-        templating: "@twig"
-        mailer: "@mailer"
-    tags:
-      - { name: kernel.event_subscriber }
->>>>>>> 77d2f9c2b8297c481eb4a2a295f45e301060bf30
