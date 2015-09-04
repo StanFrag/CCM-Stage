@@ -94,3 +94,9 @@
     background-color:red !important;
     color:green !important;
 }
+
+.dashboard_block{
+    border: 1px solid #8B8986;
+    padding:20px;
+    padding-top: 5px;
+}
