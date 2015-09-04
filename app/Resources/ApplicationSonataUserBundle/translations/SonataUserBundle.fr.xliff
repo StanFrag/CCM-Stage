@@ -73,6 +73,7 @@
             <trans-unit id="match_amount">
                 <source>match_amount</source>
                 <target>Volume matché</target>
+            </trans-unit>
             <trans-unit id="campaign_not_found">
                 <source>campaign_not_found</source>
                 <target>Aucune campagne n'est actuellement en cours</target>
@@ -100,6 +101,7 @@
             <trans-unit id="match_not_done">
                 <source>match_not_done</source>
                 <target>Matching avec la campagne encore non effectué. Veuillez patienter</target>
+            </trans-unit>
             <trans-unit id="action">
                 <source>action</source>
                 <target>Actions</target>
