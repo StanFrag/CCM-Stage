@@ -33,7 +33,7 @@ class UploadBase {
         $fs = new Filesystem();
 
         try {
-            $fs->mkdir($this->directory);
+            $fs->mkdir($this->directory, 0777);
         } catch (IOExceptionInterface $e) {
             echo "An error occurred while creating your directory at ".$e->getPath();
         }
@@ -74,7 +74,7 @@ class UploadBase {
         $fs = new Filesystem();
 
         try {
-            $fs->mkdir($this->directory);
+            $fs->mkdir($this->directory, 0777);
         } catch (IOExceptionInterface $e) {
             echo "An error occurred while creating your directory at ".$e->getPath();
         }
