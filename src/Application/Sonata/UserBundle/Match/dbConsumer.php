@@ -4,6 +4,7 @@ namespace Application\Sonata\UserBundle\Match;
 
 use Application\Sonata\UserBundle\Entity\MatchingDetail;
 use Doctrine\ORM\EntityManager;
+use OldSound\RabbitMqBundle\RabbitMq\Consumer;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,10 +17,11 @@ class dbConsumer implements ConsumerInterface{
     protected $base;
     protected $campaign;
 
-    public function __construct($container, EntityManager $em)
+    public function __construct($container, EntityManager $em, Consumer $consumer)
     {
         $this->container = $container;
         $this->em = $em;
+        $this->consumer = $consumer;
     }
 
     public function execute(AMQPMessage $msg)
@@ -27,9 +29,14 @@ class dbConsumer implements ConsumerInterface{
         // Decode message
         $object = unserialize($msg->body);
 
+        if (isset($object['message']) && $object['message'] === 'shutdown') {
+            $this->consumer->forceStopConsumer();
+            return true;
+        }
+
         // On verifie que les id recuperée ne sont pas null
         if(null == $object['campaign'] || null == $object['base']){
-            return false;
+            return true;
         }
 
         // On recupere la base liée a l'id recuperée
@@ -47,12 +54,13 @@ class dbConsumer implements ConsumerInterface{
         $baseDetails = [];
 
         foreach($baseDetailsTmp as $tmpData){
-            array_push($baseDetails, $tmpData->getMd5());
+            $tmp = $tmpData->getMd5();
+            $baseDetails[] = $tmp;
         }
 
         // Si la base est vide on renvoi une erreur
         if (!$baseDetails) {
-            return false;
+            return true;
         }
 
         // On recupere la campagne liée à l'id recuperée
@@ -65,7 +73,7 @@ class dbConsumer implements ConsumerInterface{
 
         // Si la base est null on renvoi une erreur
         if (!$campaignBase) {
-            return false;
+            return true;
         }
 
         // On recupere les details de la base ciblé
@@ -78,19 +86,20 @@ class dbConsumer implements ConsumerInterface{
         $baseDetailsFromCampaign = [];
 
         foreach($baseDetailsFromCampaignTmp as $tmpData){
-            array_push($baseDetailsFromCampaign, $tmpData->getMd5());
+            $tmp = $tmpData->getMd5();
+            $baseDetailsFromCampaign[] = $tmp;
         }
 
         // Si le base ne contient pas de données on renvoi une erreur
         if (!$baseDetailsFromCampaign) {
-            return false;
+            return true;
         }
 
         // Lancement du matching entre les deux bases
         $dataMatch = $this->match($baseDetails, $baseDetailsFromCampaign);
 
         if (!$dataMatch) {
-            return false;
+            return true;
         }
 
         // Population de l'entité matching
@@ -99,32 +108,18 @@ class dbConsumer implements ConsumerInterface{
         return $responsePopulate;
     }
 
-    protected function match(Array $firstDB, Array $secondDB){
+    protected function match(Array $first_db, Array $second_db){
 
         // Si une des deux bases est null on renvoi une erreur
-        if(null == $firstDB || null == $firstDB){
+        if(null == $first_db || null == $second_db){
             return false;
         }
 
         // Fonction permettant de traité la difference entre les deux array
-        $result =  array_intersect($firstDB, $secondDB);
+        $result =  array_intersect($first_db, $second_db);
 
-        $finalResult = [];
-
-        foreach ($result as $data) {
-
-            $verif = false;
-
-            foreach ($finalResult as $current) {
-                if($current == $data){
-                    $verif = true;
-                }
-            }
-
-            if(!$verif){
-                array_push($finalResult, $data);
-            }
-        }
+        // Fonction qui supprime les doublons
+        $finalResult = array_unique($result, SORT_REGULAR);
 
         // Return du resultat du matching
         return $finalResult;

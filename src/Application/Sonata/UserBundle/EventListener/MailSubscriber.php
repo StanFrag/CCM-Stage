@@ -62,6 +62,7 @@ class MailSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
+
     public function renderPostulateTemplate($name, $base, $campaign, $matchId)
     {
         return $this->twig->render(

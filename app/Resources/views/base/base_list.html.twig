@@ -12,10 +12,10 @@
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <tr class="alert-danger">
-                    <th>Nom de base</th>
-                    <th>Nombre de ligne</th>
-                    <th>Modifié le</th>
-                    <th>Actions</th>
+                    <th>{{ "name_base" | trans({}, 'SonataUserBundle')}}</th>
+                    <th>{{ "number_line" | trans({}, 'SonataUserBundle')}}</th>
+                    <th>{{ "modificated_at" | trans({}, 'SonataUserBundle')}}</th>
+                    <th>{{ "action" | trans({}, 'SonataUserBundle')}}</th>
                 </tr>
                 {% for base in listBases %}
                     <tr>

@@ -17,15 +17,13 @@ class MatchingController extends Controller
         $em = $this->getDoctrine();
         $campaigns = $em->getRepository('ApplicationSonataUserBundle:Campaign')->findCampaignWithMatching();
 
-        if(!$campaigns){
-            throw new NotFoundHttpException("Campagne non trouvé, veuillez contacter le support.");
-        }
-
         $matchArray = [];
 
-        foreach($campaigns as $tmp) {
-            $match = $em->getRepository('ApplicationSonataUserBundle:Matching')->findAllFromCampaign($user, $tmp);
-            array_push($matchArray, ['campaign' => $tmp, 'match' => $match]);
+        if($campaigns){
+            foreach($campaigns as $tmp) {
+                $match = $em->getRepository('ApplicationSonataUserBundle:Matching')->findAllFromCampaign($user, $tmp);
+                array_push($matchArray, ['campaign' => $tmp, 'match' => $match]);
+            }
         }
 
         return $this->render('match/match_list.html.twig', array(

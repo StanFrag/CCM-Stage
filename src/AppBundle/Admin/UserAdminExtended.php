@@ -18,6 +18,7 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\ChoiceList\LegacyChoiceListAdapter;
 
 class UserAdminExtended extends UserAdmin
 {
@@ -65,11 +66,11 @@ class UserAdminExtended extends UserAdmin
             ->add('company', null, array('label' => 'Societé'))
             ->add('phoneNumber', 'text', array('label' => 'Téléphone'))
             ->add('groups', 'entity', array())
-            ->add('enabled', null, array('editable' => true))
-#            ->add('createdAt', null, array(
-#                'label' => 'Créé le',
-#                'format' => 'd/m/Y',
-#            ))
+            ->add('locked', null, array('editable' => true))
+            ->add('createdAt', null, array(
+                'label' => 'Créé le',
+                'format' => 'd/m/Y',
+            ))
             ->add('base', 'sonata_type_collection', array(
                 'label' => 'Bases'
             ),
@@ -77,8 +78,7 @@ class UserAdminExtended extends UserAdmin
                 'edit' => 'inline',
                 'inline' => 'table',
                 'allow_delete' => true
-            ))
-        ;
+            ));
 
 #        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
 #            $listMapper
@@ -96,7 +96,7 @@ class UserAdminExtended extends UserAdmin
             ->add('id')
             ->add('username')
             ->add('company', null, array('label' => 'Société'))
-            ->add('enabled', null, array('label' => 'Activé'))
+            ->add('locked', null, array('label' => 'Verrouillé'))
             ->add('phoneNumber', null, array('label' => 'Téléphone'))
             ->add('url', null, array('label' => 'Url site'))
             ->add('email')
@@ -215,13 +215,6 @@ class UserAdminExtended extends UserAdmin
                 ->end()
             ;
         }
-
-//        $formMapper
-//            ->with('Security')
-//                ->add('token', null, array('required' => false))
-//                ->add('twoStepVerificationCode', null, array('required' => false))
-//            ->end()
-//        ;
     }
 
     /**
