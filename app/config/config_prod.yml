@@ -20,3 +20,8 @@ monolog:
     handlers:
         console:
             type:  console
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            vhost:    md5.r-target.com

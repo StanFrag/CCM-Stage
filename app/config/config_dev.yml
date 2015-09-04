@@ -4,7 +4,7 @@ imports:
     - { resource: /etc/quidea/dev/syslog.yml }
     - { resource: /etc/quidea/dev/mailing.yml }
     - { resource: /etc/quidea/dev/db_md5.yml }
-    - { resource: /etc/quidea/dev/rabbitmq.yml }
+    #- { resource: /etc/quidea/dev/rabbitmq.yml }
 
 framework:
     router:
@@ -48,3 +48,8 @@ monolog:
 
 assetic:
     use_controller: true
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            vhost:    md5.local.ccmbdm.com
