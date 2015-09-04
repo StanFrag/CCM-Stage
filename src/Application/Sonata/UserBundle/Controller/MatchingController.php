@@ -50,7 +50,8 @@ class MatchingController extends Controller
         );
 
         $this->setFlash('sonata_user_success', 'postulate_sent');
-        $this->redirect($this->generateUrl('match_list'));
+
+        return $this->redirect($this->generateUrl('match_list'));
     }
 
     /**
