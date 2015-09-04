@@ -118,6 +118,10 @@
                 <source>upload_rule_tree</source>
                 <target>Le fichier ne doit pas contenir d'entêtes de colonne</target>
             </trans-unit>
+            <trans-unit id="postulate_sent">
+                <source>postulate_sent</source>
+                <target>Le mail de postulance a bien été transmis, veuillez attendre une réponse du support.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

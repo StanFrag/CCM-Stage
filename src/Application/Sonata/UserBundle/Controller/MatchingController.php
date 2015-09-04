@@ -48,5 +48,8 @@ class MatchingController extends Controller
         $dispatcher->dispatch(
             ApplicationEvents::AFTER_POSTULATE, $event
         );
+
+        $this->setFlash('sonata_user_success', 'postulate_sent');
+        $this->redirect($this->generateUrl('match_list'));
     }
 }
