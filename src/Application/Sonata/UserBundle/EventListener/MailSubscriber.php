@@ -44,6 +44,8 @@ class MailSubscriber implements EventSubscriberInterface
         ;
 
         $this->mailer->send($message);
+
+        return true;
     }
 
     public function sentMailAfterRegister(MailEvent $event)
@@ -60,6 +62,8 @@ class MailSubscriber implements EventSubscriberInterface
         ;
 
         $this->mailer->send($message);
+
+        return true;
     }
 
 
