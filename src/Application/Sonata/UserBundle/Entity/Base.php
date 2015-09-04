@@ -44,11 +44,25 @@ class Base
     protected $user;
 
     /**
+     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Matching", mappedBy="base")
+     *
+     * @var ArrayCollection $match
+     */
+    protected $match;
+
+    /**
      * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\BaseDetail", mappedBy="base", cascade={"all"}, orphanRemoval=true)
      *
      * @var ArrayCollection $baseDetail
      */
     protected $baseDetail;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Campaign", mappedBy="base")
+     *
+     * @var ArrayCollection $baseDetail
+     */
+    protected $campaign;
 
     /**
      * @var string
@@ -219,6 +233,16 @@ class Base
     public function getBaseDetail()
     {
         return $this->baseDetail;
+    }
+
+    /**
+     * Get campaign
+     *
+     * @return ArrayCollection $campaign
+     */
+    public function getCampaign()
+    {
+        return $this->campaign;
     }
 
     /**

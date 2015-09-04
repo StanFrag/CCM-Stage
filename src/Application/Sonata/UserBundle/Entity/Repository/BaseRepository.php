@@ -20,4 +20,17 @@ class BaseRepository extends EntityRepository
         ->setParameter('user', $user)
         ->addOrderBy('b.modificated_at', "DESC");
     }
+
+    public function findConsumerBases(){
+        $null = null;
+        $qb = $this->createQueryBuilder('b');
+
+        $t = $qb->select('b.id')
+            ->leftJoin('b.campaign', 'bc')
+            ->where('bc IS NULL');
+
+        $query = $t->getQuery();
+
+        return $query->execute(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
+    }
 }

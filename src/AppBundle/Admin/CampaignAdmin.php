@@ -2,11 +2,14 @@
 
 namespace AppBundle\Admin;
 
+use Application\Sonata\UserBundle\Entity\Campaign;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CampaignAdmin extends Admin
 {
@@ -40,11 +43,11 @@ class CampaignAdmin extends Admin
                 'label' => 'Titre'
             ])
             ->add('description')
-            ->add('created_at', null, array(
-                'label' => 'Modifié le',
+            ->add('createdAt', null, array(
+                'label' => 'Crée le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('modificated_at', null, array(
+            ->add('modificatedAt', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
@@ -79,6 +82,28 @@ class CampaignAdmin extends Admin
             ->add('description', 'textarea', [
                 'label' => 'Description'
             ])
+            ->add('theme', null, [
+                'label' => 'Thématique'
+            ])
+            ->add('remunerationType', null, [
+                'label' => 'Type de rémuneration'
+            ])
+            ->add('remunerationAmount', null, [
+                'label' => 'Montant de la rémuneration',
+                'required' => false
+            ])
+            ->add('objectSentence', 'textarea', [
+                'label' => 'Phrase objet'
+            ])
+            ->add('sender', null, [
+                'label' => 'Expéditeur'
+            ])
+            ->add('beginDate', 'date', [
+                'label' => 'Date de début'
+            ])
+            ->add('endDate', 'date', [
+                'label' => 'Date de fin'
+            ])
             ->add('img', 'file', [
                 'label' => 'Image',
                 'required' => false
@@ -102,11 +127,11 @@ class CampaignAdmin extends Admin
                 'label' => 'Nom de la campagne'
             ])
             ->add('description')
-            ->add('created_at', null, array(
+            ->add('createdAt', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('modificated_at', null, array(
+            ->add('modificatedAt', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
@@ -114,11 +139,88 @@ class CampaignAdmin extends Admin
                 'choices' => array(0 => 'Fermée', 1 => 'En cours'),
                 'label' => 'Etat'
             ))
+            ->add('theme', null, [
+                'label' => 'Thématique'
+            ])
+            ->add('remunerationType', null, [
+                'label' => 'Type de rémuneration'
+            ])
+            ->add('remunerationAmount', null, [
+                'label' => 'Montant de la rémuneration'
+            ])
+            ->add('objectSentence', 'textarea', [
+                'label' => 'Phrase objet'
+            ])
+            ->add('sender', null, [
+                'label' => 'Expéditeur'
+            ])
+            ->add('beginDate', 'date', [
+                'label' => 'Date de début'
+            ])
+            ->add('endDate', 'date', [
+                'label' => 'Date de fin'
+            ])
             ->add('base')
             ->add('img', null, array(
                 'template' => 'ApplicationSonataUserBundle:Admin:image_show.html.twig',
                 'label' => 'Image'
             ))
         ;
+    }
+
+    public function postPersist($campaign) {
+        if($campaign->getState()){
+            $this->sendMatching($campaign);
+        }
+    }
+
+    public function postUpdate($campaign) {
+        if($campaign->getState()){
+            $this->removePreviousMatching($campaign);
+            $this->sendMatching($campaign);
+        }
+    }
+
+    public function removePreviousMatching(Campaign $campaign)
+    {
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByCampaign($campaign);
+
+        if (null == $matchs) {
+            return;
+        }else{
+            $tem = $em->getEntityManager();
+
+            foreach($matchs as $match){
+                $tem->remove($match);
+            }
+
+            $tem->flush();
+        }
+
+    }
+
+    protected function sendMatching(Campaign $campaign){
+        // Apres la persistance/update d'une campagne
+
+        $idBases = array();
+
+        // On recupere l'ensemble des bases actives
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $bases = $em->getRepository('ApplicationSonataUserBundle:Base')->findConsumerBases();
+
+        if(null == $bases){
+            return;
+        }else{
+            // Pour chaque base on recupere son id
+            foreach($bases as $base){
+                $id = $base['id'];
+                array_push($idBases, $id);
+            }
+
+            // On récupère le service qui va envoyer le match
+            $sendMatching = $this->getConfigurationPool()->getContainer()->get('match_exchange_sender');
+            $sendMatching->sendDB($campaign->getId(), $idBases, 'base');
+        }
     }
 }

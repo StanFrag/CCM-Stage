@@ -1,5 +1,6 @@
 services:
 
+
 ####  PUBLIC  ####
   public_user.registration.form.type:
     class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
@@ -21,6 +22,10 @@ services:
   public_user.upload_base:
       class: Application\Sonata\UserBundle\Import\UploadBase
       arguments: [%public_user.file_directory%]
+
+  public_user.util.user_manipulator:
+      class: Application\Sonata\UserBundle\Util\UserManipulator
+      arguments: [@fos_user.user_manager]
 
 ####  ADMIN  ####
   sonata.admin.base:
@@ -46,6 +51,22 @@ services:
       - ~
       - Application\Sonata\UserBundle\Entity\Campaign
       - SonataAdminBundle:CRUD
+
+  sonata.admin.matching:
+          class: AppBundle\Admin\MatchingAdmin
+          arguments: [~, Application\Sonata\UserBundle\Entity\Matching, SonataAdminBundle:CRUD]
+          tags:
+              - {name: sonata.admin, manager_type: orm, group: admin, label: Matching}
+
+
+####  MATCHING  ####
+  match_exchange_sender:
+    class: Application\Sonata\UserBundle\Match\dbSender
+    arguments: ['@service_container']
+
+  match_exchange_service:
+    class: Application\Sonata\UserBundle\Match\dbConsumer
+    arguments: ['@service_container', @doctrine.orm.entity_manager, @old_sound_rabbit_mq.get_match_exchange_consumer]
 
   application_user_bundle.mail_subscriber:
     class: Application\Sonata\UserBundle\EventListener\MailSubscriber

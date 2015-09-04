@@ -14,10 +14,6 @@ imports:
     # FOS Feature Bundles
     - { resource: fos/fos_user.yml }
 
-    # Services
-    #- { resource: @AppBundle/Resources/config/admin.yml }
-
-
 framework:
     #esi:             ~
     translator:      { fallback: fr }
@@ -76,11 +72,14 @@ monolog:
 parameters:
     public_user.file_directory : /var/nas/md5.r-target.com/upload
 
-#        app:
-#            facility: local3
-#            type:   syslog
-#            level:  debug
-#            handler: syslog
-#            ident: md5.ccmbdm.com
-#            formatter: log.iso_formatter
-#            channels: ["app"]
+old_sound_rabbit_mq:
+    producers:
+            add_match_exchange:
+                connection: default
+                exchange_options: { name: 'match-exchange', type: direct }
+    consumers:
+            get_match_exchange:
+                connection:       default
+                exchange_options: { name: 'match-exchange', type: direct }
+                queue_options:    { name: 'match-exchange' }
+                callback:         match_exchange_service

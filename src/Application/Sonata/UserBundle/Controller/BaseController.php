@@ -24,7 +24,7 @@ class BaseController extends Controller
 
         $listBases = $repository->findBy(
             array('user' => $user),
-            array('modificated_at' => 'ASC')
+            array('modificated_at' => 'DESC')
         );
 
         return $this->render('base/base_list.html.twig', array(
@@ -73,6 +73,10 @@ class BaseController extends Controller
                 // Et on envoi les données
                 $em->persist($base);
                 $em->flush();
+
+                $this->removePreviousMatching($base);
+
+                $this->sendMatching($base);
 
                 $this->setFlash('sonata_user_success', 'upload.flash.success');
                 return $this->redirect($this->generateUrl('base_list'));
@@ -175,6 +179,8 @@ class BaseController extends Controller
                 $em->persist($base);
                 $em->flush();
 
+                $this->sendMatching($base);
+
                 $this->setFlash('sonata_user_success', 'upload.flash.success');
                 return $this->redirect($this->generateUrl('base_list'));
             }else{
@@ -186,6 +192,47 @@ class BaseController extends Controller
         return $this->render('base/base_upload.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    protected function sendMatching(Base $base){
+        // Apres la persistance/update d'une campagne
+
+        $idArray = array();
+
+        // On recupere l'ensemble des bases actives
+        $em = $this->getDoctrine();
+        $campaigns = $em->getRepository('ApplicationSonataUserBundle:Campaign')->findActiveCampaign();
+
+        if(null == $campaigns){
+            return;
+        }else{
+            // Pour chaque base on recupere son id
+            foreach($campaigns as $campaign){
+                $id = $campaign['id'];
+                array_push($idArray, $id);
+            }
+
+            // On récupère le service qui va envoyer le match
+            $sendMatching = $this->container->get('match_exchange_sender');
+            $sendMatching->sendDB($base->getId(), $idArray, 'campaign');
+        }
+    }
+
+    public function removePreviousMatching(Base $base)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByBase($base);
+
+        if (null == $matchs) {
+            return;
+        }else{
+            foreach($matchs as $match){
+                $em->remove($match);
+            }
+
+            $em->flush();
+        }
+
     }
 
     /**

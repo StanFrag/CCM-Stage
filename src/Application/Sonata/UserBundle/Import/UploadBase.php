@@ -5,7 +5,10 @@ namespace Application\Sonata\UserBundle\Import;
 
 use Application\Sonata\UserBundle\Entity\Base;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class UploadBase {
 
@@ -27,9 +30,16 @@ class UploadBase {
         }
         $fileName = $this->generateFilename($file, $randomize);
 
-        $file->move($this->directory, $fileName);
+        $fs = new Filesystem();
+
+        try {
+            $fs->mkdir($this->directory, 0777);
+        } catch (IOExceptionInterface $e) {
+            echo "An error occurred while creating your directory at ".$e->getPath();
+        }
 
         $base->setPath($fileName);
+        $file->move($this->directory, $fileName);
     }
 
     public function remove(Base $base)
@@ -60,6 +70,14 @@ class UploadBase {
         }
 
         $fileName = $this->generateFilename($file, $randomize);
+
+        $fs = new Filesystem();
+
+        try {
+            $fs->mkdir($this->directory, 0777);
+        } catch (IOExceptionInterface $e) {
+            echo "An error occurred while creating your directory at ".$e->getPath();
+        }
 
         $file->move($this->directory, $fileName);
 
