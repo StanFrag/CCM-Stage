@@ -340,46 +340,12 @@ class Campaign
         return $this->path;
     }
 
-    public function getAbsolutePath()
-    {
-        return null === $this->path
-            ? null
-            : $this->getUploadRootDir().'/'.$this->path;
-    }
-
-    public function getWebPath()
-    {
-        return null === $this->path
-            ? null
-            : $this->getUploadDir().'/'.$this->path;
-    }
-
-    protected function getUploadRootDir()
-    {
-        // the absolute directory path where uploaded
-        // documents should be saved
-        return __DIR__.'/../../../../../web/'.$this->getUploadDir();
-    }
-
-    protected function getUploadDir()
-    {
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
-        return 'uploads/documents';
-    }
-
     /**
      * @ORM\PrePersist()
      */
     public function prePersist() {
         $this->setModificatedAt(new \DateTime("now"));
         $this->setCreatedAt(new \DateTime("now"));
-
-        if (null !== $this->getImg()) {
-            // do whatever you want to generate a unique name
-            $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename.'.'.$this->getImg()->guessExtension();
-        }
     }
 
     /**
@@ -387,55 +353,13 @@ class Campaign
      */
     public function preUpdate() {
         $this->setModificatedAt(new \DateTime("now"));
-
-        if (null !== $this->getImg()) {
-            // do whatever you want to generate a unique name
-            $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename.'.'.$this->getImg()->guessExtension();
-        }
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-        // the file property can be empty if the field is not required
-        if (null === $this->getImg()) {
-            return;
-        }
-
-        // move takes the target directory and target filename as params
-        $this->getImg()->move(
-            $this->getUploadRootDir(),
-            $this->path
-        );
-
-        // check if we have an old image
-        if (isset($this->temp)) {
-            // delete the old image
-            unlink($this->getUploadRootDir().'/'.$this->temp);
-            // clear the temp image path
-            $this->temp = null;
-        }
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload()
-    {
-        $file = $this->getAbsolutePath();
-        if ($file) {
-            unlink($file);
-        }
     }
 
     public function __toString()
     {
         return $this->getTitle();
     }
+
     /**
      * Constructor
      */

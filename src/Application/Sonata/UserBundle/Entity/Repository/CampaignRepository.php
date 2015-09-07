@@ -26,6 +26,18 @@ class CampaignRepository extends EntityRepository
         return $query->execute(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
     }
 
+    public function countActiveCampaign(){
+        $qb = $this->createQueryBuilder('c');
+
+        $t = $qb->select('COUNT(c)')
+            ->where('c.state = :etat')
+            ->setParameter('etat', true);
+
+        $query = $t->getQuery();
+
+        return $query->getSingleScalarResult(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
+    }
+
     public function findCampaignByBase(Base $base){
         $qb = $this->createQueryBuilder('c');
 
@@ -43,7 +55,8 @@ class CampaignRepository extends EntityRepository
 
         $t = $qb->select('c')
             ->where('c.state = :etat')
-            ->setParameter('etat', true);
+            ->setParameter('etat', true)
+            ->orderBy('c.createdAt','DESC');
 
         $query = $t->getQuery();
 

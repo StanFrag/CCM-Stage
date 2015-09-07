@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        {% stylesheets '@AppBundle/Resources/public/css/*' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% javascripts
+        '@AppBundle/Resources/public/js/jquery-1.11.3.min.js'
+        '@AppBundle/Resources/public/js/sonata_admin_js.js'
+        '@AppBundle/Resources/public/js/sonata_front_js.js'
+        '@AppBundle/Resources/public/js/sonata_jqueryui_js.js'
+        '@AppBundle/Resources/public/js/bootstrap.min.js'
+        '@AppBundle/Resources/public/js/accordion.js'
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>

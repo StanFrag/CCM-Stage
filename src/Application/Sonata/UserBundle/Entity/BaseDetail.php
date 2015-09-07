@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BaseDetail
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\BaseDetailRepository")
  */
 class BaseDetail
 {

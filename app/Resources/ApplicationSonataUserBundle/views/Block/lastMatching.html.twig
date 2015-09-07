@@ -1,0 +1,38 @@
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div class="dashboard_block">
+        <h3 class="sonata-feed-title">{{ settings.title }}</h3>
+
+        <div class="sonata-feeds-container">
+            {% if info %}
+                <div class="table-responsive">
+                    <br/>
+                    <table class="table table-bordered table-striped">
+                        <tr class="alert-danger">
+                            <th>Campagne</th>
+                            <th>Base</th>
+                            <th>Nombres match</th>
+                            <th>Postuler</th>
+                        </tr>
+                        {% for tmp in info %}
+                            <tr>
+                                <td>{{ tmp.campaign }}</td>
+                                <td>{{ tmp.title }}</td>
+                                <td>{{ tmp.nb_match }}</td>
+                                <td>
+                                    <a href="{{ path('match_postulate', { 'base': tmp.title, 'campaign': tmp.campaign, 'matchId': tmp.id}) }}">
+                                        {{ "postulate" | trans({}, 'SonataUserBundle')}}
+                                        <span class="glyphicon glyphicon-send" aria-hidden="true" style="color:dodgerblue; margin: 5px"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <p>Aucune matching encore effecuté</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

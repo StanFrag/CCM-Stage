@@ -1,6 +1,5 @@
 services:
 
-
 ####  PUBLIC  ####
   public_user.registration.form.type:
     class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
@@ -19,9 +18,17 @@ services:
             class: Application\Sonata\UserBundle\Import\PopulateBD
             arguments: [@doctrine.orm.entity_manager]
 
+  public_user.exportCsv:
+              class: Application\Sonata\UserBundle\Export\ExportCSV
+              arguments: [@service_container]
+
   public_user.upload_base:
       class: Application\Sonata\UserBundle\Import\UploadBase
       arguments: [%public_user.file_directory%]
+
+  public_user.upload_img:
+        class: Application\Sonata\UserBundle\Import\UploadImg
+        arguments: [%public_user.file_directory%]
 
   public_user.util.user_manipulator:
       class: Application\Sonata\UserBundle\Util\UserManipulator
@@ -54,10 +61,9 @@ services:
 
   sonata.admin.matching:
           class: AppBundle\Admin\MatchingAdmin
-          arguments: [~, Application\Sonata\UserBundle\Entity\Matching, SonataAdminBundle:CRUD]
+          arguments: [~, Application\Sonata\UserBundle\Entity\Matching, AppBundle:CRUD]
           tags:
               - {name: sonata.admin, manager_type: orm, group: admin, label: Matching}
-
 
 ####  MATCHING  ####
   match_exchange_sender:
@@ -68,10 +74,30 @@ services:
     class: Application\Sonata\UserBundle\Match\dbConsumer
     arguments: ['@service_container', @doctrine.orm.entity_manager, @old_sound_rabbit_mq.get_match_exchange_consumer]
 
+####  EVENTS  ####
   application_user_bundle.mail_subscriber:
     class: Application\Sonata\UserBundle\EventListener\MailSubscriber
     arguments:
-        templating: "@twig"
-        mailer: "@mailer"
+      templating: "@twig"
+      mailer: "@mailer"
     tags:
       - { name: kernel.event_subscriber }
+
+####  BLOCKS  ####
+  sonata.block.service.infouser:
+      class: Application\Sonata\UserBundle\Block\UserInfoBlockService
+      arguments: [ "sonata.block.service.infouser", @templating, @sonata.admin.pool, @doctrine.orm.entity_manager, @security.context]
+      tags:
+          - { name: sonata.block}
+
+  sonata.block.service.infostage:
+        class: Application\Sonata\UserBundle\Block\SoftStageBlockService
+        arguments: [ "sonata.block.service.infouser", @templating, @sonata.admin.pool, @doctrine.orm.entity_manager, @security.context]
+        tags:
+            - { name: sonata.block}
+
+  sonata.block.service.lastmatching:
+          class: Application\Sonata\UserBundle\Block\LastMatchingBlockService
+          arguments: [ "sonata.block.service.infouser", @templating, @sonata.admin.pool, @doctrine.orm.entity_manager, @security.context]
+          tags:
+              - { name: sonata.block}

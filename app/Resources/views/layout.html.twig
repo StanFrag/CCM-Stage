@@ -3,15 +3,21 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %} {% endblock %}</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
     {% stylesheets '@AppBundle/Resources/public/css/*' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
     {% endstylesheets %}
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    {% javascripts
+    '@AppBundle/Resources/public/js/jquery-1.11.3.min.js'
+    '@AppBundle/Resources/public/js/sonata_admin_js.js'
+    '@AppBundle/Resources/public/js/sonata_front_js.js'
+    '@AppBundle/Resources/public/js/sonata_jqueryui_js.js'
+    '@AppBundle/Resources/public/js/bootstrap.min.js'
+    '@AppBundle/Resources/public/js/accordion.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 </head>
 <body>
 <div style="margin: auto; width:50%">

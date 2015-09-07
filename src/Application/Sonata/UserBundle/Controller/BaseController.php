@@ -120,6 +120,7 @@ class BaseController extends Controller
 
     public function removeAction(Base $base)
     {
+
         if (!$base) {
             throw $this->createNotFoundException('No Base found');
         }

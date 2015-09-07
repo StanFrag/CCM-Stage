@@ -23,10 +23,7 @@ class CampaignAdmin extends Admin
             ->add('title', null, [
                 'label' => 'Nom de la campagne'
             ])
-            ->add('description', null, [
-                'label' => 'Description'
-            ])
-            ->add('state', 'doctrine_orm_string', array(), 'choice', array('choices' => array(0 => 'Fermée', 1 => 'En cours')))
+            ->add('state', 'doctrine_orm_string', array('label'=> 'Etat'), 'choice', array('choices' => array(0 => 'Fermée', 1 => 'En cours')))
             ->add('base')
         ;
     }
@@ -75,12 +72,17 @@ class CampaignAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $query = $em->getRepository('ApplicationSonataUserBundle:Base')->findAdminBases();
+
         $formMapper
             ->add('title', null, [
                 'label' => 'Nom de la campagne'
             ])
             ->add('description', 'textarea', [
-                'label' => 'Description'
+                'label' => 'Description',
+                'required' => false
             ])
             ->add('theme', null, [
                 'label' => 'Thématique'
@@ -108,7 +110,7 @@ class CampaignAdmin extends Admin
                 'label' => 'Image',
                 'required' => false
             ])
-            ->add('base')
+            ->add('base', 'sonata_type_model', array('required' => true, 'query' => $query))
             ->add('state', 'choice', array(
                 'choices' => array(0 => 'Fermée', 1 => 'En cours'),
                 'label' => 'Etat de la campagne'
@@ -166,6 +168,16 @@ class CampaignAdmin extends Admin
                 'label' => 'Image'
             ))
         ;
+    }
+
+    public function prePersist($campaign) {
+        // Upload de la base
+        $this->getConfigurationPool()->getContainer()->get('public_user.upload_img')->upload($campaign);
+    }
+
+    public function preUpdate($campaign) {
+        // Upload de la base
+        $this->getConfigurationPool()->getContainer()->get('public_user.upload_img')->update($campaign);
     }
 
     public function postPersist($campaign) {

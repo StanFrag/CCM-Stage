@@ -16,6 +16,9 @@ class MatchingAdmin extends Admin
         $collection
             ->remove('create')
             ->remove('edit')
+            ->remove('delete')
+            ->clearExcept(array('list', 'show'))
+            ->add('downloadMatch', $this->getRouterIdParameter().'/downloadMatch')
         ;
 
     }
@@ -27,8 +30,11 @@ class MatchingAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('date_maj')
-            ->add('nb_match')
+            ->add('base.user', null, array(
+                'label'=> 'Utilisateur'
+            ))
+            ->add('campaign')
+            ->add('base')
         ;
     }
 
@@ -40,13 +46,25 @@ class MatchingAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('base')
-            ->add('campaign')
-            ->add('nb_match')
-            ->add('date_maj')
+            ->add('base.user', null, array(
+                'label'=>'Utilisateur'
+            ))
+            ->add('campaign', null, array(
+                'label'=> 'Campagne'
+            ))
+            ->add('nb_match', null, array(
+                'label'=> 'Nombre de match'
+            ))
+            ->add('date_maj', null, array(
+                'label' => 'Derniere modification le',
+                'format' => 'd/m/Y à H\hi'
+            ))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
-                    'delete' => array()
+                    'downloadMatch' => array(
+                        'template' => 'AppBundle:CRUD:list__action_download.html.twig'
+                    )
                 )
             ))
         ;

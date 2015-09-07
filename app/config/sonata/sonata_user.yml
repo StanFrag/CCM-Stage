@@ -18,6 +18,11 @@ sonata_user:
             group:        Application\Sonata\UserBundle\Entity\Group
 
     profile:
+        dashboard:
+                blocks:
+                    - { position: left, type: sonata.block.service.infostage }
+                    - { position: right, type: sonata.block.service.infouser}
+                    - { position: left, type: sonata.block.service.lastmatching}
         # Customize user portal menu by setting links
         menu:
             - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}

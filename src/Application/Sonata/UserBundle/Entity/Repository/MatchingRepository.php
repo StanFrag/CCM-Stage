@@ -36,7 +36,7 @@ class MatchingRepository extends EntityRepository{
     public function findAllFromCampaign(User $user, Campaign $campaign){
         $qb = $this->createQueryBuilder('m');
 
-        $fields = array('b.title', 'm.date_maj', 'm.nb_match');
+        $fields = array('b.title', 'm.date_maj', 'm.nb_match', 'm.id');
 
         $t = $qb->select($fields)
             ->leftJoin('m.base','b')
@@ -49,5 +49,21 @@ class MatchingRepository extends EntityRepository{
         $query = $t->getQuery();
 
         return $query->execute(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
+    }
+
+    public function lastMatchingFromUser(User $user){
+
+        $qb = $this->createQueryBuilder('m');
+
+        $t = $qb->select('b.title', 'm.nb_match', 'c.title AS campaign', 'm.id')
+            ->leftJoin('m.base', 'b')
+            ->leftJoin('m.campaign', 'c')
+            ->where('b.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('m.date_maj','DESC');
+
+        $query = $t->getQuery()->setMaxResults(4);
+
+        return $query->getResult(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
     }
 }

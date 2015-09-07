@@ -23,6 +23,9 @@ sonata_block:
         sonata.block.service.rss:
         sonata.block.service.menu:
         sonata.block.service.template:
+        sonata.block.service.infouser:
+        sonata.block.service.infostage:
+        sonata.block.service.lastmatching:
 
         # UserBundle's Blocks
         sonata.user.block.account: # used to display menu option (login option)
@@ -34,6 +37,3 @@ sonata_block:
 
         # Formatter
         sonata.formatter.block.formatter:
-
-        # CSV Import
-        #appbundle.block.service.importcsv:

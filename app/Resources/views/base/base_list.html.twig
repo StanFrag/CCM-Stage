@@ -23,17 +23,35 @@
                         <td>{{ base.nbLine }}</td>
                         <td>{{ base.modificatedat | date("d/m/Y à H\\hi") }}</td>
                         <td>
-                            <a href="{{ path('base_details', { 'id': base.id }) }}">
+                            <a href="{{ path('base_details', { 'id': base.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Detail de la base">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true" style="color:dodgerblue; margin: 5px"></span>
                             </a>
-                            <a href="{{ path('base_update', { 'id': base.id }) }}">
+                            <a href="{{ path('base_update', { 'id': base.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Modifier la base">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true" style="color:green; margin: 5px"></span>
                             </a>
-                            <a href="{{ path('base_remove', { 'id': base.id }) }}">
+                            <a onClick="$('#myModal{{ base.id }}').modal()" href="#myModal{{ base.id }}" data-toggle="tooltip" data-placement="bottom" title="Supprimer la base">
                                 <span class="glyphicon glyphicon-remove danger" aria-hidden="true" style="color:red; margin: 5px"></span>
                             </a>
                         </td>
                     </tr>
+
+                    <div class="modal fade" style="display:none" id="myModal{{ base.id }}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">ATTENTION!</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Vous êtes sur le point de supprimer la base <b>{{ base.title }}</b>, êtes-vous sur de vouloir effectuer cette opération?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                    <a type="button" class="btn btn-primary" href="{{ path('base_remove', { 'id': base.id }) }}">Supprimer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
             </table>
         </div>
@@ -41,3 +59,4 @@
         <p>{{ "base_not_found" | trans({}, 'SonataUserBundle')}}</p>
     {% endif %}
 {% endblock %}
+

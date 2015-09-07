@@ -22,15 +22,35 @@ class MailSubscriber implements EventSubscriberInterface
     {
         // Liste des évènements écoutés et méthodes à appeler
         return array(
-            ApplicationEvents::AFTER_REGISTER => 'sentMailToAdmin'
+            ApplicationEvents::AFTER_REGISTER => 'sentMailAfterRegister',
+            ApplicationEvents::AFTER_POSTULATE => 'sentMailAfterPostulate'
         );
     }
 
-    public function sentMailToAdmin(MailEvent $event)
+    public function sentMailAfterPostulate(MailEvent $event)
+    {
+        $userName = $event->getUserName();
+        $base = $event->getBase();
+        $campaign = $event->getCampaign();
+        $matchId = $event->getMatchingId();
+
+        $body = $this->renderPostulateTemplate($userName, $base, $campaign, $matchId);
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('L\'utilisateur ' .$userName. ' souhaite postuler à une base')
+            ->setFrom('admin@r-target.com')
+            ->setTo('admin@r-target.com')
+            ->setBody($body)
+        ;
+
+        $this->mailer->send($message);
+    }
+
+    public function sentMailAfterRegister(MailEvent $event)
     {
         $userName = $event->getUserName();
 
-        $body = $this->renderTemplate($userName);
+        $body = $this->renderRegisterTemplate($userName);
 
         $message = \Swift_Message::newInstance()
             ->setSubject('Compte de l\'utilisateur ' .$userName. ' crée, en attente d\'etre dévèrouillé')
@@ -42,7 +62,21 @@ class MailSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public function renderTemplate($name)
+
+    public function renderPostulateTemplate($name, $base, $campaign, $matchId)
+    {
+        return $this->twig->render(
+            'mail/postulate_mail.html.twig',
+            array(
+                'name' => $name,
+                'base' => $base,
+                'campaign' => $campaign,
+                'matchId' => $matchId
+            )
+        );
+    }
+
+    public function renderRegisterTemplate($name)
     {
         return $this->twig->render(
             'mail/mail.html.twig',

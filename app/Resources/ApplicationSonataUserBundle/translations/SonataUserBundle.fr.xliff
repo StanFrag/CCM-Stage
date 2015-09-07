@@ -38,6 +38,42 @@
                 <source>base_not_found</source>
                 <target>Aucune base de données trouvé, veuillez ajouter une base</target>
             </trans-unit>
+            <trans-unit id="description">
+                <source>description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Thématique</target>
+            </trans-unit>
+            <trans-unit id="begin_date">
+                <source>begin_date</source>
+                <target>Date de début</target>
+            </trans-unit>
+            <trans-unit id="end_date">
+                <source>end_date</source>
+                <target>Date de fin</target>
+            </trans-unit>
+            <trans-unit id="remuneration_type">
+                <source>remuneration_type</source>
+                <target>Type de rémuneration</target>
+            </trans-unit>
+            <trans-unit id="remuneration_amount">
+                <source>remuneration_amount</source>
+                <target>Montant de la rémuneration</target>
+            </trans-unit>
+            <trans-unit id="object_sentence">
+                <source>object_sentence</source>
+                <target>Phrase objet</target>
+            </trans-unit>
+            <trans-unit id="sender">
+                <source>sender</source>
+                <target>Expéditeur</target>
+            </trans-unit>
+            <trans-unit id="match_amount">
+                <source>match_amount</source>
+                <target>Volume matché</target>
+            </trans-unit>
             <trans-unit id="campaign_not_found">
                 <source>campaign_not_found</source>
                 <target>Aucune campagne n'est actuellement en cours</target>
@@ -58,6 +94,14 @@
                 <source>modificated_at</source>
                 <target>Modifié le</target>
             </trans-unit>
+            <trans-unit id="postulate">
+                <source>postulate</source>
+                <target>Postuler</target>
+            </trans-unit>
+            <trans-unit id="match_not_done">
+                <source>match_not_done</source>
+                <target>Matching avec la campagne encore non effectué. Veuillez patienter</target>
+            </trans-unit>
             <trans-unit id="action">
                 <source>action</source>
                 <target>Actions</target>
@@ -73,6 +117,26 @@
             <trans-unit id="upload_rule_tree">
                 <source>upload_rule_tree</source>
                 <target>Le fichier ne doit pas contenir d'entêtes de colonne</target>
+            </trans-unit>
+            <trans-unit id="postulate_sent">
+                <source>postulate_sent</source>
+                <target>Le mail de postulance a bien été transmis, veuillez attendre une réponse du support.</target>
+            </trans-unit>
+            <trans-unit id="info_nb_base">
+                <source>info_nb_base</source>
+                <target>Nombre de bases uploadé</target>
+            </trans-unit>
+            <trans-unit id="info_nb_active_campaign">
+                <source>info_nb_active_campaign</source>
+                <target>Nombre de campagnes en cours</target>
+            </trans-unit>
+            <trans-unit id="info_nb_base_detail">
+                <source>info_nb_base_detail</source>
+                <target>Volume total de cibles dans les bases client</target>
+            </trans-unit>
+            <trans-unit id="info_nb_matching_detail">
+                <source>info_nb_matching_detail</source>
+                <target>Volume total de cibles matchées</target>
             </trans-unit>
         </body>
     </file>
