@@ -49,15 +49,10 @@ class BaseRepository extends EntityRepository
 
     public function findAdminBases(){
 
-        $role = 'ROLE_USER';
-
         $qb = $this->createQueryBuilder('b');
 
         $t = $qb->select('b')
-            ->leftJoin('b.user', 'bu')
-            ->where('bu.roles LIKE :roles')
-            ->setParameter('roles', '%"'.$role.'"%');
-
+            ->orderBy('b.modificated_at','DESC');
 
         $query = $t->getQuery();
 
