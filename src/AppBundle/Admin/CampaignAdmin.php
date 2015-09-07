@@ -74,7 +74,7 @@ class CampaignAdmin extends Admin
     {
 
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
-        $query = $em->getRepository('ApplicationSonataUserBundle:Base')->findNonAdminBases();
+        $query = $em->getRepository('ApplicationSonataUserBundle:Base')->findAdminBases();
 
         $formMapper
             ->add('title', null, [
