@@ -20,7 +20,7 @@ sonata_user:
     profile:
         dashboard:
                 blocks:
-                    - { position: left, type: sonata.block.service.text, settings: { content: "<h2>Les étapes!</h2><ul><li>Importez votre/vos bases</li><li>Consultez les campagnes</li><li>Postulez</li></ul>"} }
+                    - { position: left, type: sonata.block.service.infostage }
                     - { position: right, type: sonata.block.service.infouser}
         # Customize user portal menu by setting links
         menu:

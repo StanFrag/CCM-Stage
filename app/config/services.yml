@@ -85,3 +85,9 @@ services:
       arguments: [ "sonata.block.service.infouser", @templating, @sonata.admin.pool, @doctrine.orm.entity_manager, @security.context]
       tags:
           - { name: sonata.block}
+
+  sonata.block.service.infostage:
+        class: Application\Sonata\UserBundle\Block\SoftStageBlockService
+        arguments: [ "sonata.block.service.infouser", @templating, @sonata.admin.pool, @doctrine.orm.entity_manager, @security.context]
+        tags:
+            - { name: sonata.block}
