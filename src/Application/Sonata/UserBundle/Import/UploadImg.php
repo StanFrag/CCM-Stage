@@ -87,10 +87,10 @@ class UploadImg {
     {
         if ($randomize) {
             $filename = sprintf('%s.%s'
-                , md5(uniqid($file, true)), 'csv');
+                , md5(uniqid($file, true)), $file->guessExtension());
 
         } else {
-            $filename = sprintf('%s.%s', $file->getBasename(), 'csv');
+            $filename = sprintf('%s.%s', $file->getBasename(), $file->guessExtension());
         }
 
         return $filename;
