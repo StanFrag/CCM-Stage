@@ -55,7 +55,7 @@ class BaseRepository extends EntityRepository
 
         $t = $qb->select('b')
             ->leftJoin('b.user', 'bu')
-            ->where('u.roles LIKE :roles')
+            ->where('bu.roles LIKE :roles')
             ->setParameter('roles', '%"'.$role.'"%');
 
 
