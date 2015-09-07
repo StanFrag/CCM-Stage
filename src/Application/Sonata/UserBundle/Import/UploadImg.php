@@ -23,22 +23,21 @@ class UploadImg {
         $file = $campaign->getImg();
 
         if (!$file instanceof UploadedFile) {
-            throw new \InvalidArgumentException(
-                'There is no file to upload!'
-            );
+            return;
+        }else {
+            $fileName = $this->generateFilename($file, $randomize);
+
+            $fs = new Filesystem();
+
+            try {
+                $fs->mkdir($this->directory, 0777);
+            } catch (IOExceptionInterface $e) {
+                echo "An error occurred while creating your directory at ".$e->getPath();
+            }
+
+            $campaign->setPath($fileName);
+            $file->move($this->directory, $fileName);
         }
-        $fileName = $this->generateFilename($file, $randomize);
-
-        $fs = new Filesystem();
-
-        try {
-            $fs->mkdir($this->directory, 0777);
-        } catch (IOExceptionInterface $e) {
-            echo "An error occurred while creating your directory at ".$e->getPath();
-        }
-
-        $campaign->setPath($fileName);
-        $file->move($this->directory, $fileName);
     }
 
     public function remove(Campaign $campaign)
