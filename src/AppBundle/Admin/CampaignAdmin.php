@@ -170,6 +170,16 @@ class CampaignAdmin extends Admin
         ;
     }
 
+    public function prePersist($campaign) {
+        // Upload de la base
+        $this->getConfigurationPool()->getContainer()->get('public_user.upload_img')->upload($campaign);
+    }
+
+    public function preUpdate($campaign) {
+        // Upload de la base
+        $this->getConfigurationPool()->getContainer()->get('public_user.upload_img')->update($campaign);
+    }
+
     public function postPersist($campaign) {
         if($campaign->getState()){
             $this->sendMatching($campaign);
