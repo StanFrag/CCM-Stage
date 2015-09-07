@@ -50,4 +50,20 @@ class MatchingRepository extends EntityRepository{
 
         return $query->execute(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
     }
+
+    public function lastMatchingFromUser(User $user){
+
+        $qb = $this->createQueryBuilder('m');
+
+        $t = $qb->select('b.title', 'm.nb_match', 'c.title AS campaign', 'm.id')
+            ->leftJoin('m.base', 'b')
+            ->leftJoin('m.campaign', 'c')
+            ->where('b.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('m.date_maj','DESC');
+
+        $query = $t->getQuery()->setMaxResults(4);
+
+        return $query->getResult(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
+    }
 }

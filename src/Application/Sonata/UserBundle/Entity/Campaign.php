@@ -436,6 +436,7 @@ class Campaign
     {
         return $this->getTitle();
     }
+
     /**
      * Constructor
      */
