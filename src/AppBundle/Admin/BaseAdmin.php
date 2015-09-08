@@ -2,8 +2,8 @@
 
 namespace AppBundle\Admin;
 
-use Application\Sonata\UserBundle\Entity\base;
-use Application\Sonata\UserBundle\Entity\campaign;
+use Application\Sonata\UserBundle\Entity\Base;
+use Application\Sonata\UserBundle\Entity\Campaign;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -146,7 +146,7 @@ class BaseAdmin extends Admin{
         }
     }
 
-    public function removePreviousBaseMatching(base $base)
+    public function removePreviousBaseMatching(Base $base)
     {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByBase($base);
@@ -164,7 +164,7 @@ class BaseAdmin extends Admin{
         }
     }
 
-    public function removePreviousCampaignMatching(campaign $campaign)
+    public function removePreviousCampaignMatching(Campaign $campaign)
     {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByCampaign($campaign);
@@ -206,7 +206,7 @@ class BaseAdmin extends Admin{
         }
     }
 
-    protected function sendMatching(base $base){
+    protected function sendMatching(Base $base){
         // Apres la persistance/update d'une campagne
 
         $idArray = array();

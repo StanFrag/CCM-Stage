@@ -31,7 +31,7 @@ class BaseType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Application\Sonata\UserBundle\Entity\base'
+            'data_class' => 'Application\Sonata\UserBundle\Entity\Base'
         ));
     }
 

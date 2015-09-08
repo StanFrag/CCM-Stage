@@ -2,7 +2,7 @@
 
 namespace Application\Sonata\UserBundle\Import;
 
-use Application\Sonata\UserBundle\Entity\base;
+use Application\Sonata\UserBundle\Entity\Base;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\File;
@@ -18,7 +18,7 @@ class UploadBase {
         $this->directory = $directory;
     }
 
-    public function update(base $base, $randomize = true)
+    public function update(Base $base, $randomize = true)
     {
         $file = $base->getFile();
 
@@ -41,7 +41,7 @@ class UploadBase {
         $file->move($this->directory, $fileName);
     }
 
-    public function remove(base $base)
+    public function remove(Base $base)
     {
         $file = $base->getPath();
 
@@ -58,7 +58,7 @@ class UploadBase {
         }
     }
 
-    public function upload(base $base, $randomize = true)
+    public function upload(Base $base, $randomize = true)
     {
         $file = $base->getFile();
 

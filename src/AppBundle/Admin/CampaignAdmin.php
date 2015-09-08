@@ -192,7 +192,7 @@ class CampaignAdmin extends Admin
         }
     }
 
-    public function removePreviousMatching(campaign $campaign)
+    public function removePreviousMatching(Campaign $campaign)
     {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByCampaign($campaign);
@@ -211,7 +211,7 @@ class CampaignAdmin extends Admin
 
     }
 
-    protected function sendMatching(campaign $campaign){
+    protected function sendMatching(Campaign $campaign){
         // Apres la persistance/update d'une campagne
 
         $idBases = array();

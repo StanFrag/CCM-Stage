@@ -186,7 +186,7 @@ class Base
      * Set title
      *
      * @param string $title
-     * @return base
+     * @return Base
      */
     public function setTitle($title)
     {

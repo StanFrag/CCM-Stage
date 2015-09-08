@@ -18,7 +18,7 @@ class UploadImg {
         $this->directory = $directory;
     }
 
-    public function update(campaign $campaign, $randomize = true)
+    public function update(Campaign $campaign, $randomize = true)
     {
         $file = $campaign->getImg();
 
@@ -40,7 +40,7 @@ class UploadImg {
         }
     }
 
-    public function remove(campaign $campaign)
+    public function remove(Campaign $campaign)
     {
         $file = $campaign->getPath();
 
@@ -57,7 +57,7 @@ class UploadImg {
         }
     }
 
-    public function upload(campaign $campaign, $randomize = true)
+    public function upload(Campaign $campaign, $randomize = true)
     {
         $file = $campaign->getImg();
 

@@ -31,7 +31,7 @@ class BaseController extends Controller
         ));
     }
 
-    public function updateAction(base $base, Request $request)
+    public function updateAction(Base $base, Request $request)
     {
         if (!$base) {
             throw $this->createNotFoundException('No Base found');
@@ -90,7 +90,7 @@ class BaseController extends Controller
         ));
     }
 
-    public function detailsAction(base $base)
+    public function detailsAction(Base $base)
     {
         if (!$base) {
             throw $this->createNotFoundException('No Base found');
@@ -117,7 +117,7 @@ class BaseController extends Controller
         ));
     }
 
-    public function removeAction(base $base)
+    public function removeAction(Base $base)
     {
 
         if (!$base) {
@@ -194,7 +194,7 @@ class BaseController extends Controller
         ));
     }
 
-    protected function sendMatching(base $base){
+    protected function sendMatching(Base $base){
         // Apres la persistance/update d'une campagne
 
         $idArray = array();
@@ -218,7 +218,7 @@ class BaseController extends Controller
         }
     }
 
-    public function removePreviousMatching(base $base)
+    public function removePreviousMatching(Base $base)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByBase($base);

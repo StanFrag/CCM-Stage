@@ -19,7 +19,7 @@ class PopulateBD {
      * Populate bdd from CSV file
      *
      * @param string $filePath
-     * @param base $base
+     * @param Base $base
      * @return integer
      */
     public function fromCSV($filePath, $base){
