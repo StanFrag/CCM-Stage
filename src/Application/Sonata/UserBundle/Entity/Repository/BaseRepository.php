@@ -18,7 +18,7 @@ class BaseRepository extends EntityRepository
         return $this->createQueryBuilder('b')
         ->where('b.user = :user')
         ->setParameter('user', $user)
-        ->addOrderBy('b.modificated_at', "DESC");
+        ->addOrderBy('b.updated_at', "DESC");
     }
 
     public function findConsumerBases(){
@@ -52,7 +52,7 @@ class BaseRepository extends EntityRepository
         $qb = $this->createQueryBuilder('b');
 
         $t = $qb->select('b')
-            ->orderBy('b.modificated_at','DESC');
+            ->orderBy('b.updated_at','DESC');
 
         $query = $t->getQuery();
 

@@ -5,8 +5,8 @@ namespace Application\Sonata\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MatchingDetail
  *
+ * @ORM\Table(name="matching_details")
  * @ORM\Entity()
  * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\MatchingDetailRepository")
  */
@@ -29,7 +29,7 @@ class MatchingDetail
     private $md5;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\Matching", inversedBy="matchingDetail")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\Matching", inversedBy="matching_detail")
      * @ORM\JoinColumn(name="id_matching", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $id_matching;
@@ -71,12 +71,12 @@ class MatchingDetail
     /**
      * Set id_matching
      *
-     * @param \Application\Sonata\UserBundle\Entity\Matching $idMatching
+     * @param \Application\Sonata\UserBundle\Entity\Matching $id_matching
      * @return MatchingDetail
      */
-    public function setIdMatching(\Application\Sonata\UserBundle\Entity\Matching $idMatching = null)
+    public function setIdMatching(Matching $id_matching = null)
     {
-        $this->id_matching = $idMatching;
+        $this->id_matching = $id_matching;
 
         return $this;
     }
@@ -84,7 +84,7 @@ class MatchingDetail
     /**
      * Get id_matching
      *
-     * @return \Application\Sonata\UserBundle\Entity\Matching 
+     * @return Matching
      */
     public function getIdMatching()
     {

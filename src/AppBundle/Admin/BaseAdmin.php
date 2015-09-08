@@ -19,7 +19,7 @@ class BaseAdmin extends Admin{
             ->addIdentifier('title', null, [
                 'label' => 'Nom de base'
             ])
-            ->add('nb_line', null, [
+            ->add('row_count', null, [
                 'label' => 'Nombre lignes'
             ])
             ->add('user', null, [
@@ -29,7 +29,7 @@ class BaseAdmin extends Admin{
                 'label' => 'Créé le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('modificated_at', null, array(
+            ->add('updated_at', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
@@ -75,12 +75,12 @@ class BaseAdmin extends Admin{
                 'label' => 'Créé le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('modificated_at', null, array(
+            ->add('updated_at', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
             ->add('campaign')
-            ->add('baseDetail')
+            ->add('base_detail')
             ->end()
         ;
 
@@ -256,7 +256,7 @@ class BaseAdmin extends Admin{
             // Si le service renvoi une valeur null
             if (null !== $responsePopulate) {
                 // Sinon on incremente le nombre de ligne par le nombre de ligne du fichier
-                $base->setNbLine($responsePopulate);
+                $base->setRowCount($responsePopulate);
             }else{
                 //$this->setFlash('sonata_user_error', 'upload.flash.error');
                 throw new AdminException("Problème dans l'import du fichier CSV: $file, veuillez enregistrer un fichier valide");

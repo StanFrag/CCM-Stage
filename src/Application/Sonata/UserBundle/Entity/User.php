@@ -145,9 +145,9 @@ class User extends BaseUser
     /**
      * Remove base
      *
-     * @param \Application\Sonata\UserBundle\Entity\Base $base
+     * @param \Application\Sonata\UserBundle\Entity\base $base
      */
-    public function removeBase(\Application\Sonata\UserBundle\Entity\Base $base)
+    public function removeBase(base $base)
     {
         $this->base->removeElement($base);
     }

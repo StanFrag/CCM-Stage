@@ -9,9 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Campaign
  *
- * @ORM\Table()
+ * @ORM\Table(name="campaigns")
  * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\CampaignRepository")
  * @UniqueEntity(
  *      fields = {"title"},
@@ -51,21 +50,21 @@ class Campaign
 
     /**
      * @var string
-     * @ORM\Column(name="remunerationType", type="string")
+     * @ORM\Column(name="remuneration_type", type="string")
      */
-    protected $remunerationType;
+    protected $remuneration_type;
 
     /**
      * @var string
-     * @ORM\Column(name="remunerationAmount", type="string")
+     * @ORM\Column(name="remuneration_amount", type="string")
      */
-    protected $remunerationAmount;
+    protected $remuneration_amount;
 
     /**
      * @var string
-     * @ORM\Column(name="objectSentence", type="string")
+     * @ORM\Column(name="object_sentence", type="string")
      */
-    protected $objectSentence;
+    protected $object_sentence;
 
     /**
      * @var string
@@ -74,16 +73,16 @@ class Campaign
     protected $sender;
 
     /**
-     * @var datetime
-     * @ORM\Column(name="beginDate", type="datetime")
+     * @var \DateTime
+     * @ORM\Column(name="begin_date", type="datetime")
      */
-    protected $beginDate;
+    protected $begin_date;
 
     /**
-     * @var datetime
-     * @ORM\Column(name="endDate", type="datetime")
+     * @var \DateTime
+     * @ORM\Column(name="end_date", type="datetime")
      */
-    protected $endDate;
+    protected $end_date;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\Base", inversedBy="campaign")
@@ -106,16 +105,16 @@ class Campaign
     public $img;
 
     /**
-     * @var datetime
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @var \DateTime
+     * @ORM\Column(name="created_at", type="datetime")
      */
-    protected $createdAt;
+    protected $created_at;
 
     /**
-     * @var datetime
-     * @ORM\Column(name="modificatedAt", type="datetime")
+     * @var \DateTime
+     * @ORM\Column(name="updated_at", type="datetime")
      */
-    protected $modificatedAt;
+    protected $updated_at;
 
     /**
      * @var boolean
@@ -145,7 +144,7 @@ class Campaign
      * Set title
      *
      * @param string $title
-     * @return Campaign
+     * @return string
      */
     public function setTitle($title)
     {
@@ -156,7 +155,6 @@ class Campaign
 
     /**
      * Get title
-     *
      * @return string 
      */
     public function getTitle()
@@ -168,7 +166,7 @@ class Campaign
      * Set description
      *
      * @param string $description
-     * @return Campaign
+     * @return string
      */
     public function setDescription($description)
     {
@@ -179,7 +177,6 @@ class Campaign
 
     /**
      * Get description
-     *
      * @return string 
      */
     public function getDescription()
@@ -188,14 +185,14 @@ class Campaign
     }
 
     /**
-     * Set createdAt
+     * Set created_at
      *
-     * @param \DateTime $createdAt
-     * @return Campaign
+     * @param \DateTime $created_at
+     * @return \DateTime
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($created_at)
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
 
         return $this;
     }
@@ -207,37 +204,37 @@ class Campaign
      */
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     /**
-     * Set modificatedAt
+     * Set updated_at
      *
-     * @param \DateTime $modificatedAt
-     * @return Campaign
+     * @param \DateTime $updated_at
+     * @return \DateTime
      */
-    public function setModificatedAt($modificatedAt)
+    public function setUpdatedAt($updated_at)
     {
-        $this->modificatedAt = $modificatedAt;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
 
     /**
-     * Get modificated_at
+     * Get updated_at
      *
      * @return \DateTime 
      */
-    public function getModificatedAt()
+    public function getUpdatedAt()
     {
-        return $this->modificatedAt;
+        return $this->updated_at;
     }
 
     /**
      * Set state
      *
      * @param boolean $state
-     * @return Campaign
+     * @return boolean
      */
     public function setState($state)
     {
@@ -270,7 +267,7 @@ class Campaign
      * Set base
      *
      * @param \Application\Sonata\UserBundle\Entity\Base $base
-     * @return Campaign
+     * @return Base
      */
     public function setBase(Base $base = null)
     {
@@ -282,7 +279,7 @@ class Campaign
     /**
      * Get base
      *
-     * @return \Application\Sonata\UserBundle\Entity\Base 
+     * @return \Application\Sonata\UserBundle\Entity\Base
      */
     public function getBase()
     {
@@ -321,7 +318,7 @@ class Campaign
      * Set path
      *
      * @param string $path
-     * @return Base
+     * @return string
      */
     public function setPath($path)
     {
@@ -344,15 +341,15 @@ class Campaign
      * @ORM\PrePersist()
      */
     public function prePersist() {
-        $this->setModificatedAt(new \DateTime("now"));
         $this->setCreatedAt(new \DateTime("now"));
+        $this->setUpdatedAt(new \DateTime("now"));
     }
 
     /**
      * @ORM\PreUpdate()
      */
     public function preUpdate() {
-        $this->setModificatedAt(new \DateTime("now"));
+        $this->setUpdatedAt(new \DateTime("now"));
     }
 
     public function __toString()
@@ -365,14 +362,14 @@ class Campaign
      */
     public function __construct()
     {
-        $this->match = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->match = new ArrayCollection();
     }
 
     /**
      * Set theme
      *
      * @param string $theme
-     * @return Campaign
+     * @return string
      */
     public function setTheme($theme)
     {
@@ -392,79 +389,79 @@ class Campaign
     }
 
     /**
-     * Set remunerationType
+     * Set remuneration_type
      *
-     * @param string $remunerationType
-     * @return Campaign
+     * @param string $remuneration_type
+     * @return string
      */
-    public function setRemunerationType($remunerationType)
+    public function setRemunerationType($remuneration_type)
     {
-        $this->remunerationType = $remunerationType;
+        $this->remuneration_type = $remuneration_type;
 
         return $this;
     }
 
     /**
-     * Get remunerationType
+     * Get remuneration_type
      *
      * @return string 
      */
     public function getRemunerationType()
     {
-        return $this->remunerationType;
+        return $this->remuneration_type;
     }
 
     /**
-     * Set remunerationAmount
+     * Set remuneration_amount
      *
-     * @param string $remunerationAmount
-     * @return Campaign
+     * @param string $remuneration_amount
+     * @return string
      */
-    public function setRemunerationAmount($remunerationAmount)
+    public function setRemunerationAmount($remuneration_amount)
     {
-        $this->remunerationAmount = $remunerationAmount;
+        $this->remuneration_amount = $remuneration_amount;
 
         return $this;
     }
 
     /**
-     * Get remunerationAmount
+     * Get remuneration_amount
      *
      * @return string 
      */
     public function getRemunerationAmount()
     {
-        return $this->remunerationAmount;
+        return $this->remuneration_amount;
     }
 
     /**
-     * Set objectSentence
+     * Set object_sentence
      *
-     * @param string $objectSentence
-     * @return Campaign
+     * @param string $object_sentence
+     * @return string
      */
-    public function setObjectSentence($objectSentence)
+    public function setObjectSentence($object_sentence)
     {
-        $this->objectSentence = $objectSentence;
+        $this->object_sentence = $object_sentence;
 
         return $this;
     }
 
     /**
-     * Get objectSentence
+     * Get object_sentence
      *
      * @return string 
      */
     public function getObjectSentence()
     {
-        return $this->objectSentence;
+        return $this->object_sentence;
     }
 
     /**
      * Set sender
      *
      * @param string $sender
-     * @return Campaign
+     * @return string
      */
     public function setSender($sender)
     {
@@ -484,61 +481,60 @@ class Campaign
     }
 
     /**
-     * Set beginDate
+     * Set begin_date
      *
-     * @param \DateTime $beginDate
-     * @return Campaign
+     * @param \DateTime $begin_date
+     * @return \DateTime
      */
-    public function setBeginDate($beginDate)
+    public function setBeginDate($begin_date)
     {
-        $this->beginDate = $beginDate;
+        $this->begin_date = $begin_date;
 
         return $this;
     }
 
     /**
-     * Get beginDate
+     * Get begin_date
      *
      * @return \DateTime 
      */
     public function getBeginDate()
     {
-        return $this->beginDate;
+        return $this->begin_date;
     }
 
     /**
-     * Set endDate
+     * Set end_date
      *
-     * @param \DateTime $endDate
-     * @return Campaign
+     * @param \DateTime $end_date
+     * @return \DateTime
      */
-    public function setEndDate($endDate)
+    public function setEndDate($end_date)
     {
-        $this->endDate = $endDate;
+        $this->end_date = $end_date;
 
         return $this;
     }
 
     /**
-     * Get endDate
+     * Get end_date
      *
      * @return \DateTime 
      */
     public function getEndDate()
     {
-        return $this->endDate;
+        return $this->end_date;
     }
 
     /**
      * Add match
      *
      * @param \Application\Sonata\UserBundle\Entity\Matching $match
-     * @return Campaign
+     * @return Matching
      */
-    public function addMatch(\Application\Sonata\UserBundle\Entity\Matching $match)
+    public function addMatch(Matching $match)
     {
         $this->match[] = $match;
-
         return $this;
     }
 
@@ -547,7 +543,7 @@ class Campaign
      *
      * @param \Application\Sonata\UserBundle\Entity\Matching $match
      */
-    public function removeMatch(\Application\Sonata\UserBundle\Entity\Matching $match)
+    public function removeMatch(Matching $match)
     {
         $this->match->removeElement($match);
     }

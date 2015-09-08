@@ -3,7 +3,6 @@
 namespace Application\Sonata\UserBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Application\Sonata\UserBundle\Entity\BaseDetail;
 use Application\Sonata\UserBundle\Entity\User;
 
 /**

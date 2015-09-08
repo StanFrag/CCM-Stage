@@ -2,15 +2,15 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+use Application\Sonata\UserBundle\Entity\BaseDetail;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Base
  *
- * @ORM\Entity()
+ * @ORM\Table(name="bases")
  * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\BaseRepository")
  * @UniqueEntity(
  *      fields = {"title"},
@@ -25,14 +25,13 @@ class Base
 
     public function __construct()
     {
-        $this->baseDetail = new ArrayCollection();
+        $this->base_details = new ArrayCollection();
     }
 
     /**
-     * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -45,22 +44,20 @@ class Base
 
     /**
      * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Matching", mappedBy="base")
-     *
      * @var ArrayCollection $match
      */
     protected $match;
 
     /**
+     * @var ArrayCollection $base_detail
      * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\BaseDetail", mappedBy="base", cascade={"all"}, orphanRemoval=true)
-     *
-     * @var ArrayCollection $baseDetail
      */
-    protected $baseDetail;
+    protected $base_detail;
 
     /**
      * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Campaign", mappedBy="base")
      *
-     * @var ArrayCollection $baseDetail
+     * @var ArrayCollection $campaign
      */
     protected $campaign;
 
@@ -81,23 +78,23 @@ class Base
     public $file;
 
     /**
-     * @var datetime
+     * @var \DateTime
      * @ORM\Column(name="created_at", type="datetime")
      */
     protected $created_at;
 
     /**
-     * @var datetime
-     * @ORM\Column(name="modificated_at", type="datetime")
+     * @var \DateTime
+     * @ORM\Column(name="updated_at", type="datetime")
      */
-    protected $modificated_at;
+    protected $updated_at;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="nbLine", type="integer", nullable=true)
+     * @ORM\Column(name="row_count", type="integer", nullable=true)
      */
-    protected $nbLine;
+    protected $row_count;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -110,7 +107,7 @@ class Base
     public function preUpload()
     {
         $this->setCreatedAt();
-        $this->setModificatedAt();
+        $this->setUpdatedAt();
     }
 
     /**
@@ -118,7 +115,7 @@ class Base
      */
     public function preUpdate()
     {
-        $this->setModificatedAt();
+        $this->setUpdatedAt();
         $this->removeBaseDetailAll();
     }
 
@@ -133,7 +130,7 @@ class Base
 
     /**
      * Get created_at
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -142,33 +139,27 @@ class Base
 
     /**
      * Set created_at
-     * @return Base
      */
     public function setCreatedAt()
     {
         $this->created_at = new \DateTime('now');
-
-        return $this;
     }
 
     /**
-     * Get modificated_at
-     * @return datetime
+     * Get updated_at
+     * @return \DateTime
      */
-    public function getModificatedAt()
+    public function getUpdatedAt()
     {
-        return $this->modificated_at;
+        return $this->updated_at;
     }
 
     /**
-     * Set modificated_at
-     * @return Base
+     * Set updated_at
      */
-    public function setModificatedAt()
+    public function setUpdatedAt()
     {
-        $this->modificated_at = new \DateTime('now');
-
-        return $this;
+        $this->updated_at = new \DateTime('now');
     }
 
     /**
@@ -215,24 +206,24 @@ class Base
     }
 
     /**
-     * Add baseDetail
+     * Add base_detail
      *
-     * @param BaseDetail $baseDetail
+     * @param BaseDetail $base_detail
      */
-    public function addBaseDetail(BaseDetail $baseDetail)
+    public function addBaseDetail(BaseDetail $base_detail)
     {
-        $baseDetail->setBase($this);
-        $this->baseDetail[] = $baseDetail;
+        $base_detail->setIdBase($this);
+        $this->base_detail[] = $base_detail;
     }
 
     /**
-     * Get baseDetail
+     * Get base_detail
      *
-     * @return ArrayCollection $baseDetail
+     * @return ArrayCollection $base_detail
      */
     public function getBaseDetail()
     {
-        return $this->baseDetail;
+        return $this->base_detail;
     }
 
     /**
@@ -246,45 +237,42 @@ class Base
     }
 
     /**
-     * Remove baseDetail
+     * Remove base_detail
      *
-     * @param \Application\Sonata\UserBundle\Entity\BaseDetail $baseDetail
+     * @param \Application\Sonata\UserBundle\Entity\BaseDetail $base_detail
      */
-    public function removeBaseDetail(BaseDetail $baseDetail)
+    public function removeBaseDetail(BaseDetail $base_detail)
     {
-        $this->baseDetail->removeElement($baseDetail);
+        $this->base_detail->removeElement($base_detail);
     }
 
     /**
-     * Remove baseDetailAll
+     * Remove base_details_all
      *
      */
     public function removeBaseDetailAll()
     {
-        $this->baseDetail->clear();
+        $this->base_detail->clear();
     }
 
     /**
-     * Get nbLine
+     * Get row_count
      *
      * @return integer
      */
-    public function getNbLine()
+    public function getRowCount()
     {
-        return $this->nbLine;
+        return $this->row_count;
     }
 
     /**
-     * Set nbLine
+     * Set row_count
      *
-     * @param integer $nbLine
-     * @return Base
+     * @param integer $row_count
      */
-    public function setNbLine($nbLine)
+    public function setRowCount($row_count)
     {
-        $this->nbLine = $nbLine;
-
-        return $this;
+        $this->row_count = $row_count;
     }
 
     /**
@@ -301,13 +289,10 @@ class Base
      * Set path
      *
      * @param string $path
-     * @return Base
      */
     public function setPath($path)
     {
         $this->path = $path;
-
-        return $this;
     }
 
     /**

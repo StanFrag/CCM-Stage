@@ -19,7 +19,7 @@
                             <tr>
                                 <td>{{ tmp.campaign }}</td>
                                 <td>{{ tmp.title }}</td>
-                                <td>{{ tmp.nb_match }}</td>
+                                <td>{{ tmp.match_count }}</td>
                                 <td>
                                     <a href="{{ path('match_postulate', { 'base': tmp.title, 'campaign': tmp.campaign, 'matchId': tmp.id}) }}">
                                         {{ "postulate" | trans({}, 'SonataUserBundle')}}

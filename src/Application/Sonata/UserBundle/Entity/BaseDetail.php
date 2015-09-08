@@ -5,8 +5,7 @@ namespace Application\Sonata\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BaseDetail
- *
+ * @ORM\Table(name="base_details")
  * @ORM\Entity()
  * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\BaseDetailRepository")
  */
@@ -29,11 +28,10 @@ class BaseDetail
     private $md5;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\Base", inversedBy="baseDetail")
-     * @ORM\JoinColumn(name="base_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Base", inversedBy="base_detail")
+     * @ORM\JoinColumn(name="fk_base", referencedColumnName="id", onDelete="CASCADE", unique=true)
      */
     protected $base;
-
 
     /**
      * Get id
@@ -49,13 +47,10 @@ class BaseDetail
      * Set md5
      *
      * @param string $md5
-     * @return BaseDetail
      */
     public function setMd5($md5)
     {
         $this->md5 = $md5;
-
-        return $this;
     }
 
     /**
@@ -69,7 +64,7 @@ class BaseDetail
     }
 
     /**
-     * Set base
+     * Set Base
      *
      * @param \Application\Sonata\UserBundle\Entity\Base $base
      */
@@ -79,7 +74,7 @@ class BaseDetail
     }
 
     /**
-     * Get base
+     * Get Base
      *
      * @return \Application\Sonata\UserBundle\Entity\Base
      */

@@ -2,7 +2,6 @@
 
 namespace Application\Sonata\UserBundle\Import;
 
-
 use Application\Sonata\UserBundle\Entity\Base;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

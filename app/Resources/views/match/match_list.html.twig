@@ -47,29 +47,29 @@
 
                                     <p>
                                         <b>{{ "begin_date" | trans({}, 'SonataUserBundle')}}:</b>
-                                        {{ match.campaign.beginDate | date("d/m/Y à H\\hi")}}
+                                        {{ match.campaign.begin_date | date("d/m/Y à H\\hi")}}
                                     </p>
                                     <p>
                                         <b>{{ "end_date" | trans({}, 'SonataUserBundle')}}:</b>
-                                        {{ match.campaign.endDate | date("d/m/Y à H\\hi")}}
+                                        {{ match.campaign.end_date | date("d/m/Y à H\\hi")}}
                                     </p>
 
                                     <br/>
 
                                     <p>
                                         <b>{{ "remuneration_type" | trans({}, 'SonataUserBundle')}}:</b>
-                                        {{ match.campaign.remunerationType }}
+                                        {{ match.campaign.remuneration_type }}
                                     </p>
-                                    {% if match.campaign.remunerationAmount %}
+                                    {% if match.campaign.remuneration_amount %}
                                         <p>
                                             <b>{{ "remuneration_amount" | trans({}, 'SonataUserBundle')}}:</b>
-                                            {{ match.campaign.remunerationAmount }}
+                                            {{ match.campaign.remuneration_amount }}
                                         </p>
                                     {% endif %}
 
                                     <p>
                                         <b>{{ "object_sentence" | trans({}, 'SonataUserBundle')}}:</b>
-                                        {{ match.campaign.objectSentence }}
+                                        {{ match.campaign.object_sentence }}
                                     </p>
                                     <p>
                                         <b>{{ "sender" | trans({}, 'SonataUserBundle')}}:</b>
@@ -98,8 +98,8 @@
                                         {% for t in match.match %}
                                             <tr>
                                                 <td>{{ t.title }}</td>
-                                                <td>{{ t.nb_match }}</td>
-                                                <td>{{ t.date_maj | date("d/m/Y à H\\hi")}}</td>
+                                                <td>{{ t.match_count }}</td>
+                                                <td>{{ t.updated_at | date("d/m/Y à H\\hi")}}</td>
                                                 <td>
                                                     <a href="{{ path('match_postulate', { 'base': t.title, 'campaign': match.campaign, 'matchId': t.id}) }}">
                                                         {{ "postulate" | trans({}, 'SonataUserBundle')}}
