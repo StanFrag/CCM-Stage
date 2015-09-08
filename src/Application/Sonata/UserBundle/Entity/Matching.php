@@ -6,8 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Matching
  *
+ * @ORM\Table(name="matchings")
  * @ORM\Entity()
  * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\MatchingRepository")
  */
@@ -16,7 +16,7 @@ class Matching
 
     public function __construct()
     {
-        $this->matchingDetail = new ArrayCollection();
+        $this->matching_detail = new ArrayCollection();
     }
 
     /**
@@ -45,21 +45,21 @@ class Matching
      *
      * @ORM\Column(name="date_maj", type="datetime")
      */
-    private $date_maj;
+    private $updated_at;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_match", type="integer")
+     * @ORM\Column(name="match_count", type="integer")
      */
-    private $nb_match;
+    private $match_count;
 
     /**
      * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\MatchingDetail", mappedBy="id_matching", cascade={"all"}, orphanRemoval=true)
      *
-     * @var ArrayCollection $matchingDetail
+     * @var ArrayCollection $matching_detail
      */
-    protected $matchingDetail;
+    protected $matching_detail;
 
 
     /**
@@ -73,59 +73,58 @@ class Matching
     }
 
     /**
-     * Set date_maj
+     * Set updated_at
      *
-     * @return Matching
+     * @return \DateTime
      */
-    public function setDateMaj()
+    public function setUpdatedAt()
     {
-        $this->date_maj = new \DateTime('now');;
-
+        $this->updated_at = new \DateTime('now');;
         return $this;
     }
 
     /**
-     * Get date_maj
+     * Get updated_at
      *
      * @return \DateTime 
      */
-    public function getDateMaj()
+    public function getUpdatedAt()
     {
-        return $this->date_maj;
+        return $this->updated_at;
     }
 
     /**
-     * Set nb_match
+     * Set match_count
      *
-     * @param integer $nbMatch
-     * @return Matching
+     * @param integer $match_count
+     * @return integer
      */
-    public function setNbMatch($nbMatch)
+    public function setMatchCount($match_count)
     {
-        $this->nb_match = $nbMatch;
+        $this->match_count = $match_count;
 
         return $this;
     }
 
     /**
-     * Get nombre_adresses_matchees
+     * Get match_count
      *
      * @return integer 
      */
-    public function getNbMatch()
+    public function getMatchCount()
     {
-        return $this->nb_match;
+        return $this->match_count;
     }
 
     /**
      * Set id_base
      *
-     * @param \Application\Sonata\UserBundle\Entity\Base $Base
-     * @return Matching
+     * @param \Application\Sonata\UserBundle\Entity\Base $base
+     * @return Base
      */
-    public function setBase(Base $Base)
+    public function setBase(Base $base)
     {
-        $this->base = $Base;
+        $this->base = $base;
 
         return $this;
     }
@@ -133,7 +132,7 @@ class Matching
     /**
      * Get id_base
      *
-     * @return \Application\Sonata\UserBundle\Entity\Base 
+     * @return \Application\Sonata\UserBundle\Entity\Base
      */
     public function getBase()
     {
@@ -143,12 +142,12 @@ class Matching
     /**
      * Set id_campaign
      *
-     * @param \Application\Sonata\UserBundle\Entity\Campaign $Campaign
-     * @return Matching
+     * @param \Application\Sonata\UserBundle\Entity\Campaign $campaign
+     * @return Campaign
      */
-    public function setCampaign(Campaign $Campaign)
+    public function setCampaign(Campaign $campaign)
     {
-        $this->campaign = $Campaign;
+        $this->campaign = $campaign;
 
         return $this;
     }
@@ -156,7 +155,7 @@ class Matching
     /**
      * Get id_campaign
      *
-     * @return \Application\Sonata\UserBundle\Entity\Campaign 
+     * @return \Application\Sonata\UserBundle\Entity\Campaign
      */
     public function getCampaign()
     {
@@ -164,43 +163,42 @@ class Matching
     }
 
     /**
-     * Add matchingDetail
+     * Add matching_detail
      *
-     * @param \Application\Sonata\UserBundle\Entity\MatchingDetail $matchingDetail
+     * @param \Application\Sonata\UserBundle\Entity\MatchingDetail $matching_detail
      * @return Matching
      */
-    public function addMatchingDetail(MatchingDetail $matchingDetail)
+    public function addMatchingDetail(MatchingDetail $matching_detail)
     {
-        $matchingDetail->setIdMatching($this);
-        $this->matchingDetail[] = $matchingDetail;
+        $matching_detail->setIdMatching($this);
+        $this->matching_detail[] = $matching_detail;
     }
 
     /**
-     * Remove matchingDetail
+     * Remove matching_detail
      *
-     * @param \Application\Sonata\UserBundle\Entity\MatchingDetail $matchingDetail
+     * @param \Application\Sonata\UserBundle\Entity\MatchingDetail $matching_detail
      */
-    public function removeMatchingDetail(MatchingDetail $matchingDetail)
+    public function removeMatchingDetail(MatchingDetail $matching_detail)
     {
-        $this->matchingDetail->removeElement($matchingDetail);
+        $this->matching_detail->removeElement($matching_detail);
     }
 
     /**
      * Remove baseMatchingDetail
-     *
      */
     public function removeMatchingDetailAll()
     {
-        $this->matchingDetail->clear();
+        $this->matching_detail->clear();
     }
 
     /**
-     * Get matchingDetail
+     * Get matching_detail
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
     public function getMatchingDetail()
     {
-        return $this->matchingDetail;
+        return $this->matching_detail;
     }
 }

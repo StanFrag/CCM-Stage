@@ -52,10 +52,10 @@ class MatchingAdmin extends Admin
             ->add('campaign', null, array(
                 'label'=> 'Campagne'
             ))
-            ->add('nb_match', null, array(
+            ->add('match_count', null, array(
                 'label'=> 'Nombre de match'
             ))
-            ->add('date_maj', null, array(
+            ->add('updated_at', null, array(
                 'label' => 'Derniere modification le',
                 'format' => 'd/m/Y à H\hi'
             ))
@@ -77,8 +77,8 @@ class MatchingAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('date_maj')
-            ->add('nb_match')
+            ->add('updated_at')
+            ->add('match_count')
         ;
     }
 
@@ -89,9 +89,9 @@ class MatchingAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('date_maj')
-            ->add('nb_match')
-            ->add('matchingDetail')
+            ->add('updated_at')
+            ->add('match_count')
+            ->add('matching_detail')
         ;
     }
 }

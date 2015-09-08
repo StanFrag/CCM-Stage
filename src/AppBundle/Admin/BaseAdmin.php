@@ -2,8 +2,8 @@
 
 namespace AppBundle\Admin;
 
-use Application\Sonata\UserBundle\Entity\Base;
-use Application\Sonata\UserBundle\Entity\Campaign;
+use Application\Sonata\UserBundle\Entity\base;
+use Application\Sonata\UserBundle\Entity\campaign;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -19,7 +19,7 @@ class BaseAdmin extends Admin{
             ->addIdentifier('title', null, [
                 'label' => 'Nom de base'
             ])
-            ->add('nb_line', null, [
+            ->add('row_count', null, [
                 'label' => 'Nombre lignes'
             ])
             ->add('user', null, [
@@ -29,7 +29,7 @@ class BaseAdmin extends Admin{
                 'label' => 'Créé le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('modificated_at', null, array(
+            ->add('updated_at', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
@@ -75,12 +75,12 @@ class BaseAdmin extends Admin{
                 'label' => 'Créé le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('modificated_at', null, array(
+            ->add('updated_at', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
             ->add('campaign')
-            ->add('baseDetail')
+            ->add('base_detail')
             ->end()
         ;
 
@@ -146,7 +146,7 @@ class BaseAdmin extends Admin{
         }
     }
 
-    public function removePreviousBaseMatching(Base $base)
+    public function removePreviousBaseMatching(base $base)
     {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByBase($base);
@@ -164,7 +164,7 @@ class BaseAdmin extends Admin{
         }
     }
 
-    public function removePreviousCampaignMatching(Campaign $campaign)
+    public function removePreviousCampaignMatching(campaign $campaign)
     {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByCampaign($campaign);
@@ -206,7 +206,7 @@ class BaseAdmin extends Admin{
         }
     }
 
-    protected function sendMatching(Base $base){
+    protected function sendMatching(base $base){
         // Apres la persistance/update d'une campagne
 
         $idArray = array();
@@ -256,7 +256,7 @@ class BaseAdmin extends Admin{
             // Si le service renvoi une valeur null
             if (null !== $responsePopulate) {
                 // Sinon on incremente le nombre de ligne par le nombre de ligne du fichier
-                $base->setNbLine($responsePopulate);
+                $base->setRowCount($responsePopulate);
             }else{
                 //$this->setFlash('sonata_user_error', 'upload.flash.error');
                 throw new AdminException("Problème dans l'import du fichier CSV: $file, veuillez enregistrer un fichier valide");

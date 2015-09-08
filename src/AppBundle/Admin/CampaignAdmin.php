@@ -8,7 +8,6 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CampaignAdmin extends Admin
@@ -40,11 +39,11 @@ class CampaignAdmin extends Admin
                 'label' => 'Titre'
             ])
             ->add('description')
-            ->add('createdAt', null, array(
+            ->add('created_at', null, array(
                 'label' => 'Crée le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('modificatedAt', null, array(
+            ->add('updated_at', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
@@ -87,23 +86,23 @@ class CampaignAdmin extends Admin
             ->add('theme', null, [
                 'label' => 'Thématique'
             ])
-            ->add('remunerationType', null, [
+            ->add('remuneration_type', null, [
                 'label' => 'Type de rémuneration'
             ])
-            ->add('remunerationAmount', null, [
+            ->add('remuneration_amount', null, [
                 'label' => 'Montant de la rémuneration',
                 'required' => false
             ])
-            ->add('objectSentence', 'textarea', [
+            ->add('object_sentence', 'textarea', [
                 'label' => 'Phrase objet'
             ])
             ->add('sender', null, [
                 'label' => 'Expéditeur'
             ])
-            ->add('beginDate', 'date', [
+            ->add('begin_date', 'date', [
                 'label' => 'Date de début'
             ])
-            ->add('endDate', 'date', [
+            ->add('end_date', 'date', [
                 'label' => 'Date de fin'
             ])
             ->add('img', 'file', [
@@ -129,11 +128,11 @@ class CampaignAdmin extends Admin
                 'label' => 'Nom de la campagne'
             ])
             ->add('description')
-            ->add('createdAt', null, array(
+            ->add('created_at', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('modificatedAt', null, array(
+            ->add('updated_at', null, array(
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
@@ -144,22 +143,22 @@ class CampaignAdmin extends Admin
             ->add('theme', null, [
                 'label' => 'Thématique'
             ])
-            ->add('remunerationType', null, [
+            ->add('remuneration_type', null, [
                 'label' => 'Type de rémuneration'
             ])
-            ->add('remunerationAmount', null, [
+            ->add('remuneration_amount', null, [
                 'label' => 'Montant de la rémuneration'
             ])
-            ->add('objectSentence', 'textarea', [
+            ->add('object_sentence', 'textarea', [
                 'label' => 'Phrase objet'
             ])
             ->add('sender', null, [
                 'label' => 'Expéditeur'
             ])
-            ->add('beginDate', 'date', [
+            ->add('begin_date', 'date', [
                 'label' => 'Date de début'
             ])
-            ->add('endDate', 'date', [
+            ->add('end_date', 'date', [
                 'label' => 'Date de fin'
             ])
             ->add('base')
@@ -193,7 +192,7 @@ class CampaignAdmin extends Admin
         }
     }
 
-    public function removePreviousMatching(Campaign $campaign)
+    public function removePreviousMatching(campaign $campaign)
     {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByCampaign($campaign);
@@ -212,7 +211,7 @@ class CampaignAdmin extends Admin
 
     }
 
-    protected function sendMatching(Campaign $campaign){
+    protected function sendMatching(campaign $campaign){
         // Apres la persistance/update d'une campagne
 
         $idBases = array();

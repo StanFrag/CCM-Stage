@@ -9,7 +9,6 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class BaseController extends Controller
 {
     public function showAction()
@@ -24,7 +23,7 @@ class BaseController extends Controller
 
         $listBases = $repository->findBy(
             array('user' => $user),
-            array('modificated_at' => 'DESC')
+            array('updated_at' => 'DESC')
         );
 
         return $this->render('base/base_list.html.twig', array(
@@ -32,7 +31,7 @@ class BaseController extends Controller
         ));
     }
 
-    public function updateAction(Base $base, Request $request)
+    public function updateAction(base $base, Request $request)
     {
         if (!$base) {
             throw $this->createNotFoundException('No Base found');
@@ -67,7 +66,7 @@ class BaseController extends Controller
             // Si le service n'a pas rempli la base de donnée des Bases Details
             if (null !== $response) {
                 // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
-                $base->setNbLine($response);
+                $base->setRowCount($response);
                 $base->setUser($user);
 
                 // Et on envoi les données
@@ -91,7 +90,7 @@ class BaseController extends Controller
         ));
     }
 
-    public function detailsAction(Base $base)
+    public function detailsAction(base $base)
     {
         if (!$base) {
             throw $this->createNotFoundException('No Base found');
@@ -118,7 +117,7 @@ class BaseController extends Controller
         ));
     }
 
-    public function removeAction(Base $base)
+    public function removeAction(base $base)
     {
 
         if (!$base) {
@@ -173,7 +172,7 @@ class BaseController extends Controller
                 $this->get('public_user.upload_base')->upload($base);
 
                 // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
-                $base->setNbLine($response);
+                $base->setRowCount($response);
                 $base->setUser($user);
 
                 // Et on envoi les données
@@ -195,7 +194,7 @@ class BaseController extends Controller
         ));
     }
 
-    protected function sendMatching(Base $base){
+    protected function sendMatching(base $base){
         // Apres la persistance/update d'une campagne
 
         $idArray = array();
@@ -219,7 +218,7 @@ class BaseController extends Controller
         }
     }
 
-    public function removePreviousMatching(Base $base)
+    public function removePreviousMatching(base $base)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $matchs = $em->getRepository('ApplicationSonataUserBundle:Matching')->findByBase($base);

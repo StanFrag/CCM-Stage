@@ -137,8 +137,8 @@ class dbConsumer implements ConsumerInterface{
 
             $match->setBase($this->base);
             $match->setCampaign($this->campaign);
-            $match->setDateMaj();
-            $match->setNbMatch($nbMatch);
+            $match->setUpdatedAt();
+            $match->setMatchCount($nbMatch);
 
             $this->em->persist($match);
             $this->em->flush();

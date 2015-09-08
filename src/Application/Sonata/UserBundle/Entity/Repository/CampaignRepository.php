@@ -3,7 +3,6 @@
 namespace Application\Sonata\UserBundle\Entity\Repository;
 
 use Application\Sonata\UserBundle\Entity\Base;
-use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -56,7 +55,7 @@ class CampaignRepository extends EntityRepository
         $t = $qb->select('c')
             ->where('c.state = :etat')
             ->setParameter('etat', true)
-            ->orderBy('c.createdAt','DESC');
+            ->orderBy('c.created_at','DESC');
 
         $query = $t->getQuery();
 
