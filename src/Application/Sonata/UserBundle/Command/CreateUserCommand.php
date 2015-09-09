@@ -24,7 +24,6 @@ class CreateUserCommand extends ContainerAwareCommand
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
                 new InputArgument('compagny', InputArgument::REQUIRED, 'Société'),
                 new InputArgument('legal-situation', InputArgument::REQUIRED, 'Situation légal'),
-                new InputArgument('activity-type', InputArgument::REQUIRED, 'Type d\'activité'),
                 new InputArgument('phone-number', InputArgument::REQUIRED, 'Numéro de téléphone'),
                 new InputArgument('url', InputArgument::REQUIRED, 'Site web'),
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
@@ -64,13 +63,12 @@ EOT
         $inactive   = $input->getOption('inactive');
         $company = $input->getArgument('compagny');
         $legalSituation = $input->getArgument('legal-situation');
-        $activityType = $input->getArgument('activity-type');
         $phoneNumber = $input->getArgument('phone-number');
         $url = $input->getArgument('url');
         $superadmin = $input->getOption('super-admin');
 
         $manipulator = $this->getContainer()->get('public_user.util.user_manipulator');
-        $manipulator->create($username, $password, $email, $company, $legalSituation, $activityType, $phoneNumber, $url, !$inactive, $superadmin);
+        $manipulator->create($username, $password, $email, $company, $legalSituation, $phoneNumber, $url, !$inactive, $superadmin);
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $username));
     }
@@ -153,21 +151,6 @@ EOT
                 }
             );
             $input->setArgument('legal-situation', $legalSituation);
-        }
-
-        if (!$input->getArgument('activity-type')) {
-            $activityType = $this->getHelper('dialog')->askAndValidate(
-                $output,
-                'Please choose an activity type:',
-                function($activityType) {
-                    if (empty($activityType)) {
-                        throw new \Exception('Activity type can not be empty');
-                    }
-
-                    return $activityType;
-                }
-            );
-            $input->setArgument('activity-type', $activityType);
         }
 
         if (!$input->getArgument('phone-number')) {

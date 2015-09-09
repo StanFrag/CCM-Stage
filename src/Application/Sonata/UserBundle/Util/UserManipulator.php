@@ -40,7 +40,6 @@ class UserManipulator
                            $superadmin,
                            $company,
                            $legalSituation,
-                           $activityType,
                            $phoneNumber,
                            $url)
     {
@@ -52,7 +51,6 @@ class UserManipulator
         $user->setSuperAdmin((Boolean) $superadmin);
         $user->setCompany($company);
         $user->setLegalSituation($legalSituation);
-        $user->setActivityType($activityType);
         $user->setPhoneNumber($phoneNumber);
         $user->setUrl($url);
         $this->userManager->updateUser($user);

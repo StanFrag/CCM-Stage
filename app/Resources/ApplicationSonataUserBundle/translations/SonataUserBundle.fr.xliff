@@ -120,7 +120,7 @@
             </trans-unit>
             <trans-unit id="postulate_sent">
                 <source>postulate_sent</source>
-                <target>Le mail de postulance a bien été transmis, veuillez attendre une réponse du support.</target>
+                <target>Votre demande a bien été prise en compte, veuillez attendre une réponse du support.</target>
             </trans-unit>
             <trans-unit id="info_nb_base">
                 <source>info_nb_base</source>

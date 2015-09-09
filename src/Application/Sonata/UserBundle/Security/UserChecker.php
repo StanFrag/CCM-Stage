@@ -23,7 +23,7 @@ class UserChecker implements UserCheckerInterface
         }
 
         if (!$user->isAccountNonLocked()) {
-            $ex = new LockedException('Le compte est actuelement bloqué. Veuillez patienter qu\'un administrateur le déverrouille.');
+            $ex = new LockedException('Le compte est actuellement bloqué. Veuillez patienter qu\'un administrateur le déverrouille.');
             $ex->setUser($user);
             throw $ex;
         }

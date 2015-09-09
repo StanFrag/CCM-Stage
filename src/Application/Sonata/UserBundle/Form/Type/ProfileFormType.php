@@ -33,10 +33,6 @@ class ProfileFormType extends BaseType
                 ),
                 'label' => 'Statut juridique :',
             ))
-            ->add('activityType', 'choice', array(
-                'choices' => array('editor' => 'Editeur Standard', 'mailer' => 'Emailer'),
-                'label' => 'Type d\'activité :',
-            ))
             ->add('phoneNumber', 'text', array('label' => 'Téléphone :'))
             ->add('url', 'url', array('label' => 'Url de votre site :'))
             ->setAttribute('error_type', 'inline');

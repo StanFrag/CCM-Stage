@@ -66,7 +66,10 @@ class UserAdminExtended extends UserAdmin
             ->add('company', null, array('label' => 'Societé'))
             ->add('phoneNumber', 'text', array('label' => 'Téléphone'))
             ->add('groups', 'entity', array())
-            ->add('locked', null, array('editable' => true))
+            ->add('locked', null, array(
+                'editable' => true,
+                'label' => 'Verrouillé'
+            ))
             ->add('createdAt', null, array(
                 'label' => 'Créé le',
                 'format' => 'd/m/Y',
@@ -174,10 +177,6 @@ class UserAdminExtended extends UserAdmin
                             'sa' => 'SA',
                         ),
                         'label' => 'Statut juridique :',
-                    ))
-                    ->add('activityType', 'choice', array(
-                        'choices' => array('editor' => 'Editeur Standard', 'mailer' => 'Emailer'),
-                        'label' => 'Type d\'activité :',
                     ))
                     ->add('phoneNumber', 'text', array('label' => 'Téléphone :'))
                     ->add('url', 'url', array('label' => 'Url de votre site :'))
