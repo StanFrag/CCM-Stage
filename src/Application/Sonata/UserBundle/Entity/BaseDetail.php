@@ -29,7 +29,7 @@ class BaseDetail
 
     /**
      * @ORM\ManyToOne(targetEntity="Base", inversedBy="base_detail")
-     * @ORM\JoinColumn(name="fk_base", referencedColumnName="id", onDelete="CASCADE", unique=true)
+     * @ORM\JoinColumn(name="fk_base", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $base;
 

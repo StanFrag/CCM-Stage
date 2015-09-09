@@ -71,7 +71,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="phoneNumber", type="integer")
+     * @ORM\Column(name="phoneNumber", type="string", length=10)
      * @Assert\Regex(
      *     pattern="/^((\+|00)33\s?|0)[1-9](\s?\d{2}){4}$/",
      *     match=true,
