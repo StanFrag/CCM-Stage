@@ -64,13 +64,6 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="activityType", type="string", length=255)
-     */
-    protected $activityType;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="phoneNumber", type="string", length=10)
      * @Assert\Regex(
      *     pattern="/^((\+|00)33\s?|0)[1-9](\s?\d{2}){4}$/",
@@ -110,16 +103,6 @@ class User extends BaseUser
     public function setLegalSituation($legalSituation)
     {
         $this->legalSituation = $legalSituation;
-    }
-
-    public function getActivityType()
-    {
-        return $this->activityType;
-    }
-
-    public function setActivityType($activityType)
-    {
-        $this->activityType = $activityType;
     }
 
     public function getPhoneNumber()

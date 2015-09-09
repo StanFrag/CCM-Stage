@@ -109,21 +109,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        {% if form_errors(form.activityType) %}
-                            <div class="alert alert-danger alert-error">
-                                {{ form_errors(form.activityType) }}
-                            </div>
-                        {% endif %}
-                        <div class="row">
-                            <div class="col-md-4 textRight">
-                                {{ form_label(form.activityType) }}
-                            </div>
-                            <div class="col-md-8">
-                                {{ form_widget(form.activityType) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         {% if form_errors(form.url) %}
                             <div class="alert alert-danger alert-error">
                                 {{ form_errors(form.url) }}

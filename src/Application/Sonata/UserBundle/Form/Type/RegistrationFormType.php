@@ -63,17 +63,6 @@ class RegistrationFormType extends BaseType
                     'class' => 'form-control',
                 ),
             ))
-            ->add('activityType', 'choice', array(
-                'choices' => array(
-                    'editor' => 'Editeur Standard',
-                    'mailer' => 'Emailer',
-                ),
-                'label' => 'Type d\'activité :',
-                'placeholder' => 'Veuillez choisir...',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
             ->add('phoneNumber', 'text', array(
                 'label' => 'Téléphone :',
                 'attr' => array(
