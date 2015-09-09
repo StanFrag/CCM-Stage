@@ -101,3 +101,6 @@ services:
           arguments: [ "sonata.block.service.infouser", @templating, @sonata.admin.pool, @doctrine.orm.entity_manager, @security.context]
           tags:
               - { name: sonata.block}
+
+  security.user_checker:
+      class: Application\Sonata\UserBundle\Security\UserChecker
