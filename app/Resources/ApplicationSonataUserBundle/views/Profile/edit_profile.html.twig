@@ -32,15 +32,113 @@ file that was distributed with this source code.
                 </div>
                 <div class="panel-body">
                     <form action="{{ path('sonata_user_profile_edit') }}" method="POST" class="form-horizontal">
+                        <br/>
+                        <div class="form-group">
+                            {% if form_errors(form.lastname) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.lastname) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_label(form.lastname) }}
+                                </div>
+                                <div class="col-md-7">
+                                    {{ form_widget(form.lastname) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {% if form_errors(form.firstname) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.firstname) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_label(form.firstname) }}
+                                </div>
+                                <div class="col-md-7">
+                                    {{ form_widget(form.firstname) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {% if form_errors(form.phoneNumber) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.phoneNumber) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_label(form.phoneNumber) }}
+                                </div>
+                                <div class="col-md-7">
+                                    {{ form_widget(form.phoneNumber) }}
+                                </div>
+                            </div>
+                        </div>
 
-                        {{ form_row(form.lastname) }}
-                        {{ form_row(form.firstname) }}
-                        {{ form_row(form.phoneNumber) }}
                         <hr/>
-                        {{ form_row(form.company) }}
-                        {{ form_row(form.legalSituation) }}
-                        {{ form_row(form.url) }}
 
+                        <div class="form-group">
+                            {% if form_errors(form.company) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.company) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_label(form.company) }}
+                                </div>
+                                <div class="col-md-7">
+                                    {{ form_widget(form.company) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {% if form_errors(form.legalSituation) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.legalSituation) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_label(form.legalSituation) }}
+                                </div>
+                                <div class="col-md-7">
+                                    {{ form_widget(form.legalSituation) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {% if form_errors(form.url) %}
+                                <div class="alert alert-danger alert-error">
+                                    {{ form_errors(form.url) }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_label(form.url) }}
+                                </div>
+                                <div class="col-md-7">
+                                    {{ form_widget(form.url) }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
                         {{ form_row(form._token) }}
                         <br/>
                         <div class="form-actions">

@@ -59,7 +59,9 @@ class MatchingRepository extends EntityRepository{
             ->leftJoin('m.base', 'b')
             ->leftJoin('m.campaign', 'c')
             ->where('b.user = :user')
+            ->andWhere('c.state = :state')
             ->setParameter('user', $user)
+            ->setParameter('state', true)
             ->orderBy('m.updated_at','DESC');
 
         $query = $t->getQuery()->setMaxResults(4);

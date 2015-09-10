@@ -20,18 +20,18 @@ sonata_user:
     profile:
         dashboard:
                 blocks:
-                    - { position: left, type: sonata.block.service.infostage }
-                    - { position: right, type: sonata.block.service.infouser}
+                    - { position: right, type: sonata.block.service.infostage }
+                    - { position: left, type: sonata.block.service.infouser}
                     - { position: left, type: sonata.block.service.lastmatching}
         # Customize user portal menu by setting links
         menu:
-            - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}
+            - { route: 'sonata_user_profile_show', label: 'title_dashboard', domain: 'SonataUserBundle'}
             - { route: 'sonata_user_profile_edit', label: 'link_edit_profile', domain: 'SonataUserBundle'}
             - { route: 'base_list', label: 'title_base', domain: 'SonataUserBundle'}
             - { route: 'match_list', label: 'title_match', domain: 'SonataUserBundle'}
 
         form:
-            type:               public_user_registration
+            type:               public_user_profile
             handler:            sonata.user.profile.form.handler.default
             name:               sonata_user_profile_form
             validation_groups:  [Profile]

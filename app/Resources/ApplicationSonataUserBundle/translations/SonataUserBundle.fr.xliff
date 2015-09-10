@@ -18,6 +18,10 @@
                 <source>title_match</source>
                 <target>Campagnes</target>
             </trans-unit>
+            <trans-unit id="title_dashboard">
+                <source>title_dashboard</source>
+                <target>Tableau de bord</target>
+            </trans-unit>
             <trans-unit id="title_user_account">
                 <source>title_user_account</source>
                 <target>Mon profil</target>
@@ -136,7 +140,7 @@
             </trans-unit>
             <trans-unit id="info_nb_base">
                 <source>info_nb_base</source>
-                <target>Nombre de bases uploadé</target>
+                <target>Nombre de bases uploadées</target>
             </trans-unit>
             <trans-unit id="info_nb_active_campaign">
                 <source>info_nb_active_campaign</source>

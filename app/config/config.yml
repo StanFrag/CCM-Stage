@@ -64,7 +64,7 @@ doctrine:
         auto_mapping: true
 
 swiftmailer:
-    delivery_address: admin@r-target.com
+    delivery_address: pkoenig@commentcamarche.net
 
 monolog:
     handlers:

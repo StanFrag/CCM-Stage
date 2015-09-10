@@ -25,7 +25,7 @@ class MatchingDetailRepository extends EntityRepository{
         $null = null;
         $qb = $this->createQueryBuilder('md');
 
-        $t = $qb->select('COUNT(md)')
+        $t = $qb->select('COUNT(DISTINCT md.md5)')
             ->leftJoin('md.id_matching', 'm')
             ->leftJoin('m.base', 'b')
             ->where('b.user = :user')

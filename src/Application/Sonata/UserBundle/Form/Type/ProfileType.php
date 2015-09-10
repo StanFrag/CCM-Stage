@@ -1,19 +1,23 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: stanislas
- * Date: 06/05/15
- * Time: 11:48.
- */
 namespace Application\Sonata\UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
+use Sonata\UserBundle\Form\Type\ProfileType as BaseType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProfileFormType extends BaseType
+class ProfileType extends BaseType
 {
+    private $class;
+
+    /**
+     * @param string $class The User class name
+     */
+    public function __construct($class)
+    {
+        $this->class = $class;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -48,13 +52,8 @@ class ProfileFormType extends BaseType
         ));
     }
 
-    public function getParent()
-    {
-        return 'fos_user_profile';
-    }
-
     public function getName()
     {
-        return 'application_sonata_user_profile';
+        return 'public_user_profile';
     }
 }

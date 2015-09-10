@@ -4,12 +4,11 @@ services:
   public_user.registration.form.type:
     class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
     arguments: [%fos_user.model.user.class%]
-    parent: fos_user.registration.form.type
     tags:
       - { name: form.type, alias: public_user_registration }
 
   public_user.profile.form.type:
-    class: Application\Sonata\UserBundle\Form\Type\ProfileFormType
+    class: Application\Sonata\UserBundle\Form\Type\ProfileType
     arguments: [%fos_user.model.user.class%]
     tags:
       - { name: form.type, alias: public_user_profile }
