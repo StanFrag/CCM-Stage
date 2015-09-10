@@ -54,7 +54,7 @@ class BaseController extends Controller
             return $this->redirect($this->generateUrl('base_list'));
         }
 
-        return $this->render('base/base_upload.html.twig', array(
+        return $this->render('base/base_rename.html.twig', array(
             'form' => $form->createView(),
         ));
     }
