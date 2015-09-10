@@ -39,7 +39,7 @@ class ProfileFormType extends BaseType
             ->setAttribute('error_type', 'inline');
     }
 
-    public function setDefaultOption(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Sonata\UserBundle\Entity\User',
