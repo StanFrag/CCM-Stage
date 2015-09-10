@@ -31,6 +31,8 @@ class Group extends BaseGroup
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

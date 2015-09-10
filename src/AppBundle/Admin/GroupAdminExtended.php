@@ -63,8 +63,7 @@ class GroupAdminExtended extends GroupAdmin
             ->tab('Rôles')
                 ->add('roles', 'sonata_security_roles', array(
                     'expanded' => true,
-                    'multiple' => true,
-                    'required' => false,
+                    'multiple' => true
                 ))
             ->end()
         ;

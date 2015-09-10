@@ -104,3 +104,13 @@ services:
 
   security.user_checker:
       class: Application\Sonata\UserBundle\Security\UserChecker
+
+  sonata.user.editable_role_builder:
+      class: Application\Sonata\UserBundle\Security\EditableRolesBuilder
+      arguments: [@security.context, @sonata.admin.pool, %security.role_hierarchy.roles%]
+
+  sonata.user.form.type.security_roles:
+      class: Application\Sonata\UserBundle\Form\Type\SecurityRolesType
+      arguments: [@sonata.user.editable_role_builder]
+      tags:
+        - { name: form.type, alias: sonata_security_roles}

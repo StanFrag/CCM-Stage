@@ -20,7 +20,7 @@ class BaseType extends AbstractType
             )
             ->add('file', 'file', array(
                 'required' => true,
-                'label' => 'Fichier à uploader')
+                'label' => 'Base à importer')
             )
         ;
     }

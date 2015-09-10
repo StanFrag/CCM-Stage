@@ -1,14 +1,14 @@
 {% extends "ApplicationSonataUserBundle:Profile:action.html.twig" %}
 
 {% block sonata_profile_title %}
-    {{ "title_user_base" | trans({}, 'SonataUserBundle')}}
+    {{ "title_base" | trans({}, 'SonataUserBundle')}}
 {% endblock %}
 
 {% block sonata_profile_content %}
 
     {% form_theme form _self %}
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-7">
             <div class="panel panel-md5">
 
                 <div class="panel-heading">
@@ -76,6 +76,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7"></div>
+        <div class="col-md-5"></div>
     </div>
 {% endblock %}
