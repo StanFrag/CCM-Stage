@@ -24,7 +24,7 @@ class RenameBaseType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOption(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Sonata\UserBundle\Entity\Base'
@@ -36,6 +36,6 @@ class RenameBaseType extends AbstractType
      */
     public function getName()
     {
-        return 'application_sonata_userbundle_renamebase';
+        return 'application_sonata_user_rename_base';
     }
 }

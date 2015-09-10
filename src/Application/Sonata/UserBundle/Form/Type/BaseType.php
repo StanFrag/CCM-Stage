@@ -27,7 +27,7 @@ class BaseType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOption(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Sonata\UserBundle\Entity\Base'
@@ -39,6 +39,6 @@ class BaseType extends AbstractType
      */
     public function getName()
     {
-        return 'application_sonata_userbundle_base';
+        return 'application_sonata_user_base';
     }
 }
