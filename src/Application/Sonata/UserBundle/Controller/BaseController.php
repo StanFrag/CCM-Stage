@@ -50,11 +50,12 @@ class BaseController extends Controller
 
         // Si le formulaire est submit et la validation correct
         if ($form->isValid()) {
+
             // Recupération de l'entity manager
             $em = $this->getDoctrine()->getManager();
 
-            // Recuperation du path du fichier soumis
-            $name = $form->get('title');
+            // Recuperation du titre de la base modifié
+            $name = $form["title"]->getData();
 
             $base->setTitle($name);
 
