@@ -50,7 +50,20 @@ class BaseController extends Controller
 
         // Si le formulaire est submit et la validation correct
         if ($form->isValid()) {
+            // Recupération de l'entity manager
+            $em = $this->getDoctrine()->getManager();
+
+            // Recuperation du path du fichier soumis
+            $name = $form->get('title');
+
+            $base->setTitle($name);
+
+            // Et on envoi les données
+            $em->persist($base);
+            $em->flush();
+
             $this->setFlash('sonata_user_success', 'upload.flash.success');
+
             return $this->redirect($this->generateUrl('base_list'));
         }
 
