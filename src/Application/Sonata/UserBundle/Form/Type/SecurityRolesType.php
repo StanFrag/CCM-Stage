@@ -82,7 +82,7 @@ class SecurityRolesType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOption(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         list($roles, $rolesReadOnly) = $this->rolesBuilder->getRoles();
 
