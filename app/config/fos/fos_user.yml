@@ -12,12 +12,6 @@ fos_user:
         user_manager: sonata.user.orm.user_manager
 
     registration:
-#        confirmation:
-#            from_email: # Use this node only if you don't want the global email address for the confirmation email
-#                address:        stan1904@hotmail.fr
-#                sender_name:    Admin CCM Benchmark
-#            enabled:    true # change to true for required email confirmation
-#            template:   FOSUserBundle:Registration:email.txt.twig
         form:
             type: public_user_registration
             validation_groups: [Register, Default, Registration]
@@ -27,4 +21,4 @@ fos_user:
             type:               fos_user_profile
             handler:            fos_user.profile.form.handler.default
             name:               fos_user_profile_form
-            validation_groups:  [ Profile ]
+            validation_groups:  [ Authentication ]

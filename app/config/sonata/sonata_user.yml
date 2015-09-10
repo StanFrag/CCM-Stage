@@ -31,7 +31,7 @@ sonata_user:
             - { route: 'match_list', label: 'title_match', domain: 'SonataUserBundle'}
 
         form:
-            type:               public_user_registration
+            type:               public_user_profile
             handler:            sonata.user.profile.form.handler.default
             name:               sonata_user_profile_form
             validation_groups:  [Profile]
