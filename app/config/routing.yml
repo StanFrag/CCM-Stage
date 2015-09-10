@@ -27,6 +27,10 @@ base_update:
     path: /bases/update/{id}
     defaults:  { _controller: ApplicationSonataUserBundle:Base:update }
 
+base_rename:
+    path: /bases/rename/{id}
+    defaults:  { _controller: ApplicationSonataUserBundle:Base:rename }
+
 base_remove:
     path: /bases/remove/{id}
     defaults:  { _controller: ApplicationSonataUserBundle:Base:remove }

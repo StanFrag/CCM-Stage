@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class BaseType extends AbstractType
+class RenameBaseType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,9 +17,6 @@ class BaseType extends AbstractType
         $builder
             ->add('title', null, array(
                 'label' => 'Nom de la base')
-            )
-            ->add('file', 'file', array(
-                'label' => 'Base à importer')
             )
         ;
     }
@@ -39,6 +36,6 @@ class BaseType extends AbstractType
      */
     public function getName()
     {
-        return 'application_sonata_userbundle_base';
+        return 'application_sonata_userbundle_renamebase';
     }
 }
