@@ -8,22 +8,14 @@
 
     {% form_theme form _self %}
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-5">
             <div class="panel panel-md5">
 
                 <div class="panel-heading">
-                    <h2 class="panel-title">{{ 'base_upload_form'|trans({}, 'SonataUserBundle') }}</h2>
+                    <h2 class="panel-title">{{ 'title_renamebase'|trans({}, 'SonataUserBundle') }}</h2>
                 </div>
 
                 <div class="panel-body">
-
-                    <div class="well  well-sm">
-                        <ul class="noMargin">
-                            <li>{{ 'upload_rule_one'|trans({}, 'SonataUserBundle') }}</li>
-                            <li>{{ 'upload_rule_two'|trans({}, 'SonataUserBundle') }}</li>
-                            <li>{{ 'upload_rule_tree'|trans({}, 'SonataUserBundle') }}</li>
-                        </ul>
-                    </div>
 
                     <form action="#" method="post" {{ form_enctype(form) }}>
 
@@ -43,22 +35,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            {% if form_errors(form.file) %}
-                                <div class="alert alert-danger alert-error">
-                                    {{ form_errors(form.file) }}
-                                </div>
-                            {% endif %}
-                            <div class="row">
-                                <div class="col-md-4 textRight">
-                                    {{ form_label(form.file) }}
-                                </div>
-                                <div class="col-md-8">
-                                    {{ form_widget(form.file) }}
-                                </div>
-                            </div>
-                        </div>
-
                         {{ form_rest(form) }}
 
                         <div class="form-group">
@@ -66,7 +42,7 @@
                                 <div class="col-md-4">
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="submit" class="btn btn-success" value="{{ 'base_submit'|trans({}, 'SonataUserBundle') }}" />
+                                    <input type="submit" class="btn btn-success" value="{{ 'title_renamebase'|trans({}, 'SonataUserBundle') }}" />
                                 </div>
                             </div>
                         </div>
@@ -76,6 +52,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5"></div>
+        <div class="col-md-7"></div>
     </div>
 {% endblock %}

@@ -4,6 +4,7 @@ namespace Application\Sonata\UserBundle\Controller;
 
 use Application\Sonata\UserBundle\Entity\Base;
 use Application\Sonata\UserBundle\Form\Type\BaseType;
+use Application\Sonata\UserBundle\Form\Type\RenameBaseType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Form\FormError;
@@ -28,6 +29,47 @@ class BaseController extends Controller
 
         return $this->render('base/base_list.html.twig', array(
             'listBases' => $listBases,
+        ));
+    }
+
+    public function renameAction(Base $base, Request $request)
+    {
+        if (!$base) {
+            throw $this->createNotFoundException('No Base found');
+        }
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        if ($base->getUser() !== $user) {
+            throw new AccessDeniedException();
+        }
+
+        // Creation du formulaire
+        $form = $this->createForm(new RenameBaseType(), $base);
+        $form->handleRequest($request);
+
+        // Si le formulaire est submit et la validation correct
+        if ($form->isValid()) {
+
+            // Recupération de l'entity manager
+            $em = $this->getDoctrine()->getManager();
+
+            // Recuperation du titre de la base modifié
+            $name = $form["title"]->getData();
+
+            $base->setTitle($name);
+
+            // Et on envoi les données
+            $em->persist($base);
+            $em->flush();
+
+            $this->setFlash('sonata_user_success', 'upload.flash.success');
+
+            return $this->redirect($this->generateUrl('base_list'));
+        }
+
+        return $this->render('base/base_rename.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 

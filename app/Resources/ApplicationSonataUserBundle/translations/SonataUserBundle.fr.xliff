@@ -10,17 +10,29 @@
                 <source>title_base</source>
                 <target>Bases de données</target>
             </trans-unit>
+            <trans-unit id="title_renamebase">
+                <source>title_renamebase</source>
+                <target>Renommer la base</target>
+            </trans-unit>
             <trans-unit id="title_match">
                 <source>title_match</source>
-                <target>Matching des bases</target>
+                <target>Campagnes</target>
+            </trans-unit>
+            <trans-unit id="title_user_account">
+                <source>title_user_account</source>
+                <target>Mon profil</target>
+            </trans-unit>
+            <trans-unit id="sonata_user_validate">
+                <source>sonata_user_validate</source>
+                <target>Valider</target>
             </trans-unit>
             <trans-unit id="base_upload_form">
                 <source>base_upload_form</source>
-                <target>Upload d'une base CSV</target>
+                <target>Ajout d'une base</target>
             </trans-unit>
             <trans-unit id="base_submit">
                 <source>base_submit</source>
-                <target>Upload de la base</target>
+                <target>Ajouter la base</target>
             </trans-unit>
             <trans-unit id="upload.flash.success">
                 <source>upload.flash.success</source>
@@ -36,7 +48,7 @@
             </trans-unit>
             <trans-unit id="base_not_found">
                 <source>base_not_found</source>
-                <target>Aucune base de données trouvé, veuillez ajouter une base</target>
+                <target>Aucune base de données trouvée, veuillez ajouter une base.</target>
             </trans-unit>
             <trans-unit id="description">
                 <source>description</source>

@@ -10,6 +10,7 @@ namespace Application\Sonata\UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProfileFormType extends BaseType
 {
@@ -38,10 +39,10 @@ class ProfileFormType extends BaseType
             ->setAttribute('error_type', 'inline');
     }
 
-    public function setDefaultOption(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => "Application\Sonata\UserBundle\Entity\User",
+            'data_class' => 'Application\Sonata\UserBundle\Entity\User',
             'validation_groups' => array('Default', 'Profile'),
             'intention' => 'profile',
         ));
@@ -54,6 +55,6 @@ class ProfileFormType extends BaseType
 
     public function getName()
     {
-        return 'public_user_registration';
+        return 'application_sonata_user_profile';
     }
 }

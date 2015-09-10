@@ -1,7 +1,7 @@
 {% extends "ApplicationSonataUserBundle:Profile:action.html.twig" %}
 
 {% block sonata_profile_title %}
-    {{ "title_user_base" | trans({}, 'SonataUserBundle')}}
+    {{ "title_base" | trans({}, 'SonataUserBundle')}}
 {% endblock %}
 
 {% block sonata_profile_content %}
@@ -32,9 +32,11 @@
                             <a onClick="$('#myModal{{ base.id }}').modal()" href="#myModal{{ base.id }}" data-toggle="tooltip" data-placement="bottom" title="Supprimer la base">
                                 <span class="glyphicon glyphicon-remove danger" aria-hidden="true" style="color:red; margin: 5px"></span>
                             </a>
+                            <a href="{{ path('base_rename', { 'id': base.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Renommer la base">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color:orange; margin: 5px"></span>
+                            </a>
                         </td>
                     </tr>
-
                     <div class="modal fade" style="display:none" id="myModal{{ base.id }}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
                         <div class="modal-dialog">
                             <div class="modal-content">
