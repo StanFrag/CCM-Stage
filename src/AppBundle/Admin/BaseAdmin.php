@@ -15,7 +15,6 @@ class BaseAdmin extends Admin{
 
     protected function configureListFields(ListMapper $listMapper){
         $listMapper
-            ->add('id')
             ->addIdentifier('title', null, [
                 'label' => 'Nom de base'
             ])
@@ -53,7 +52,6 @@ class BaseAdmin extends Admin{
     protected function configureDatagridFilters(DatagridMapper $filterMapper)
     {
         $filterMapper
-            ->add('id')
             ->add('title', null, [
                 'label' => 'Nom de base'
             ])

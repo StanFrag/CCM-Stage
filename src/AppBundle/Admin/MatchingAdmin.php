@@ -33,8 +33,12 @@ class MatchingAdmin extends Admin
             ->add('base.user', null, array(
                 'label'=> 'Utilisateur'
             ))
-            ->add('campaign')
+            ->add('campaign', null, array('label' => 'Campagne'))
             ->add('base')
+            ->add('state', null, array(
+                'editable' => true,
+                'label' => 'Accepté'
+            ))
         ;
     }
 
