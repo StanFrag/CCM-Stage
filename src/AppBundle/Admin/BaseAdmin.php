@@ -38,7 +38,8 @@ class BaseAdmin extends Admin{
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
-                )
+                ),
+                'label' => 'Actions'
             ))
             ->add('campaign', null, array(
                 'label' => 'Campagne associée'
