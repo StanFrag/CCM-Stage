@@ -18,6 +18,10 @@ match_postulate:
     path: /matching/{base}/{campaign}/{matchId}
     defaults:  { _controller: ApplicationSonataUserBundle:Matching:postulate }
 
+match_download:
+    path: /matching/{matchId}
+    defaults:  { _controller: ApplicationSonataUserBundle:Matching:download }
+
 # Base
 base_list:
     path: /bases/

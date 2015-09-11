@@ -59,6 +59,10 @@ class MatchingAdmin extends Admin
                 'label' => 'Effectué le',
                 'format' => 'd/m/Y à H\hi'
             ))
+            ->add('state', null, array(
+                'editable' => true,
+                'label' => 'Accepté'
+            ))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),

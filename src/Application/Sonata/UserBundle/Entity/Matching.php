@@ -61,6 +61,11 @@ class Matching
      */
     protected $matching_detail;
 
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean", name="state")
+     */
+    protected $state = false;
 
     /**
      * Get id
@@ -200,5 +205,28 @@ class Matching
     public function getMatchingDetail()
     {
         return $this->matching_detail;
+    }
+
+    /**
+     * Set state
+     *
+     * @param boolean $state
+     * @return boolean
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return boolean
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 }
