@@ -125,6 +125,28 @@ class User extends BaseUser
         $this->url = $url;
     }
 
+    public function setBase($bases)
+    {
+        if (count($bases) > 0) {
+            foreach ($bases as $i) {
+                $this->addBase($i);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addBase(Base $base)
+    {
+        $base->setUser($this);
+        $this->base->add($base);
+    }
+
+    public function getBase()
+    {
+        return $this->base;
+    }
+
     /**
      * Remove base
      *

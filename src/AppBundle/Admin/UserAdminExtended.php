@@ -65,7 +65,7 @@ class UserAdminExtended extends UserAdmin
             ->add('email')
             ->add('company', null, array('label' => 'Societé'))
             ->add('phoneNumber', 'text', array('label' => 'Téléphone'))
-            ->add('groups', 'entity', array())
+            ->add('groups', 'entity', array('label' => 'Groupe(s)'))
             ->add('locked', null, array(
                 'editable' => true,
                 'label' => 'Verrouillé'
@@ -75,19 +75,12 @@ class UserAdminExtended extends UserAdmin
                 'format' => 'd/m/Y',
             ))
             ->add('base', 'sonata_type_collection', array(
-                'label' => 'Bases'
-            ),
-            array(
+                'by_reference' => false,
+                'label' => 'Base(s)'
+            ), array(
                 'edit' => 'inline',
-                'inline' => 'table',
-                'allow_delete' => true
+                'inline' => 'table'
             ));
-
-#        if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
-#            $listMapper
-#                ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
-#            ;
-#        }
     }
 
     /**
@@ -96,15 +89,14 @@ class UserAdminExtended extends UserAdmin
     protected function configureDatagridFilters(DatagridMapper $filterMapper)
     {
         $filterMapper
-            ->add('id')
             ->add('username')
             ->add('company', null, array('label' => 'Société'))
             ->add('locked', null, array('label' => 'Verrouillé'))
             ->add('phoneNumber', null, array('label' => 'Téléphone'))
-            ->add('url', null, array('label' => 'Url site'))
-            ->add('email')
+            ->add('url', null, array('label' => 'Site web'))
+            ->add('email', null, array('label' => 'E-mail'))
             ->add('base', null, array('label' => 'Base'))
-            ->add('groups')
+            ->add('groups', null, array('label' => 'Groupe(s)'), null, array('multiple' => true))
         ;
     }
 
@@ -223,6 +215,7 @@ class UserAdminExtended extends UserAdmin
     {
         $this->getUserManager()->updateCanonicalFields($user);
         $this->getUserManager()->updatePassword($user);
+        $user->setBase($user->getBase());
     }
 
     /**

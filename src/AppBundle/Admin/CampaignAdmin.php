@@ -39,12 +39,12 @@ class CampaignAdmin extends Admin
                 'label' => 'Titre'
             ])
             ->add('description')
-            ->add('created_at', null, array(
-                'label' => 'Crée le',
+            ->add('begin_date', null, array(
+                'label' => 'Date de début',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('updated_at', null, array(
-                'label' => 'Modifié le',
+            ->add('end_date', null, array(
+                'label' => 'Date de fin',
                 'format' => 'd/m/Y à H\hi'
             ))
             ->add('state', 'choice', array(
@@ -57,7 +57,8 @@ class CampaignAdmin extends Admin
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
-                )
+                ),
+                'label' => 'Actions'
             ))
             ->add('img', null, array(
                 'template' => 'ApplicationSonataUserBundle:Admin:image_show.html.twig',

@@ -56,7 +56,7 @@ class MatchingAdmin extends Admin
                 'label'=> 'Nombre de match'
             ))
             ->add('updated_at', null, array(
-                'label' => 'Derniere modification le',
+                'label' => 'Effectué le',
                 'format' => 'd/m/Y à H\hi'
             ))
             ->add('_action', 'actions', array(
