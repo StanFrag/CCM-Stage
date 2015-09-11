@@ -54,6 +54,21 @@ class MatchingController extends Controller
         return $this->redirect($this->generateUrl('match_list'));
     }
 
+    public function downloadAction($matchId)
+    {
+        if (!$matchId) {
+            throw new NotFoundHttpException(sprintf('Unable to find the object with id : %s', $id));
+        }
+
+        // On récupère le service qui va envoyer le match
+        $downloadMatching = $this->container->get('public_user.exportCsv');
+        $downloadMatching->fromMatching($matchId);
+
+        $this->addFlash('sonata_flash_success', 'DownLoad du matching effectué avec succès');
+
+        return $this->redirect($this->generateUrl('match_list'));
+    }
+
     /**
      * @param string $action
      * @param string $value

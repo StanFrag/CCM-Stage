@@ -18,7 +18,6 @@ class CampaignAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
             ->add('title', null, [
                 'label' => 'Nom de la campagne'
             ])
@@ -34,7 +33,6 @@ class CampaignAdmin extends Admin
     {
 
         $listMapper
-            ->add('id')
             ->add('title', null, [
                 'label' => 'Titre'
             ])

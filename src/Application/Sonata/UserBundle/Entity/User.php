@@ -77,6 +77,11 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="url", type="string")
+     * @Assert\Regex(
+     *     pattern="(?<protocol>http(s)?|ftp)://(?<server>([A-Za-z0-9-]+\.)*(?<basedomain>[A-Za-z0-9-]+\.[A-Za-z0-9]+))+((/?)(?<path>(?<dir>[A-Za-z0-9\._\-]+)(/){0,1}[A-Za-z0-9.-/]*)){0,1}",
+     *     match=true,
+     *     message="L'adresse du site web doit être valide"
+     * )
      */
     protected $url;
 

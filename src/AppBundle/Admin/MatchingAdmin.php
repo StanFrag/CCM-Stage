@@ -33,8 +33,12 @@ class MatchingAdmin extends Admin
             ->add('base.user', null, array(
                 'label'=> 'Utilisateur'
             ))
-            ->add('campaign')
+            ->add('campaign', null, array('label' => 'Campagne'))
             ->add('base')
+            ->add('state', null, array(
+                'editable' => true,
+                'label' => 'Accepté'
+            ))
         ;
     }
 
@@ -58,6 +62,10 @@ class MatchingAdmin extends Admin
             ->add('updated_at', null, array(
                 'label' => 'Effectué le',
                 'format' => 'd/m/Y à H\hi'
+            ))
+            ->add('state', null, array(
+                'editable' => true,
+                'label' => 'Accepté'
             ))
             ->add('_action', 'actions', array(
                 'actions' => array(
