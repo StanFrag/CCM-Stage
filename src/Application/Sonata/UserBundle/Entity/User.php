@@ -78,12 +78,20 @@ class User extends BaseUser
      *
      * @ORM\Column(name="url", type="string")
      * @Assert\Regex(
-     *     pattern="(?<protocol>http(s)?|ftp)://(?<server>([A-Za-z0-9-]+\.)*(?<basedomain>[A-Za-z0-9-]+\.[A-Za-z0-9]+))+((/?)(?<path>(?<dir>[A-Za-z0-9\._\-]+)(/){0,1}[A-Za-z0-9.-/]*)){0,1}",
+     *     pattern="@^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$@i",
      *     match=true,
      *     message="L'adresse du site web doit être valide"
      * )
      */
     protected $url;
+
+    /**
+     * @Assert\Regex(
+     *  pattern="/^(?=.*[!@#$%])[0-9a-zA-Z!@#$%0-9]{8,}$/",
+     *  message="Le mot de passe doit contenir au minimum 8 caractères et au moins un caractère spécial."
+     * )
+     */
+    protected $plainPassword;
 
     public function getId()
     {
