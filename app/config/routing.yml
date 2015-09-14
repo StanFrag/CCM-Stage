@@ -9,6 +9,13 @@ cga_show:
     path: /cga/
     defaults:  { _controller: AppBundle:Cga:show }
 
+app_robots:
+    path: /robots.txt
+    defaults:
+        _format: txt
+        _controller: FrameworkBundle:Template:template
+        template: :robots:robots.txt.twig
+
 # Matching
 match_list:
     path: /matching/

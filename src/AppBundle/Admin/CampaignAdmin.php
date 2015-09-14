@@ -170,7 +170,7 @@ class CampaignAdmin extends Admin
 
     public function prePersist($campaign) {
         // Upload de la base
-        $this->getConfigurationPool()->getContainer()->get('public_user.upload_img')->upload($campaign);
+        $this->getConfigurationPool()->getContainer()->get('public_user.upload_img')->update($campaign);
     }
 
     public function preUpdate($campaign) {
