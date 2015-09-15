@@ -1,14 +1,13 @@
 {% extends sonata_block.templates.block_base %}
 
 {% block block %}
-    <div class="dashboard_block">
-        <h3 class="sonata-feed-title">{{ settings.title }}</h3>
-
-        <div class="sonata-feeds-container">
-            <br/>
+    <div class="panel panel-md5-dark">
+        <div class="panel-heading">
+            <h2 class="panel-title"><b>{{ settings.title }}</b></h2>
+        </div>
+        <div class="panel-body" style="padding: 20px">
             {% if info %}
                 <div class="table-responsive">
-                    <br/>
                     <table class="table table-bordered table-striped">
                         <tr class="alert-danger">
                             <th>Campagne</th>

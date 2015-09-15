@@ -33,13 +33,16 @@ file that was distributed with this source code.
     <div class="space_main_header_before"></div>
     <div class="row-fluid main_header">
         <div style="margin: auto; width:90%">
-            <img src="{{ asset('img/rtarget_logo_white.png') }}" alt="Logo MD5 R-target"/>
+            <a href="../profile">
+                <img src="{{ asset('img/rtarget_logo_white.png') }}" alt="Logo MD5 R-target"/>
+            </a>
             <h2>{% block sonata_profile_title %}{% trans from 'SonataUserBundle' %}title_dashboard{% endtrans %}{% endblock %}</h2>
         </div>
     </div>
     <div class="space_main_header_after"></div>
 
     <div style="margin: auto; width:90%">
+
     {% block sonata_page_breadcrumb %}
         {% if breadcrumb_context is not defined %}
             {% set breadcrumb_context = 'user_index' %}
@@ -53,7 +56,7 @@ file that was distributed with this source code.
 
         <div class="span2 col-lg-2">
             {% block sonata_profile_menu %}
-                {{ sonata_block_render({'type': 'sonata.user.block.menu'}, {'current_uri': app.request.requestUri}) }}
+                {{ sonata_block_render({'type': 'sonata.block.service.menu'}, {'current_uri': app.request.requestUri}) }}
             {% endblock %}
         </div>
 

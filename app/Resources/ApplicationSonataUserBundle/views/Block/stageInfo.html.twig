@@ -1,15 +1,15 @@
 {% extends sonata_block.templates.block_base %}
 
 {% block block %}
-    <div class="dashboard_block">
-        <h3 class="sonata-feed-title">{{ settings.title }}</h3>
-
-        <div class="sonata-feeds-container">
-            <br/>
+    <div class="panel panel-md5-dark">
+        <div class="panel-heading">
+            <h2 class="panel-title"><b>{{ settings.title }}</b></h2>
+        </div>
+        <div class="panel-body" style="padding: 20px">
             <ul>
-                <li><p style="font-size: 15px">Importez votre/vos bases</p></li>
-                <li><p style="font-size: 15px">Postulez à une campagne</p></li>
-                <li><p style="font-size: 15px">Recevez les cibles matchées</p></li>
+                <li style="color:red"><p style="font-size: 15px; color:#000000">Importez votre/vos bases</p></li>
+                <li style="color:red"><p style="font-size: 15px; color:#000000">Postulez à une campagne</p></li>
+                <li style="color:red"><p style="font-size: 15px; color:#000000">Recevez les cibles matchées</p></li>
             </ul>
         </div>
     </div>
