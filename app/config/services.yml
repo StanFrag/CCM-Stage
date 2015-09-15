@@ -101,6 +101,12 @@ services:
           tags:
               - { name: sonata.block}
 
+  sonata.block.service.menu:
+          class: Application\Sonata\UserBundle\Block\ProfileMenuBlockService
+          arguments: [ "sonata.user.block.menu", @templating, @knp_menu.menu_provider, @sonata.user.profile.menu_builder]
+          tags:
+              - { name: sonata.block}
+
   security.user_checker:
       class: Application\Sonata\UserBundle\Security\UserChecker
 
