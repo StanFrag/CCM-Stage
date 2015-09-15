@@ -30,6 +30,15 @@ file that was distributed with this source code.
     {% endjavascripts %}
 </head>
 <body>
+    <div class="space_main_header_before"></div>
+    <div class="row-fluid main_header">
+        <div style="margin: auto; width:90%">
+            <img src="{{ asset('img/rtarget_logo_white.png') }}" alt="Logo MD5 R-target"/>
+            <h2>{% block sonata_profile_title %}{% trans from 'SonataUserBundle' %}title_dashboard{% endtrans %}{% endblock %}</h2>
+        </div>
+    </div>
+    <div class="space_main_header_after"></div>
+
     <div style="margin: auto; width:90%">
     {% block sonata_page_breadcrumb %}
         {% if breadcrumb_context is not defined %}
@@ -39,8 +48,6 @@ file that was distributed with this source code.
             {{ sonata_block_render_event('breadcrumb', { 'context': breadcrumb_context, 'current_uri': app.request.requestUri }) }}
         </div>
     {% endblock %}
-
-    <h2>{% block sonata_profile_title %}{% trans from 'SonataUserBundle' %}title_dashboard{% endtrans %}{% endblock %}</h2>
 
     <div class="sonata-user-show row row-fluid">
 
