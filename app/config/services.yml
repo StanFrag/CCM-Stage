@@ -23,11 +23,11 @@ services:
 
   public_user.upload_base:
       class: Application\Sonata\UserBundle\Import\UploadBase
-      arguments: [%public_user.file_directory%]
+      arguments: [%public_user.file_directory%, @service_container]
 
   public_user.upload_img:
         class: Application\Sonata\UserBundle\Import\UploadImg
-        arguments: [%public_user.file_directory%]
+        arguments: [%public_user.file_directory%, @service_container]
 
   public_user.util.user_manipulator:
       class: Application\Sonata\UserBundle\Util\UserManipulator

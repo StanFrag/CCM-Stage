@@ -71,7 +71,9 @@ class Base
 
     /**
      * @Assert\File(
-     *      uploadErrorMessage = "le fichier n'a pas pu etre uploadé pour une raison inconnu, veuillez contacter l'administrateur du site",
+     *      uploadErrorMessage = "le fichier n'a pas pu etre uploadé pour une raison inconnu, veuillez contacter l'administrateur du site.",
+     *      uploadFormSizeErrorMessage = "Erreur: maxSize du champ HTML input file atteint. Veuillez contacter le support.",
+     *      notReadableMessage = "Erreur: Impossible de lire le fichier.",
      *      maxSize="1000M",
      * )
      */

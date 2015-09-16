@@ -79,6 +79,7 @@ class BaseController extends Controller
             throw $this->createNotFoundException('No Base found');
         }
 
+        $oldFile = $base->getPath();
         $user = $this->container->get('security.context')->getToken()->getUser();
 
         if ($base->getUser() !== $user) {
@@ -107,6 +108,14 @@ class BaseController extends Controller
 
             // Si le service n'a pas rempli la base de donnée des Bases Details
             if (null !== $response) {
+
+                $uploadMessage = $this->get('public_user.upload_base')->update($base, $oldFile);
+
+                if(null !== $uploadMessage){
+                    $this->setFlash('sonata_user_error', $uploadMessage);
+                    return $this->redirect($this->generateUrl('base_upload'));
+                }
+
                 // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
                 $base->setRowCount($response);
                 $base->setUser($user);
@@ -123,7 +132,7 @@ class BaseController extends Controller
                 return $this->redirect($this->generateUrl('base_list'));
             }else{
                 $this->setFlash('sonata_user_error', 'upload.flash.error');
-                $this->redirect($this->generateUrl('base_upload'));
+                return $this->redirect($this->generateUrl('base_upload'));
             }
         }
 
@@ -210,8 +219,14 @@ class BaseController extends Controller
 
             // Si le service n'a pas rempli la base de donnée des Bases Details
             if (null !== $response) {
+
                 // Upload de la base
-                $this->get('public_user.upload_base')->upload($base);
+                $uploadMessage = $this->get('public_user.upload_base')->upload($base);
+
+                if(null !== $uploadMessage){
+                    $this->setFlash('sonata_user_error', $uploadMessage);
+                    return $this->redirect($this->generateUrl('base_upload'));
+                }
 
                 // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
                 $base->setRowCount($response);
@@ -227,7 +242,7 @@ class BaseController extends Controller
                 return $this->redirect($this->generateUrl('base_list'));
             }else{
                 $this->setFlash('sonata_user_error', 'upload.flash.error');
-                $this->redirect($this->generateUrl('base_upload'));
+                return $this->redirect($this->generateUrl('base_upload'));
             }
         }
 

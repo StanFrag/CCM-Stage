@@ -21,7 +21,7 @@
                     <tr>
                         <td>{{ base.title }}</td>
                         <td>{{ base.rowCount }}</td>
-                        <td>{{ base.updated_at | date("d/m/Y à H\\hi") }}</td>
+                        <td>{{ base.updatedAt | date("d/m/Y à H\\hi") }}</td>
                         <td>
                             <a href="{{ path('base_details', { 'id': base.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Detail de la base">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true" style="color:dodgerblue; margin: 5px"></span>

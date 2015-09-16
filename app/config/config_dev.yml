@@ -14,7 +14,7 @@ framework:
 
 web_profiler:
     toolbar: true
-    intercept_redirects: false
+    intercept_redirects: true
 
 monolog:
     handlers:
@@ -50,6 +50,12 @@ assetic:
     use_controller: true
     filters:
             cssrewrite: ~
+
+swiftmailer:
+    transport: gmail
+    username:  sfragniere@commentcamarche.net
+    password:  Fra898&S
+    delivery_address: sfragniere@commentcamarche.net
 
 old_sound_rabbit_mq:
     connections:
