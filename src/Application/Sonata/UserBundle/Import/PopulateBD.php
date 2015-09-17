@@ -64,12 +64,12 @@ class PopulateBD {
             }
             // On ferme la lecture du fichier CSV
             fclose($handle);
+
+            // Si le traitement s'est deroulé correctement, on envoi le nombre de lignes traitées
+            return $num;
         }else{
             // Si le CSV n'a pas pu etre ouvert, on renvoi une reponse null
             return null;
         }
-
-        // Si le traitement s'est deroulé correctement, on envoi le nombre de lignes traitées
-        return $num;
     }
 }

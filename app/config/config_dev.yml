@@ -10,7 +10,7 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing_dev.yml"
         strict_requirements: true
-    profiler: { only_exceptions: false }
+    profiler: { only_exceptions: true }
 
 web_profiler:
     toolbar: true
@@ -50,12 +50,6 @@ assetic:
     use_controller: true
     filters:
             cssrewrite: ~
-
-swiftmailer:
-    transport: gmail
-    username:  sfragniere@commentcamarche.net
-    password:  Fra898&S
-    delivery_address: sfragniere@commentcamarche.net
 
 old_sound_rabbit_mq:
     connections:
