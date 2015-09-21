@@ -71,7 +71,7 @@ services:
 
   populate_exchange_service:
     class: Application\Sonata\UserBundle\Import\populateConsumer
-    arguments: ['@service_container', @doctrine.orm.entity_manager, @old_sound_rabbit_mq.get_populate_exchange_consumer]
+    arguments: ['@service_container', @doctrine.orm.entity_manager, @old_sound_rabbit_mq.get_populate_exchange_consumer, %public_user.file_directory%]
 
 ####  MATCHING  ####
   match_exchange_sender:

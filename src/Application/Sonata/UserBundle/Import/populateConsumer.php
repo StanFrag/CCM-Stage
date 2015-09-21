@@ -16,11 +16,12 @@ class populateConsumer implements ConsumerInterface{
     protected $base;
     protected $campaign;
 
-    public function __construct($container, EntityManager $em, Consumer $consumer)
+    public function __construct($container, EntityManager $em, Consumer $consumer, $directory)
     {
         $this->container = $container;
         $this->em = $em;
         $this->consumer = $consumer;
+        $this->directory = $directory;
     }
 
     public function execute(AMQPMessage $msg)
@@ -28,13 +29,14 @@ class populateConsumer implements ConsumerInterface{
         // Decode message
         $object = unserialize($msg->body);
 
+        // Rabbitmq consumer non lancé, renvoi en liste necessaire.
         if (isset($object['message']) && $object['message'] === 'shutdown') {
             $this->consumer->forceStopConsumer();
             return false;
         }
 
         // On verifie que les id recuperée ne sont pas null
-        if(null == $object['base'] || null == $object['md5']){
+        if(null == $object['base'] || null == $object['filePath']){
             return false;
         }
 
@@ -42,19 +44,38 @@ class populateConsumer implements ConsumerInterface{
             ->getRepository('ApplicationSonataUserBundle:Base')
             ->find($object['base']);
 
-        // On verifie que les id recuperée ne sont pas null
+        // Si la base est null c'est qu'elle n'existe plus donc le traitement n'a pas lieu d'etre
         if(null == $base){
-            return false;
+            return true;
         }
 
-        // Population de l'entité matching
-        $responsePopulate = $this->populate($object['md5'], $base);
+        // Si le fichier CSV est correctement ouvert en lecture
+        if (($handle = fopen($this->directory.'/'.$object['filePath'], "r")) !== FALSE) {
+            // Pour chaque colonne du CSV
+            while(($row = fgetcsv($handle, 0, ';')) !== FALSE) {
 
-        return $responsePopulate;
+                // On compte le nombre de ligne presente dans le fichier
+                $md5Array = count($row);
+
+                // Pour chaque ligne
+                for ($c=0; $c < $md5Array; $c++) {
+
+                    $tmpObj = str_replace([' ', ';'], '', $row[$c]);
+
+                    $this->populate($tmpObj, $base);
+                }
+            }
+            fclose($handle);
+
+            // Si le traitement s'est deroulé correctement, on le specifie au consumer
+            return true;
+        }else{
+            // Si on arrive pas a ouvrir le fichier, on reitere l'operation
+            return false;
+        }
     }
 
     protected function populate($md5, $base){
-
         // On crée un nouvelle obj Base Detail
         $baseDetail = new BaseDetail();
 
@@ -65,7 +86,5 @@ class populateConsumer implements ConsumerInterface{
         // Puis on persiste l'entité
         $this->em->persist($baseDetail);
         $this->em->flush();
-
-        return true;
     }
 }
