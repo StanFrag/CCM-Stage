@@ -3,6 +3,8 @@
 namespace Application\Sonata\UserBundle\Import;
 
 use Application\Sonata\UserBundle\Entity\Base;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -38,16 +40,16 @@ class UploadBase {
             $fs->mkdir($this->directory, 0777);
             $file->move($this->directory, $fileName);
         } catch (IOExceptionInterface $e) {
-            return $e->getMessage();
+            throw new IOException($e->getMessage());
         } catch (FileException $e) {
-            return $e->getMessage();
+            throw new FileException($e->getMessage());
         } catch(\Exception $e){
-            return $e->getMessage();
+            throw new Exception($e->getMessage());
         }
 
         $base->setPath($fileName);
 
-        return null;
+        return $fileName;
     }
 
     public function remove(Base $base)
@@ -85,16 +87,16 @@ class UploadBase {
             $fs->mkdir($this->directory, 0777);
             $file->move($this->directory, $fileName);
         } catch (IOExceptionInterface $e) {
-            return $e->getMessage();
+            throw new IOException($e->getMessage());
         } catch (FileException $e) {
-            return $e->getMessage();
+            throw new FileException($e->getMessage());
         } catch(\Exception $e){
-            return $e->getMessage();
+            throw new Exception($e->getMessage());
         }
 
         $base->setPath($fileName);
 
-        return null;
+        return $fileName;
     }
 
     private function generateFilename($file, $randomize = true)

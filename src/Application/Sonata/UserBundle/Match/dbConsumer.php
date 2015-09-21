@@ -26,17 +26,13 @@ class dbConsumer implements ConsumerInterface{
 
     public function execute(AMQPMessage $msg)
     {
-        // Decode message
+        // On decode le message recu
         $object = unserialize($msg->body);
 
+        // Verification que le consumer est activé
         if (isset($object['message']) && $object['message'] === 'shutdown') {
             $this->consumer->forceStopConsumer();
-            return true;
-        }
-
-        // On verifie que les id recuperée ne sont pas null
-        if(null == $object['campaign'] || null == $object['base']){
-            return true;
+            return false;
         }
 
         // On recupere la base liée a l'id recuperée
@@ -44,7 +40,12 @@ class dbConsumer implements ConsumerInterface{
             ->getRepository('ApplicationSonataUserBundle:Base')
             ->find($object['base']);
 
-        //Get base detail from base
+        // Si l'id ciblé ne recupere pas de base cela signifie que cette base n'existe plus, on annule alors
+        if(!$this->base){
+            return true;
+        }
+
+        // On recupere les baseDetails de la base ciblé
         $baseDetailsTmp = $this->em
             ->getRepository('ApplicationSonataUserBundle:BaseDetail')
             ->findBy(
@@ -53,14 +54,17 @@ class dbConsumer implements ConsumerInterface{
 
         $baseDetails = [];
 
+        // Pour chaque basedetail, on recupere son md5
         foreach($baseDetailsTmp as $tmpData){
             $tmp = $tmpData->getMd5();
             $baseDetails[] = $tmp;
         }
 
-        // Si la base est vide on renvoi une erreur
-        if (!$baseDetails) {
-            return true;
+        // Si le nombre de baseDetails recuperé n'est pas egal au nombre de ligne de la base
+        // cela signifie que les données de baseDetails n'ont pas encore été completment importé
+        // On renvoi le traitement en liste d'attente
+        if($this->base->getRowCount() != count($baseDetails)){
+            return false;
         }
 
         // On recupere la campagne liée à l'id recuperée
@@ -68,11 +72,17 @@ class dbConsumer implements ConsumerInterface{
             ->getRepository('ApplicationSonataUserBundle:Campaign')
             ->find($object['campaign']);
 
+        // Si l'id ciblé ne recupere pas de campagne cela signifie que cette base n'existe plus, on annule alors
+        if(!$this->campaign){
+            return true;
+        }
+
         // On recupere la base liée a cette campagne
         $campaignBase = $this->campaign->getBase();
 
-        // Si la base est null on renvoi une erreur
-        if (!$campaignBase) {
+        // Si l'id ciblé ne recupere pas de base de campagne, cela signifi qu'aucune base n'est assigné a la campagne
+        // le traitement n'a donc pas lieu d'etre
+        if(!$campaignBase){
             return true;
         }
 
@@ -90,17 +100,12 @@ class dbConsumer implements ConsumerInterface{
             $baseDetailsFromCampaign[] = $tmp;
         }
 
-        // Si le base ne contient pas de données on renvoi une erreur
-        if (!$baseDetailsFromCampaign) {
-            return true;
+        if($campaignBase->getRowCount() != count($baseDetailsFromCampaign)){
+            return false;
         }
 
         // Lancement du matching entre les deux bases
         $dataMatch = $this->match($baseDetails, $baseDetailsFromCampaign);
-
-        if (!$dataMatch) {
-            return true;
-        }
 
         // Population de l'entité matching
         $responsePopulate = $this->populate($dataMatch);
@@ -109,11 +114,6 @@ class dbConsumer implements ConsumerInterface{
     }
 
     protected function match(Array $first_db, Array $second_db){
-
-        // Si une des deux bases est null on renvoi une erreur
-        if(null == $first_db || null == $second_db){
-            return false;
-        }
 
         // Fonction permettant de traité la difference entre les deux array
         $result =  array_intersect($first_db, $second_db);

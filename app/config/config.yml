@@ -79,9 +79,19 @@ old_sound_rabbit_mq:
             add_match_exchange:
                 connection: default
                 exchange_options: { name: 'match-exchange', type: direct }
+
+            add_populate_exchange:
+                connection: default
+                exchange_options: { name: 'populate-exchange', type: direct }
     consumers:
             get_match_exchange:
                 connection:       default
                 exchange_options: { name: 'match-exchange', type: direct }
                 queue_options:    { name: 'match-exchange' }
                 callback:         match_exchange_service
+
+            get_populate_exchange:
+                connection:       default
+                exchange_options: { name: 'populate-exchange', type: direct }
+                queue_options:    { name: 'populate-exchange' }
+                callback:         populate_exchange_service

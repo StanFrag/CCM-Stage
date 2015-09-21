@@ -110,27 +110,27 @@ class BaseAdmin extends Admin{
     }
 
     public function prePersist($base) {
-        // Lors de la création d'une nouvelle Base coté Admin
-        $this->populateBaseDetail($base);
-
         // Upload de la base
         $this->getConfigurationPool()->getContainer()->get('public_user.upload_base')->upload($base);
     }
 
     public function preUpdate($base) {
-        // Lors de l'update d'une nouvelle Base coté Admin
-        $this->populateBaseDetail($base, true);
-
         // Upload de la base
         $this->getConfigurationPool()->getContainer()->get('public_user.upload_base')->update($base);
     }
 
     public function postPersist($base) {
+        // Lors de la création d'une nouvelle Base coté Admin
+        $this->populateBaseDetail($base);
+
         $this->sendMatching($base);
     }
 
     public function postUpdate($base) {
         $this->removePreviousBaseMatching($base);
+
+        // Lors de l'update d'une nouvelle Base coté Admin
+        $this->populateBaseDetail($base, true);
 
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $campaign = $em->getRepository('ApplicationSonataUserBundle:Campaign')->findCampaignByBase($base);
@@ -235,7 +235,7 @@ class BaseAdmin extends Admin{
      */
     protected function populateBaseDetail($base, $updateAction = false)
     {
-        $file = $this->getForm()->get('file')->getData();
+        $file = $base->getPath();
 
         // Si un fichier à été soumis durant le formulaire
         if(null !== $file){
@@ -248,9 +248,9 @@ class BaseAdmin extends Admin{
                 $base->removeBaseDetailAll();
             }
 
-            // On récupère le service qui popule la Base de ses Bases Details
-            $populate = $this->getConfigurationPool()->getContainer()->get('public_user.populate');
-            $responsePopulate = $populate->fromCSV($filePath, $base);
+            // On récupère le service qui va envoyer le populate
+            $sendMatching = $this->getConfigurationPool()->getContainer()->get('populate_exchange_sender');
+            $responsePopulate = $sendMatching->send($filePath, $base->getId());
 
             // Si le service renvoi une valeur null
             if (null !== $responsePopulate) {

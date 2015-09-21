@@ -119,7 +119,6 @@ class Base
     public function preUpdate()
     {
         $this->setUpdatedAt();
-        $this->removeBaseDetailAll();
     }
 
     /**

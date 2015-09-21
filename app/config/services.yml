@@ -64,6 +64,15 @@ services:
           tags:
               - {name: sonata.admin, manager_type: orm, group: admin, label: Matching}
 
+####  POPULATE  ####
+  populate_exchange_sender:
+    class: Application\Sonata\UserBundle\Import\populateSender
+    arguments: ['@service_container', %public_user.file_directory%]
+
+  populate_exchange_service:
+    class: Application\Sonata\UserBundle\Import\populateConsumer
+    arguments: ['@service_container', @doctrine.orm.entity_manager, @old_sound_rabbit_mq.get_populate_exchange_consumer]
+
 ####  MATCHING  ####
   match_exchange_sender:
     class: Application\Sonata\UserBundle\Match\dbSender
