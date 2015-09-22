@@ -61,8 +61,9 @@ class populateConsumer implements ConsumerInterface{
                 for ($c=0; $c < $md5Array; $c++) {
 
                     $tmpObj = str_replace([' ', ';'], '', $row[$c]);
+                    $tmpObjLower = strtolower($tmpObj);
 
-                    $this->populate($tmpObj, $base);
+                    $this->populate($tmpObjLower, $base);
                 }
             }
             fclose($handle);
