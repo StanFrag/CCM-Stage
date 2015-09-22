@@ -30,6 +30,7 @@ class populateSender{
         $num = 0;
 
         if (($handle = fopen($this->directory.'/'.$filePath, "r")) !== FALSE) {
+
             while(($row = fgetcsv($handle, 0, ';')) !== FALSE) {
 
                 $md5Array = count($row);

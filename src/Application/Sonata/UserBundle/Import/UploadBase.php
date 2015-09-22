@@ -16,10 +16,9 @@ class UploadBase {
 
     private $directory;
 
-    public function __construct($directory, $container)
+    public function __construct($directory)
     {
         $this->directory = $directory;
-        $this->container = $container;
     }
 
     public function update(Base $base, $oldFile, $randomize = true)

@@ -21,8 +21,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Base
 {
 
-    protected $em;
-
     public function __construct()
     {
         $this->base_details = new ArrayCollection();
@@ -245,7 +243,7 @@ class Base
      */
     public function removeBaseDetail(BaseDetail $base_detail)
     {
-        $this->base_detail->removeElement($base_detail);
+        $this->base_detail->removeElent($base_detail);
     }
 
     /**
