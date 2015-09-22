@@ -240,8 +240,6 @@ class BaseAdmin extends Admin{
         // Si un fichier à été soumis durant le formulaire
         if(null !== $file){
 
-            $filePath = $this->getForm()->get('file')->getData()->getPathName();
-
             // S'il s'agit d'un update, on vide la base de ses baseDetails
             if($updateAction == true){
                 // On supprime les entités de base detail du fichier precedent
@@ -250,7 +248,7 @@ class BaseAdmin extends Admin{
 
             // On récupère le service qui va envoyer le populate
             $sendMatching = $this->getConfigurationPool()->getContainer()->get('populate_exchange_sender');
-            $responsePopulate = $sendMatching->send($filePath, $base->getId());
+            $responsePopulate = $sendMatching->send($file, $base->getId());
 
             // Si le service renvoi une valeur null
             if (null !== $responsePopulate) {
