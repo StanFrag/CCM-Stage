@@ -236,7 +236,7 @@ class BaseAdmin extends Admin{
     protected function populateBaseDetail($base, $updateAction = false)
     {
         $file = $base->getPath();
-        $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getEntityManager();
 
         // Si un fichier à été soumis durant le formulaire
         if(null !== $file){
@@ -257,7 +257,6 @@ class BaseAdmin extends Admin{
                 $base->setRowCount($responsePopulate);
 
                 // Et on envoi les données
-                $em->persist($base);
                 $em->flush();
             }else{
                 //$this->setFlash('sonata_user_error', 'upload.flash.error');
