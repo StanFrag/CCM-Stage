@@ -1,10 +1,12 @@
 imports:
+
     - { resource: config.yml }
     - { resource: /etc/quidea/dev/sharedance_bg.yml }
     - { resource: /etc/quidea/dev/syslog.yml }
     - { resource: /etc/quidea/dev/mailing.yml }
     - { resource: /etc/quidea/dev/db_md5.yml }
     #- { resource: /etc/quidea/dev/rabbitmq.yml }
+
 
 framework:
     router:
@@ -37,14 +39,6 @@ monolog:
                 VERBOSITY_VERY_VERBOSE: NOTICE
                 VERBOSITY_DEBUG: DEBUG
             channels: ["doctrine"]
-        # uncomment to get logging in your browser
-        # you may have to allow bigger header sizes in your Web server configuration
-        #firephp:
-        #    type:   firephp
-        #    level:  info
-        #chromephp:
-        #    type:   chromephp
-        #    level:  info
 
 assetic:
     use_controller: true
@@ -56,6 +50,6 @@ old_sound_rabbit_mq:
       default:
         host:     'localhost'
         port:     5672
-        user:     'test'
-        password: 'test'
+        user:     'admin'
+        password: 'admin'
         vhost:    '/'

@@ -158,6 +158,10 @@
                 <source>info_nb_matching_detail</source>
                 <target>Volume total de cibles matchées</target>
             </trans-unit>
+            <trans-unit id="upload_base_rate">
+                <source>upload_base_rate</source>
+                <target>Upload de la base</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

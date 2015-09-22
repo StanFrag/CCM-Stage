@@ -79,6 +79,7 @@ class BaseController extends Controller
             throw $this->createNotFoundException('No Base found');
         }
 
+        $oldFile = $base->getPath();
         $user = $this->container->get('security.context')->getToken()->getUser();
 
         if ($base->getUser() !== $user) {
@@ -101,12 +102,19 @@ class BaseController extends Controller
             // On supprime les anciennes base details
             $base->removeBaseDetailAll();
 
-            // On récupère le service pour remplir la base de donnée des basesDetails
-            $populate = $this->container->get('public_user.populate');
-            $response = $populate->fromCSV($filePath, $base);
+            $uploadPathFile = $this->get('public_user.upload_base')->update($base, $oldFile);
+
+            // On persist la base et on la flush pour créer son id
+            $em->persist($base);
+            $em->flush();
+
+            // On récupère le service qui va envoyer le match
+            $sendMatching = $this->container->get('populate_exchange_sender');
+            $response = $sendMatching->send($uploadPathFile, $base->getId());
 
             // Si le service n'a pas rempli la base de donnée des Bases Details
             if (null !== $response) {
+
                 // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
                 $base->setRowCount($response);
                 $base->setUser($user);
@@ -123,7 +131,7 @@ class BaseController extends Controller
                 return $this->redirect($this->generateUrl('base_list'));
             }else{
                 $this->setFlash('sonata_user_error', 'upload.flash.error');
-                $this->redirect($this->generateUrl('base_upload'));
+                return $this->redirect($this->generateUrl('base_upload'));
             }
         }
 
@@ -195,39 +203,46 @@ class BaseController extends Controller
 
         // Si le formulaire est submit et la validation correct
         if ($form->isValid()) {
-            // Recupération du user
+
             $user = $this->get('security.token_storage')->getToken()->getUser();
-
-            // Recupération de l'entity manager
             $em = $this->getDoctrine()->getManager();
-
-            // Recuperation du path du fichier soumis
             $filePath = $form->get('file')->getData()->getPathName();
 
-            // On récupère le service pour remplir la base de donnée des basesDetails
-            $populate = $this->container->get('public_user.populate');
-            $response = $populate->fromCSV($filePath, $base);
+            if(null == $filePath){
+                $this->setFlash('sonata_user_error', 'upload.flash.error');
+                return $this->redirect($this->generateUrl('base_upload'));
+            }else{
 
-            // Si le service n'a pas rempli la base de donnée des Bases Details
-            if (null !== $response) {
                 // Upload de la base
-                $this->get('public_user.upload_base')->upload($base);
-
-                // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
-                $base->setRowCount($response);
-                $base->setUser($user);
+                $uploadPathFile = $this->get('public_user.upload_base')->upload($base);
 
                 // Et on envoi les données
                 $em->persist($base);
                 $em->flush();
 
-                $this->sendMatching($base);
+                // On récupère le service qui va populer la base de ses basedetails
+                $sendPopulate = $this->container->get('populate_exchange_sender');
+                $responsePopulate = $sendPopulate->send($uploadPathFile, $base->getId());
 
-                $this->setFlash('sonata_user_success', 'upload.flash.success');
-                return $this->redirect($this->generateUrl('base_list'));
-            }else{
-                $this->setFlash('sonata_user_error', 'upload.flash.error');
-                $this->redirect($this->generateUrl('base_upload'));
+                // Si le service a rempli la base de donnée des Bases Details
+                if (null !== $responsePopulate) {
+
+                    // Sinon on ajout en bd le nombre de ligne du fichier et l'User associé
+                    $base->setRowCount($responsePopulate);
+                    $base->setUser($user);
+
+                    // Et on envoi les données
+                    $em->persist($base);
+                    $em->flush();
+
+                    $this->sendMatching($base);
+
+                    $this->setFlash('sonata_user_success', 'upload.flash.success');
+                    return $this->redirect($this->generateUrl('base_list'));
+                }else{
+                    $this->setFlash('sonata_user_error', 'upload.flash.error');
+                    return $this->redirect($this->generateUrl('base_upload'));
+                }
             }
         }
 

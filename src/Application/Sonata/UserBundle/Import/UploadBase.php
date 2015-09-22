@@ -3,6 +3,9 @@
 namespace Application\Sonata\UserBundle\Import;
 
 use Application\Sonata\UserBundle\Entity\Base;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\File;
@@ -18,7 +21,7 @@ class UploadBase {
         $this->directory = $directory;
     }
 
-    public function update(Base $base, $randomize = true)
+    public function update(Base $base, $oldFile, $randomize = true)
     {
         $file = $base->getFile();
 
@@ -32,13 +35,20 @@ class UploadBase {
         $fs = new Filesystem();
 
         try {
+            $fs->remove($this->directory.'/'.$oldFile);
             $fs->mkdir($this->directory, 0777);
+            $file->move($this->directory, $fileName);
         } catch (IOExceptionInterface $e) {
-            echo "An error occurred while creating your directory at ".$e->getPath();
+            throw new IOException($e->getMessage());
+        } catch (FileException $e) {
+            throw new FileException($e->getMessage());
+        } catch(\Exception $e){
+            throw new Exception($e->getMessage());
         }
 
         $base->setPath($fileName);
-        $file->move($this->directory, $fileName);
+
+        return $fileName;
     }
 
     public function remove(Base $base)
@@ -74,13 +84,18 @@ class UploadBase {
 
         try {
             $fs->mkdir($this->directory, 0777);
+            $file->move($this->directory, $fileName);
         } catch (IOExceptionInterface $e) {
-            echo "An error occurred while creating your directory at ".$e->getPath();
+            throw new IOException($e->getMessage());
+        } catch (FileException $e) {
+            throw new FileException($e->getMessage());
+        } catch(\Exception $e){
+            throw new Exception($e->getMessage());
         }
 
-        $file->move($this->directory, $fileName);
-
         $base->setPath($fileName);
+
+        return $fileName;
     }
 
     private function generateFilename($file, $randomize = true)

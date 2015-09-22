@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\UserBundle\Entity\Repository;
 
+use Application\Sonata\UserBundle\Entity\Base;
 use Doctrine\ORM\EntityRepository;
 use Application\Sonata\UserBundle\Entity\User;
 
@@ -22,6 +23,21 @@ class BaseDetailRepository extends EntityRepository
             ->leftJoin('bd.base', 'b')
             ->where('b.user = :user')
             ->setParameter('user', $user);
+
+        $query = $t->getQuery();
+
+        return $query->getSingleScalarResult(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
+    }
+
+    public function countBaseDetailByIdBase($baseId){
+
+        $null = null;
+        $qb = $this->createQueryBuilder('bd');
+
+        $t = $qb->select('COUNT(bd)')
+            ->leftJoin('bd.base', 'b')
+            ->where('b.id = :id')
+            ->setParameter('id', $baseId);
 
         $query = $t->getQuery();
 

@@ -21,8 +21,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Base
 {
 
-    protected $em;
-
     public function __construct()
     {
         $this->base_details = new ArrayCollection();
@@ -71,8 +69,11 @@ class Base
 
     /**
      * @Assert\File(
-     *      uploadErrorMessage = "le fichier n'a pas pu etre uploadé pour une raison inconnu, veuillez contacter l'administrateur du site",
-     *      maxSize="1000M",
+     *      uploadErrorMessage = "le fichier n'a pas pu etre uploadé pour une raison inconnu, veuillez contacter l'administrateur du site.",
+     *      uploadFormSizeErrorMessage = "Erreur: maxSize du champ HTML input file atteint. Veuillez contacter le support.",
+     *      notReadableMessage = "Erreur: Impossible de lire le fichier.",
+     *      maxSize="2147483648",
+     *      maxSizeMessage="Fichier trop lourd."
      * )
      */
     public $file;
@@ -116,7 +117,6 @@ class Base
     public function preUpdate()
     {
         $this->setUpdatedAt();
-        $this->removeBaseDetailAll();
     }
 
     /**
@@ -243,7 +243,7 @@ class Base
      */
     public function removeBaseDetail(BaseDetail $base_detail)
     {
-        $this->base_detail->removeElement($base_detail);
+        $this->base_detail->removeElent($base_detail);
     }
 
     /**

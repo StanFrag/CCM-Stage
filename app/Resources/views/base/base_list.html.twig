@@ -15,23 +15,30 @@
                     <th>{{ "name_base" | trans({}, 'SonataUserBundle')}}</th>
                     <th>{{ "number_line" | trans({}, 'SonataUserBundle')}}</th>
                     <th>{{ "modificated_at" | trans({}, 'SonataUserBundle')}}</th>
+                    <th>{{ "upload_base_rate" | trans({}, 'SonataUserBundle')}}</th>
                     <th>{{ "action" | trans({}, 'SonataUserBundle')}}</th>
                 </tr>
                 {% for base in listBases %}
                     <tr>
                         <td>{{ base.title }}</td>
                         <td>{{ base.rowCount }}</td>
-                        <td>{{ base.updated_at | date("d/m/Y à H\\hi") }}</td>
+                        <td>{{ base.updatedAt | date("d/m/Y à H\\hi") }}</td>
+                        <td>{{ base_operation.getPopulateRate(base) }} %</td>
                         <td>
                             <a href="{{ path('base_details', { 'id': base.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Detail de la base">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true" style="color:dodgerblue; margin: 5px"></span>
                             </a>
-                            <a href="{{ path('base_update', { 'id': base.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Modifier la base">
-                                <span class="glyphicon glyphicon-cog" aria-hidden="true" style="color:green; margin: 5px"></span>
-                            </a>
-                            <a onClick="$('#myModal{{ base.id }}').modal()" href="#myModal{{ base.id }}" data-toggle="tooltip" data-placement="bottom" title="Supprimer la base">
-                                <span class="glyphicon glyphicon-remove danger" aria-hidden="true" style="color:red; margin: 5px"></span>
-                            </a>
+                            {% if base_operation.getPopulateRate(base) == 100 %}
+                                <a href="{{ path('base_update', { 'id': base.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Modifier la base">
+                                    <span class="glyphicon glyphicon-cog" aria-hidden="true" style="color:green; margin: 5px"></span>
+                                </a>
+                                <a onClick="$('#myModal{{ base.id }}').modal()" href="#myModal{{ base.id }}" data-toggle="tooltip" data-placement="bottom" title="Supprimer la base">
+                                    <span class="glyphicon glyphicon-remove danger" aria-hidden="true" style="color:red; margin: 5px"></span>
+                                </a>
+                            {% else %}
+                                    <span class="glyphicon glyphicon-cog" aria-hidden="true" style="color:#8B8986; margin: 5px"></span>
+                                    <span class="glyphicon glyphicon-remove danger" aria-hidden="true" style="color:#8B8986; margin: 5px"></span>
+                            {% endif %}
                             <a href="{{ path('base_rename', { 'id': base.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Renommer la base">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color:orange; margin: 5px"></span>
                             </a>
