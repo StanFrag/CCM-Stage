@@ -54,28 +54,32 @@ class populateConsumer implements ConsumerInterface{
             $conn = $this->em->getConnection();
             $conn->beginTransaction();
 
+            $countLine = 0;
+
             // Pour chaque colonne du CSV
             while(($row = fgetcsv($handle, 0, ';')) !== FALSE) {
+
+                $countLine++;
 
                 // On compte le nombre de ligne presente dans le fichier
                 $md5Array = count($row);
 
                 // Pour chaque ligne
-                for ($c=0; $c < $md5Array; $c++) {
+                for ($c = 0; $c < $md5Array; $c++) {
 
                     $tmpObj = str_replace([' ', ';'], '', $row[$c]);
                     $tmpObjLower = strtolower($tmpObj);
 
                     $this->populate($tmpObjLower, $base, $conn);
+                }
 
-                    if(($c % 500) == 0 && $c > 0){
-                        try{
-                            // do stuff
-                            $conn->commit();
-                        } catch(Exception $e) {
-                            $conn->rollback();
-                            throw $e;
-                        }
+                if( ($countLine % 500) == 0 && $c > 0){
+                    try{
+                        $conn->commit();
+                        $conn->beginTransaction();
+                    } catch(Exception $e) {
+                        $conn->rollback();
+                        throw $e;
                     }
                 }
             }
@@ -83,15 +87,14 @@ class populateConsumer implements ConsumerInterface{
             fclose($handle);
 
             try{
-                // do stuff
                 $conn->commit();
+                return true;
             } catch(Exception $e) {
                 $conn->rollback();
                 throw $e;
             }
 
-            // Si le traitement s'est deroulé correctement, on le specifie au consumer
-            return true;
+
         }else{
             // Si on arrive pas a ouvrir le fichier, on reitere l'operation
             return false;
