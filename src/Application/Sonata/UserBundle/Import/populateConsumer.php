@@ -7,14 +7,13 @@ use Doctrine\ORM\EntityManager;
 use OldSound\RabbitMqBundle\RabbitMq\Consumer;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class populateConsumer implements ConsumerInterface{
 
-    protected $em;
-
     protected $base;
-    protected $campaign;
+    private $conn;
 
     public function __construct($container, EntityManager $em, Consumer $consumer, $directory)
     {
@@ -51,6 +50,10 @@ class populateConsumer implements ConsumerInterface{
 
         // Si le fichier CSV est correctement ouvert en lecture
         if (($handle = fopen($this->directory.'/'.$object['filePath'], "r")) !== FALSE) {
+
+            $conn = $this->em->getConnection();
+            $conn->beginTransaction();
+
             // Pour chaque colonne du CSV
             while(($row = fgetcsv($handle, 0, ';')) !== FALSE) {
 
@@ -63,10 +66,29 @@ class populateConsumer implements ConsumerInterface{
                     $tmpObj = str_replace([' ', ';'], '', $row[$c]);
                     $tmpObjLower = strtolower($tmpObj);
 
-                    $this->populate($tmpObjLower, $base);
+                    $this->populate($tmpObjLower, $base, $conn);
+
+                    if(($c % 500) == 0 && $c > 0){
+                        try{
+                            // do stuff
+                            $conn->commit();
+                        } catch(Exception $e) {
+                            $conn->rollback();
+                            throw $e;
+                        }
+                    }
                 }
             }
+            // On close le csv
             fclose($handle);
+
+            try{
+                // do stuff
+                $conn->commit();
+            } catch(Exception $e) {
+                $conn->rollback();
+                throw $e;
+            }
 
             // Si le traitement s'est deroulé correctement, on le specifie au consumer
             return true;
@@ -76,16 +98,7 @@ class populateConsumer implements ConsumerInterface{
         }
     }
 
-    protected function populate($md5, $base){
-        // On crée un nouvelle obj Base Detail
-        $baseDetail = new BaseDetail();
-
-        // Et on rempli les variables de l'objet
-        $baseDetail->setBase($base);
-        $baseDetail->setMd5($md5);
-
-        // Puis on persiste l'entité
-        $this->em->persist($baseDetail);
-        $this->em->flush();
+    protected function populate($md5, $base, $conn){
+        $conn->insert('base_details', ['md5' => $md5, 'fk_base' => $base->getId()]);
     }
 }
