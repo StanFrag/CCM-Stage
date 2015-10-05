@@ -46,7 +46,7 @@ class dbConsumer implements ConsumerInterface{
             ->find($object['base']);
 
         // Si l'id ciblé ne recupere pas de base cela signifie que cette base n'existe plus, on annule alors
-        if($this->base->count() == 0){
+        if(!$this->base->getId()){
             return true;
         }
 
@@ -57,7 +57,7 @@ class dbConsumer implements ConsumerInterface{
                 array('base' => $this->base)
             );
 
-        if($baseDetailsTmp->count() == 0){
+        if(count($baseDetailsTmp) == 0){
             return false;
         }
 
@@ -82,7 +82,7 @@ class dbConsumer implements ConsumerInterface{
             ->find($object['campaign']);
 
         // Si l'id ciblé ne recupere pas de campagne cela signifie que cette base n'existe plus, on annule alors
-        if($this->campaign->count() == 0){
+        if(!$this->campaign->getId()){
             return true;
         }
 
@@ -91,7 +91,7 @@ class dbConsumer implements ConsumerInterface{
 
         // Si l'id ciblé ne recupere pas de base de campagne, cela signifi qu'aucune base n'est assigné a la campagne
         // le traitement n'a donc pas lieu d'etre
-        if($campaignBase->count() == 0){
+        if(!$campaignBase->getId()){
             return true;
         }
 

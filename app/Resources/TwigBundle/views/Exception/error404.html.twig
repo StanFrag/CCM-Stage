@@ -1,1 +1,5 @@
-<p>BLABLABLA ERREUR 404 </p>
+{% extends "SonataUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <h1>Erreur 404: Page non trouvé. </h1>
+{% endblock %}
