@@ -30,9 +30,14 @@ class dbConsumer implements ConsumerInterface{
         $object = unserialize($msg->body);
 
         // Verification que le consumer est activé
+        // si non on renvoi en file
         if (isset($object['message']) && $object['message'] === 'shutdown') {
             $this->consumer->forceStopConsumer();
             return false;
+        }
+
+        if (empty($object['base']) || empty($object['campaign'])) {
+            return true;
         }
 
         // On recupere la base liée a l'id recuperée
@@ -41,7 +46,7 @@ class dbConsumer implements ConsumerInterface{
             ->find($object['base']);
 
         // Si l'id ciblé ne recupere pas de base cela signifie que cette base n'existe plus, on annule alors
-        if(!$this->base){
+        if(empty($this->base)){
             return true;
         }
 
@@ -51,6 +56,10 @@ class dbConsumer implements ConsumerInterface{
             ->findBy(
                 array('base' => $this->base)
             );
+
+        if(empty($baseDetailsTmp)){
+            return false;
+        }
 
         $baseDetails = [];
 
@@ -73,7 +82,7 @@ class dbConsumer implements ConsumerInterface{
             ->find($object['campaign']);
 
         // Si l'id ciblé ne recupere pas de campagne cela signifie que cette base n'existe plus, on annule alors
-        if(!$this->campaign){
+        if(empty($this->campaign)){
             return true;
         }
 
@@ -82,7 +91,7 @@ class dbConsumer implements ConsumerInterface{
 
         // Si l'id ciblé ne recupere pas de base de campagne, cela signifi qu'aucune base n'est assigné a la campagne
         // le traitement n'a donc pas lieu d'etre
-        if(!$campaignBase){
+        if(empty($campaignBase)){
             return true;
         }
 

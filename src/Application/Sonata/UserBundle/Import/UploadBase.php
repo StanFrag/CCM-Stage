@@ -21,7 +21,7 @@ class UploadBase {
         $this->directory = $directory;
     }
 
-    public function update(Base $base, $oldFile, $randomize = true)
+    public function update(Base $base, $oldFile = null, $randomize = true)
     {
         $file = $base->getFile();
 
@@ -35,7 +35,9 @@ class UploadBase {
         $fs = new Filesystem();
 
         try {
-            $fs->remove($this->directory.'/'.$oldFile);
+            if($oldFile !== null){
+                $fs->remove($this->directory.'/'.$oldFile);
+            }
             $fs->mkdir($this->directory, 0777);
             $file->move($this->directory, $fileName);
         } catch (IOExceptionInterface $e) {

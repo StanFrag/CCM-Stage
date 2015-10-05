@@ -9,11 +9,13 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Admin\Admin;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BaseAdmin extends Admin{
 
     protected function configureListFields(ListMapper $listMapper){
+
         $listMapper
             ->addIdentifier('title', null, [
                 'label' => 'Nom de base'
@@ -32,18 +34,20 @@ class BaseAdmin extends Admin{
                 'label' => 'Modifié le',
                 'format' => 'd/m/Y à H\hi'
             ))
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'show' => array(),
-                    'edit' => array(),
-                    'delete' => array(),
-                ),
-                'label' => 'Actions'
-            ))
             ->add('campaign', null, array(
                 'label' => 'Campagne associée'
-            ))
-        ;
+            ));
+
+
+        $listMapper->add('_action', 'actions', array(
+            'actions' => array(
+                'show' => array(),
+                'edit' => array(),
+                'delete' => array()
+            ),
+            'label' => 'Actions'
+        ));
+
     }
 
     /**
@@ -272,5 +276,10 @@ class BaseAdmin extends Admin{
     protected function setFlash($action, $value)
     {
         $this->getConfigurationPool()->getContainer()->get('session')->getFlashBag()->set($action, $value);
+    }
+
+    public function getParent()
+    {
+        return 'SonataAdminBundle';
     }
 }
