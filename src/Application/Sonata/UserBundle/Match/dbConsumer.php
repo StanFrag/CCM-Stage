@@ -16,6 +16,7 @@ class dbConsumer implements ConsumerInterface{
 
     protected $base;
     protected $campaign;
+    protected $conn;
 
     public function __construct($container, EntityManager $em, Consumer $consumer)
     {
@@ -136,9 +137,12 @@ class dbConsumer implements ConsumerInterface{
 
     protected function populate(Array $data){
 
+        $conn = $this->em->getConnection();
+        $conn->beginTransaction();
+
         $match = new Matching();
 
-        $response = $this->populateBaseDetails($data, $match);
+        $response = $this->populateBaseDetails($data, $match, $conn);
 
         $nbMatch = count($data);
 
@@ -158,10 +162,17 @@ class dbConsumer implements ConsumerInterface{
         }
     }
 
-    protected  function populateBaseDetails(Array $dataMatch, Matching $match){
+    protected  function populateBaseDetails(Array $dataMatch, Matching $match, $conn){
+
+        $countLine = 0;
 
         foreach($dataMatch as $md5){
 
+            $countLine++;
+
+            $conn->insert('matching_details', ['md5' => $md5, 'fk_matching' => $match->getId()]);
+
+            /*
             $matchDetail = new MatchingDetail();
 
             // Et on rempli les variables de l'objet
@@ -170,8 +181,26 @@ class dbConsumer implements ConsumerInterface{
 
             // Puis on persiste l'entité
             $this->em->persist($matchDetail);
+            */
+
+            if( ($countLine % 500) == 0 && $c > 0){
+                try{
+                    $conn->commit();
+                    $conn->beginTransaction();
+                } catch(Exception $e) {
+                    $conn->rollback();
+                    throw $e;
+                }
+            }
         }
 
-        return true;
+        try{
+            $conn->commit();
+            return true;
+        } catch(Exception $e) {
+            $conn->rollback();
+            throw $e;
+            return false;
+        }
     }
 }
