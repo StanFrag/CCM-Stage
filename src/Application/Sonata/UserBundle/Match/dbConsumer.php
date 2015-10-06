@@ -13,10 +13,8 @@ use \Application\Sonata\UserBundle\Entity\Matching;
 class dbConsumer implements ConsumerInterface{
 
     protected $em;
-
     protected $base;
     protected $campaign;
-    protected $conn;
 
     public function __construct($container, EntityManager $em, Consumer $consumer)
     {
@@ -31,14 +29,9 @@ class dbConsumer implements ConsumerInterface{
         $object = unserialize($msg->body);
 
         // Verification que le consumer est activé
-        // si non on renvoi en file
         if (isset($object['message']) && $object['message'] === 'shutdown') {
             $this->consumer->forceStopConsumer();
             return false;
-        }
-
-        if (empty($object['base']) || empty($object['campaign'])) {
-            return true;
         }
 
         // On recupere la base liée a l'id recuperée
@@ -47,7 +40,7 @@ class dbConsumer implements ConsumerInterface{
             ->find($object['base']);
 
         // Si l'id ciblé ne recupere pas de base cela signifie que cette base n'existe plus, on annule alors
-        if(!$this->base->getId()){
+        if(!$this->base){
             return true;
         }
 
@@ -57,10 +50,6 @@ class dbConsumer implements ConsumerInterface{
             ->findBy(
                 array('base' => $this->base)
             );
-
-        if(count($baseDetailsTmp) == 0){
-            return false;
-        }
 
         $baseDetails = [];
 
@@ -83,7 +72,7 @@ class dbConsumer implements ConsumerInterface{
             ->find($object['campaign']);
 
         // Si l'id ciblé ne recupere pas de campagne cela signifie que cette base n'existe plus, on annule alors
-        if(!$this->campaign->getId()){
+        if(!$this->campaign){
             return true;
         }
 
@@ -92,7 +81,7 @@ class dbConsumer implements ConsumerInterface{
 
         // Si l'id ciblé ne recupere pas de base de campagne, cela signifi qu'aucune base n'est assigné a la campagne
         // le traitement n'a donc pas lieu d'etre
-        if(!$campaignBase->getId()){
+        if(!$campaignBase){
             return true;
         }
 
@@ -137,12 +126,9 @@ class dbConsumer implements ConsumerInterface{
 
     protected function populate(Array $data){
 
-        $conn = $this->em->getConnection();
-        $conn->beginTransaction();
-
         $match = new Matching();
 
-        $response = $this->populateBaseDetails($data, $match, $conn);
+        $response = $this->populateBaseDetails($data, $match);
 
         $nbMatch = count($data);
 
@@ -162,17 +148,10 @@ class dbConsumer implements ConsumerInterface{
         }
     }
 
-    protected  function populateBaseDetails(Array $dataMatch, Matching $match, $conn){
-
-        $countLine = 0;
+    protected  function populateBaseDetails(Array $dataMatch, Matching $match){
 
         foreach($dataMatch as $md5){
 
-            $countLine++;
-
-            $conn->insert('matching_details', ['md5' => $md5, 'fk_matching' => $match->getId()]);
-
-            /*
             $matchDetail = new MatchingDetail();
 
             // Et on rempli les variables de l'objet
@@ -181,26 +160,8 @@ class dbConsumer implements ConsumerInterface{
 
             // Puis on persiste l'entité
             $this->em->persist($matchDetail);
-            */
-
-            if( ($countLine % 500) == 0 && $c > 0){
-                try{
-                    $conn->commit();
-                    $conn->beginTransaction();
-                } catch(Exception $e) {
-                    $conn->rollback();
-                    throw $e;
-                }
-            }
         }
 
-        try{
-            $conn->commit();
-            return true;
-        } catch(Exception $e) {
-            $conn->rollback();
-            throw $e;
-            return false;
-        }
+        return true;
     }
 }
