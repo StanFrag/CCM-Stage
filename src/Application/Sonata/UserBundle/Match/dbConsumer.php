@@ -36,7 +36,6 @@ class dbConsumer implements ConsumerInterface{
         }
 
         $conn = $this->em->getConnection();
-        $conn->beginTransaction();
 
         // On recupere la base liée a l'id recuperée
         $this->base = $this->em
@@ -113,6 +112,8 @@ class dbConsumer implements ConsumerInterface{
 
     protected function populate(Array $data, $conn){
 
+        $conn->beginTransaction();
+
         $sth = $conn->prepare('INSERT INTO matchings (base_id, campaign_id) VALUES (?, ?)');
         $sth->execute(array($this->base->getId(),$this->campaign->getId()));
 
@@ -142,10 +143,26 @@ class dbConsumer implements ConsumerInterface{
 
     protected  function populateBaseDetails(Array $dataMatch, $idMatch, $conn){
 
+        $countLine = 0;
+
         foreach($dataMatch as $md5){
+            $countLine++;
+
             $sth = $conn->prepare('INSERT INTO matching_details (md5, id_matching) VALUES (?, ?)');
             $sth->execute(array($md5,$idMatch));
+
+            if( ($countLine % 500) == 0){
+                try{
+                    $conn->commit();
+                    $conn->beginTransaction();
+                } catch(Exception $e) {
+                    $conn->rollback();
+                    throw $e;
+                }
+            }
         }
+
+
 
         return true;
     }
