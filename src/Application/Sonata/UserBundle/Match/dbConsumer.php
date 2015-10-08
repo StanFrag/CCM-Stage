@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use OldSound\RabbitMqBundle\RabbitMq\Consumer;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use \Application\Sonata\UserBundle\Entity\Matching;
 
@@ -34,6 +35,9 @@ class dbConsumer implements ConsumerInterface{
             return false;
         }
 
+        $conn = $this->em->getConnection();
+        $conn->beginTransaction();
+
         // On recupere la base liée a l'id recuperée
         $this->base = $this->em
             ->getRepository('ApplicationSonataUserBundle:Base')
@@ -44,20 +48,11 @@ class dbConsumer implements ConsumerInterface{
             return true;
         }
 
-        // On recupere les baseDetails de la base ciblé
-        $baseDetailsTmp = $this->em
-            ->getRepository('ApplicationSonataUserBundle:BaseDetail')
-            ->findBy(
-                array('base' => $this->base)
-            );
+        $sth = $conn->prepare('SELECT md5 FROM base_details WHERE fk_base = ?');
+        $sth->execute(array($this->base->getId()));
+        $result = $sth->fetchAll();
 
-        $baseDetails = [];
-
-        // Pour chaque basedetail, on recupere son md5
-        foreach($baseDetailsTmp as $tmpData){
-            $tmp = $tmpData->getMd5();
-            $baseDetails[] = $tmp;
-        }
+        $baseDetails = array_map(function($array){return $array['md5']; }, $result);
 
         // Si le nombre de baseDetails recuperé n'est pas egal au nombre de ligne de la base
         // cela signifie que les données de baseDetails n'ont pas encore été completment importé
@@ -85,19 +80,11 @@ class dbConsumer implements ConsumerInterface{
             return true;
         }
 
-        // On recupere les details de la base ciblé
-        $baseDetailsFromCampaignTmp = $this->em
-            ->getRepository('ApplicationSonataUserBundle:BaseDetail')
-            ->findBy(
-                array('base' => $campaignBase)
-            );
+        $sth = $conn->prepare('SELECT md5 FROM base_details WHERE fk_base = ?');
+        $sth->execute(array($campaignBase->getId()));
+        $result = $sth->fetchAll();
 
-        $baseDetailsFromCampaign = [];
-
-        foreach($baseDetailsFromCampaignTmp as $tmpData){
-            $tmp = $tmpData->getMd5();
-            $baseDetailsFromCampaign[] = $tmp;
-        }
+        $baseDetailsFromCampaign = array_map(function($array){return $array['md5']; }, $result);
 
         if($campaignBase->getRowCount() != count($baseDetailsFromCampaign)){
             return false;
@@ -107,7 +94,7 @@ class dbConsumer implements ConsumerInterface{
         $dataMatch = $this->match($baseDetails, $baseDetailsFromCampaign);
 
         // Population de l'entité matching
-        $responsePopulate = $this->populate($dataMatch);
+        $responsePopulate = $this->populate($dataMatch, $conn);
 
         return $responsePopulate;
     }
@@ -118,48 +105,46 @@ class dbConsumer implements ConsumerInterface{
         $result =  array_intersect($first_db, $second_db);
 
         // Fonction qui supprime les doublons
-        $finalResult = array_unique($result, SORT_REGULAR);
+        $finalResult = array_unique($result);
 
         // Return du resultat du matching
         return $finalResult;
     }
 
-    protected function populate(Array $data){
+    protected function populate(Array $data, $conn){
 
-        $match = new Matching();
+        $sth = $conn->prepare('INSERT INTO matchings (base_id, campaign_id) VALUES (?, ?)');
+        $sth->execute(array($this->base->getId(),$this->campaign->getId()));
 
-        $response = $this->populateBaseDetails($data, $match);
+        $tmp = $conn->lastInsertId();
+
+        $response = $this->populateBaseDetails($data, $tmp, $conn);
 
         $nbMatch = count($data);
 
         if($response){
 
-            $match->setBase($this->base);
-            $match->setCampaign($this->campaign);
-            $match->setUpdatedAt();
-            $match->setMatchCount($nbMatch);
+            $sth = $conn->prepare('UPDATE matchings SET date_maj = ?, match_count = ? WHERE id = ?');
+            $sth->execute(array(date("Y-m-d H:i:s"),$nbMatch, $tmp));
 
-            $this->em->persist($match);
-            $this->em->flush();
+            try{
+                $conn->commit();
+                return true;
+            } catch(Exception $e) {
+                $conn->rollback();
+                throw $e;
+            }
 
-            return true;
         }else{
             return false;
         }
     }
 
-    protected  function populateBaseDetails(Array $dataMatch, Matching $match){
+    protected  function populateBaseDetails(Array $dataMatch, $idMatch, $conn){
 
         foreach($dataMatch as $md5){
-
-            $matchDetail = new MatchingDetail();
-
-            // Et on rempli les variables de l'objet
-            $matchDetail->setIdMatching($match);
-            $matchDetail->setMd5($md5);
-
-            // Puis on persiste l'entité
-            $this->em->persist($matchDetail);
+            $sth = $conn->prepare('INSERT INTO matching_details (md5, id_matching) VALUES (?, ?)');
+            $sth->execute(array($md5,$idMatch));
         }
 
         return true;
