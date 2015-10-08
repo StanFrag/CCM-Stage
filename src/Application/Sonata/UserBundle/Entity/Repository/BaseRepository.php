@@ -27,11 +27,14 @@ class BaseRepository extends EntityRepository
 
         $t = $qb->select('b.id')
             ->leftJoin('b.campaign', 'bc')
-            ->where('bc IS NULL');
-
+            ->leftJoin('b.user', 'u')
+            ->leftJoin('u.groups', 'g')
+            ->where('bc IS NULL')
+            ->andWhere('g.name IS NULL');
+        
         $query = $t->getQuery();
 
-        return $query->execute(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
+        return $query->execute();
     }
 
     public function countConsumerBases(User $user){
@@ -44,7 +47,7 @@ class BaseRepository extends EntityRepository
 
         $query = $t->getQuery();
 
-        return $query->getSingleScalarResult(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
+        return $query->getSingleScalarResult();
     }
 
     public function findAdminBases(){
@@ -52,10 +55,14 @@ class BaseRepository extends EntityRepository
         $qb = $this->createQueryBuilder('b');
 
         $t = $qb->select('b')
+            ->leftJoin('b.user', 'u')
+            ->leftJoin('u.groups', 'g')
+            ->where('g.name = :group')
+            ->setParameter('group', 'ADMIN')
             ->orderBy('b.updated_at','DESC');
 
         $query = $t->getQuery();
 
-        return $query; // instanceof Doctrine\ODM\MongoDB\EagerCursor
+        return $query;
     }
 }

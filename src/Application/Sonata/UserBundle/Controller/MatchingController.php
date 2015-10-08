@@ -64,9 +64,10 @@ class MatchingController extends Controller
         $downloadMatching = $this->container->get('public_user.exportCsv');
         $downloadMatching->fromMatching($matchId);
 
+        /*
         $this->addFlash('sonata_flash_success', 'DownLoad du matching effectué avec succès');
-
         return $this->redirect($this->generateUrl('match_list'));
+        */
     }
 
     /**

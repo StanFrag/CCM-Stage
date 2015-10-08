@@ -123,9 +123,10 @@ class BaseController extends Controller
                 $em->persist($base);
                 $em->flush();
 
-                $this->removePreviousMatching($base);
-
-                $this->sendMatching($base);
+                if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+                    $this->removePreviousMatching($base);
+                    $this->sendMatching($base);
+                }
 
                 $this->setFlash('sonata_user_success', 'upload.flash.success');
                 return $this->redirect($this->generateUrl('base_list'));
@@ -235,7 +236,9 @@ class BaseController extends Controller
                     $em->persist($base);
                     $em->flush();
 
-                    $this->sendMatching($base);
+                    if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+                        $this->sendMatching($base);
+                    }
 
                     $this->setFlash('sonata_user_success', 'upload.flash.success');
                     return $this->redirect($this->generateUrl('base_list'));

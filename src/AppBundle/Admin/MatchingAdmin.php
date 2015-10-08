@@ -71,7 +71,7 @@ class MatchingAdmin extends Admin
                 'actions' => array(
                     'show' => array(),
                     'downloadMatch' => array(
-                        'template' => 'AppBundle:CRUD:list__action_download.html.twig'
+                        'template' => 'SonataAdminBundle:CRUD:list__action_download.html.twig'
                     )
                 )
             ))
