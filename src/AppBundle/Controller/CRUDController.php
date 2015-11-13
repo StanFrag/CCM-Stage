@@ -19,7 +19,7 @@ class CRUDController extends Controller
         }
 
         // On récupère le service qui va envoyer le match
-        $response = new StreamedResponse(function() use($matchId, $downloadMatching) {
+        $response = new StreamedResponse(function() use($matchId) {
             //$downloadMatching = $this->container->get('public_user.exportCsv')->fromMatching($matchId);
 
             $container = $this->container;
