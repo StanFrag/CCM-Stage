@@ -45,9 +45,8 @@ class ExportCSV {
             fclose($handle);
         });
 
-        $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'application/force-download');
-        $response->headers->set('Content-Disposition','attachment; filename="Export_matching_'.$matchingId.'.csv"');
+        $response->headers->set('Content-Disposition','attachment; filename="Matching-'.$matchingId.'.csv"');
         //$response->send();
 
         return $response;
