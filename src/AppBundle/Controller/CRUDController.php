@@ -19,6 +19,7 @@ class CRUDController extends Controller
             throw new NotFoundHttpException(sprintf('Unable to find the object with id : %s', $matchId));
         }
 
+        /*
         $response = new StreamedResponse();
 
         $response->setCallback(function ($matchId) {
@@ -42,10 +43,33 @@ class CRUDController extends Controller
             fclose($handle);
         });
 
-        $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, "Export_matching_'.$matchId.'.csv");
+        $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Export_matching_'.$matchId.'.csv');
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', $contentDisposition);
         return $response;
+        */
+
+        return new StreamedResponse(
+            function () use ($matchId) {
+                $container = $this->container;
+                $em = $container->get('doctrine')->getManager();
+                $conn = $em->getConnection();
+
+                $sth = $conn->prepare('SELECT md5 FROM matching_details WHERE id_matching = ?');
+                $sth->execute(array($matchId));
+                $results = $sth->fetchAll();
+
+                $handle = fopen('php://output', 'r') or die("Couldn't get handle");
+
+                foreach ($results as $row) {
+                    fputcsv($handle, $row);
+                }
+
+                fclose($handle);
+            }, 200, array(
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => 'attachment; filename="Export_matching_'.$matchId.'.csv"')
+        );
 
         /*
         // On récupère le service qui va envoyer le match

@@ -85,7 +85,7 @@ class MatchingController extends Controller
             fclose($handle);
         });
 
-        $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, "Export_matching_'.$matchId.'.csv");
+        $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Export_matching_'.$matchId.'.csv');
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', $contentDisposition);
         return $response;
