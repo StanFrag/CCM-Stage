@@ -18,18 +18,36 @@ class CRUDController extends Controller
             throw new NotFoundHttpException(sprintf('Unable to find the object with id : %s', $matchId));
         }
 
-        $downloadMatching = null;
-
         // On récupère le service qui va envoyer le match
-        $response = new StreamedResponse(function() use($matchId, $downloadMatching) {
-            $downloadMatching = $this->container->get('public_user.exportCsv')->fromMatching($matchId);
+        $response = new StreamedResponse(function() use($matchId) {
+            //$downloadMatching = $this->container->get('public_user.exportCsv')->fromMatching($matchId);
+
+            $container = $this->container;
+
+            $em = $container->get('doctrine')->getManager();
+
+            $conn = $em->getConnection();
+
+            $sth = $conn->prepare('SELECT md5 FROM matching_details WHERE id_matching = ?');
+            $sth->execute(array($matchId));
+
+            $results = $sth->fetchAll();
+
+            $handle = fopen('php://output', 'r') or die("Couldn't get handle");
+
+            foreach ($results as $row) {
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
         });
 
         $response->setStatusCode(200);
-        $response->headers->set('Content-Type', 'application/force-download');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Expires', '0');
         $response->headers->set('Content-Disposition','attachment; filename="Export_matching_'.$matchId.'.csv"');
-        $response->headers->set('Content-length', filesize($downloadMatching));
-        $response->headers->set('Content-Type', 'text/csv'); // CSV
+        $response->headers->set('Cache-Control', 'must-revalidate; post-check=0; pre-check=0');
+        $response->headers->set('Cache-Control', 'private', false);
         $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('Content-Transfer-Encoding', 'binary');
 

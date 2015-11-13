@@ -24,24 +24,32 @@ class ExportCSV {
 
         $container = $this->container;
 
-        $em = $container->get('doctrine')->getManager();
+        $response = new StreamedResponse(function() use($container, $matchingId) {
 
-        $conn = $em->getConnection();
+            $em = $container->get('doctrine')->getManager();
 
-        $sth = $conn->prepare('SELECT md5 FROM matching_details WHERE id_matching = ?');
-        $sth->execute(array($matchingId));
+            $conn = $em->getConnection();
 
-        $results = $sth->fetchAll();
-        //$results = $em->getRepository('ApplicationSonataUserBundle:MatchingDetail')->findByIdMatching($matchingId);
+            $sth = $conn->prepare('SELECT md5 FROM matching_details WHERE id_matching = ?');
+            $sth->execute(array($matchingId));
 
-        $handle = fopen('php://output', 'r');
+            $results = $sth->fetchAll();
+            //$results = $em->getRepository('ApplicationSonataUserBundle:MatchingDetail')->findByIdMatching($matchingId);
 
-        foreach ($results as $row) {
-            fputcsv($handle, $row);
-        }
+            $handle = fopen('php://output', 'r');
 
-        fclose($handle);
+            foreach ($results as $row) {
+                fputcsv($handle, $row);
+            }
 
-        return $handle;
+            fclose($handle);
+        });
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'application/force-download');
+        $response->headers->set('Content-Disposition','attachment; filename="Export_matching_'.$matchingId.'.csv"');
+        //$response->send();
+
+        return $response;
     }
 }
