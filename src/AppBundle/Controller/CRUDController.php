@@ -5,23 +5,28 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CRUDController extends Controller
 {
     public function downloadMatchAction()
     {
         $object = $this->admin->getSubject();
+        $matchId = $object->getId();
 
         if (!$object) {
-            throw new NotFoundHttpException(sprintf('Unable to find the object with id : %s', $id));
+            throw new NotFoundHttpException(sprintf('Unable to find the object with id : %s', $matchId));
         }
 
         // On récupère le service qui va envoyer le match
-        $downloadMatching = $this->container->get('public_user.exportCsv');
-        $downloadMatching->fromMatching($object->getId());
+        $response = new StreamedResponse(function() use($matchId) {
+            $downloadMatching = $this->container->get('public_user.exportCsv')->fromMatching($matchId);
+        });
 
-        $this->addFlash('sonata_flash_success', 'DownLoad du matching effectué avec succès');
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'application/force-download');
+        $response->headers->set('Content-Disposition','attachment; filename="Export_matching_'.$matchId.'.csv"');
 
-        return new RedirectResponse($this->admin->generateUrl('list'));
+        return $response;
     }
 }

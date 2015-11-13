@@ -142,6 +142,10 @@
                 <source>upload_rule_tree</source>
                 <target>Le fichier ne doit pas contenir d'entêtes de colonne</target>
             </trans-unit>
+            <trans-unit id="upload_rule_four">
+                <source>upload_rule_four</source>
+                <target>Le fichier CSV doit être au format Windows</target>
+            </trans-unit>
             <trans-unit id="postulate_sent">
                 <source>postulate_sent</source>
                 <target>Votre demande a bien été prise en compte, veuillez attendre une réponse du support.</target>

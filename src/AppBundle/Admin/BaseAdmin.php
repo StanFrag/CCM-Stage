@@ -263,8 +263,11 @@ class BaseAdmin extends Admin{
                 // Et on envoi les données
                 $em->flush();
             }else{
-                //$this->setFlash('sonata_user_error', 'upload.flash.error');
-                throw new AdminException("Problème dans l'import du fichier CSV: $file, veuillez enregistrer un fichier valide");
+                $em->remove($base);
+                $em->flush();
+
+                $this->setFlash('sonata_user_error', 'upload.flash.error');
+                //throw new AdminException("Problème dans l'import du fichier CSV: $file, veuillez enregistrer un fichier valide");
             }
         }
     }

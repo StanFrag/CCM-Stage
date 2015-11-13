@@ -243,6 +243,10 @@ class BaseController extends Controller
                     $this->setFlash('sonata_user_success', 'upload.flash.success');
                     return $this->redirect($this->generateUrl('base_list'));
                 }else{
+                    // Si une erreur a été recu on supprime la base de donnée ciblé
+                    $em->remove($base);
+                    $em->flush();
+
                     $this->setFlash('sonata_user_error', 'upload.flash.error');
                     return $this->redirect($this->generateUrl('base_upload'));
                 }
