@@ -76,7 +76,7 @@ class MatchingController extends Controller
 
             $results = $sth->fetchAll();
 
-            $handle = fopen('php://output', 'r');
+            $handle = fopen('php://output', 'r') or die("Couldn't get handle");
 
             foreach ($results as $row) {
                 fputcsv($handle, $row);
