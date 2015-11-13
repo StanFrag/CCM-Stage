@@ -6,6 +6,7 @@ use Application\Sonata\UserBundle\Event\MailEvent;
 use Application\Sonata\UserBundle\ApplicationEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MatchingController extends Controller
 {
@@ -57,17 +58,19 @@ class MatchingController extends Controller
     public function downloadAction($matchId)
     {
         if (!$matchId) {
-            throw new NotFoundHttpException(sprintf('Unable to find the object with id : %s', $id));
+            throw new NotFoundHttpException(sprintf('Unable to find the object with id : %s', $matchId));
         }
 
         // On récupère le service qui va envoyer le match
-        $downloadMatching = $this->container->get('public_user.exportCsv');
-        $downloadMatching->fromMatching($matchId);
+        $response = new StreamedResponse(function() use($matchId) {
+            $downloadMatching = $this->container->get('public_user.exportCsv')->fromMatching($matchId);
+        });
 
-        /*
-        $this->addFlash('sonata_flash_success', 'DownLoad du matching effectué avec succès');
-        return $this->redirect($this->generateUrl('match_list'));
-        */
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'application/force-download');
+        $response->headers->set('Content-Disposition','attachment; filename="Export_matching_'.$matchId.'.csv"');
+
+        return $response;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Application\Sonata\UserBundle\Export;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -22,25 +23,25 @@ class ExportCSV {
     public function fromMatching($matchingId){
 
         $container = $this->container;
-        $response = new StreamedResponse(function() use($container, $matchingId) {
 
-            $em = $container->get('doctrine')->getManager();
+        $em = $container->get('doctrine')->getManager();
 
-            $results = $em->getRepository('ApplicationSonataUserBundle:MatchingDetail')->findByIdMatching($matchingId);
-            $handle = fopen('php://output', 'r+');
+        $conn = $em->getConnection();
 
-            foreach ($results as $row) {
-                fputcsv($handle, $row);
-            }
+        $sth = $conn->prepare('SELECT md5 FROM matching_details WHERE id_matching = ?');
+        $sth->execute(array($matchingId));
 
-            fclose($handle);
-        });
+        $results = $sth->fetchAll();
+        //$results = $em->getRepository('ApplicationSonataUserBundle:MatchingDetail')->findByIdMatching($matchingId);
 
-        $response->headers->set('Content-Type', 'application/force-download');
-        $response->headers->set('Content-Disposition','attachment; filename="Matching-'.$matchingId.'.csv"');
+        $handle = fopen('php://output', 'r');
 
-        $response->send();
+        foreach ($results as $row) {
+            fputcsv($handle, $row);
+        }
 
-        return $response;
+        fclose($handle);
+
+        return $handle;
     }
 }
