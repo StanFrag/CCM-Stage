@@ -5,6 +5,7 @@ namespace Application\Sonata\UserBundle\Controller;
 use Application\Sonata\UserBundle\Event\MailEvent;
 use Application\Sonata\UserBundle\ApplicationEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
