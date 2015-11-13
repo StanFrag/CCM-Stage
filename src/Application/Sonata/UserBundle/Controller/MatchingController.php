@@ -61,6 +61,35 @@ class MatchingController extends Controller
             throw new NotFoundHttpException(sprintf('Unable to find the object with id : %s', $matchId));
         }
 
+        $response = new StreamedResponse();
+
+        $response->setCallback(function ($matchId) {
+            $container = $this->container;
+
+            $em = $container->get('doctrine')->getManager();
+
+            $conn = $em->getConnection();
+
+            $sth = $conn->prepare('SELECT md5 FROM matching_details WHERE id_matching = ?');
+            $sth->execute(array($matchId));
+
+            $results = $sth->fetchAll();
+
+            $handle = fopen('php://output', 'r') or die("Couldn't get handle");
+
+            foreach ($results as $row) {
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
+        });
+
+        $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, "Export_matching_'.$matchId.'.csv");
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', $contentDisposition);
+        return $response;
+
+        /*
         // On récupère le service qui va envoyer le match
         $response = new StreamedResponse(function() use($matchId) {
             //$downloadMatching = $this->container->get('public_user.exportCsv')->fromMatching($matchId);
@@ -95,6 +124,7 @@ class MatchingController extends Controller
         $response->headers->set('Content-Transfer-Encoding', 'binary');
 
         return $response;
+        */
     }
 
     /**
