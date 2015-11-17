@@ -21,14 +21,14 @@ class populateConsumer implements ConsumerInterface{
         $this->em = $em;
         $this->consumer = $consumer;
         $this->directory = $directory;
+
+        $this->consumer->getChannel()->queue_bind('populate-queue', 'broadcasting');
     }
 
     public function execute(AMQPMessage $msg)
     {
         // Decode message
         $object = unserialize($msg->body);
-
-        $this->consumer->getChannel()->queue_bind('populate-queue', 'broadcasting');
 
         // Rabbitmq consumer non lancé, renvoi en liste necessaire.
         if (isset($object['message']) && $object['message'] === 'shutdown') {
