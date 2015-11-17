@@ -25,7 +25,7 @@
     </target>
 
     <target name="sf2_create_cache">
-        <exec command="${php} app/console cache:clear --env=${environment}" checkreturn="true" />
+        <exec command="${php} app/console cache:clear --env=${environment}" checkreturn="true" passthru="true" />
     </target>
 
     <target name="composer">
@@ -37,7 +37,7 @@
             <not><isset property="composer.notRequired"/></not>
             <then>
                 <echo msg="Composer install" />
-                <exec command="export SYMFONY_ENV=${environment}; ${php} ${composer} install ${composer_options}" checkreturn="true" />
+                <exec command="export SYMFONY_ENV=${environment}; ${php} ${composer} install ${composer_options}" checkreturn="true" passthru="true" />
             </then>
             <else>
                 <phingcall target="sf2_create_cache" />
@@ -51,7 +51,7 @@
             <equals arg1="${environment}" arg2="dev" />
             <then>
                 <echo msg="Executing database update" />
-                <exec command="export SYMFONY_ENV=${environment}; ${php} app/console doctrine:schema:update --force" checkreturn="true" />
+                <exec command="export SYMFONY_ENV=${environment}; ${php} app/console doctrine:schema:update --force" checkreturn="true" passthru="true" />
             </then>
         </if>
     </target>
