@@ -55,10 +55,10 @@ class BaseRepository extends EntityRepository
         $qb = $this->createQueryBuilder('b');
 
         $t = $qb->select('b')
-            ->leftJoin('b.user', 'u')
-            ->leftJoin('u.groups', 'g')
-            ->where('g.name = :group')
-            ->setParameter('group', 'ADMIN')
+            //->leftJoin('b.user', 'u')
+            //->leftJoin('u.groups', 'g')
+            //->where('g.name = :group')
+            //->setParameter('group', 'ADMIN')
             ->orderBy('b.updated_at','DESC');
 
         $query = $t->getQuery();

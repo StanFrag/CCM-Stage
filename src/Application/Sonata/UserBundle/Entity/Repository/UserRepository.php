@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function findNonAdmin(){
+
+        $qb = $this->createQueryBuilder('u');
+
+        $t = $qb->select('u');
+
+        $query = $t->getQuery();
+
+        return $query;
+    }
 }

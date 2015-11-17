@@ -48,7 +48,7 @@ class Base
 
     /**
      * @var ArrayCollection $base_detail
-     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\BaseDetail", mappedBy="base", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\BaseDetail", mappedBy="base")
      */
     protected $base_detail;
 
@@ -234,25 +234,6 @@ class Base
     public function getCampaign()
     {
         return $this->campaign;
-    }
-
-    /**
-     * Remove base_detail
-     *
-     * @param \Application\Sonata\UserBundle\Entity\BaseDetail $base_detail
-     */
-    public function removeBaseDetail(BaseDetail $base_detail)
-    {
-        $this->base_detail->removeElent($base_detail);
-    }
-
-    /**
-     * Remove base_details_all
-     *
-     */
-    public function removeBaseDetailAll()
-    {
-        $this->base_detail->clear();
     }
 
     /**
