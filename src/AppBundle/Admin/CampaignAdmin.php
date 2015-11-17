@@ -50,6 +50,7 @@ class CampaignAdmin extends Admin
                 'label' => 'Etat'
             ))
             ->add('base')
+            ->add('users')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -73,6 +74,7 @@ class CampaignAdmin extends Admin
 
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $query = $em->getRepository('ApplicationSonataUserBundle:Base')->findAdminBases();
+        $queryUsers = $em->getRepository('ApplicationSonataUserBundle:User')->findNonAdmin();
 
         $formMapper
             ->add('title', null, [
@@ -108,6 +110,7 @@ class CampaignAdmin extends Admin
                 'label' => 'Image',
                 'required' => false
             ])
+            ->add('users', 'sonata_type_model', array('multiple' => true, 'query' => $queryUsers))
             ->add('base', 'sonata_type_model', array('required' => true, 'query' => $query))
             ->add('state', 'choice', array(
                 'choices' => array(0 => 'Fermée', 1 => 'En cours'),
@@ -161,6 +164,7 @@ class CampaignAdmin extends Admin
                 'label' => 'Date de fin'
             ])
             ->add('base')
+            ->add('users')
             ->add('img', null, array(
                 'template' => 'ApplicationSonataUserBundle:Admin:image_show.html.twig',
                 'label' => 'Image'

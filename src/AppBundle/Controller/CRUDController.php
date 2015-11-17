@@ -29,9 +29,10 @@ class CRUDController extends Controller
             $em         = $container->get('doctrine')->getManager();
             $conn       = $em->getConnection();
 
+            // On crée la limite du nombre de donnée recuperés par requetes
             $lim = 10000;
 
-            // On recupere les 10 000 premiers resultat
+            // On recupere les 10000 premiers resultat
             $query = "SELECT SQL_CALC_FOUND_ROWS md5 FROM matching_details WHERE id_matching = :id LIMIT :lim";
             $sth = $conn->prepare($query);
             $sth->bindValue(':id', $matchId);
@@ -52,9 +53,10 @@ class CRUDController extends Controller
             $sth->execute(array($matchId));
             $resultLine = $sth->fetchAll();
 
+            // On recupere le nombre de ligne total
             $nb_line = intval($resultLine[0]["FOUND_ROWS()"]);
 
-            // Si le nombrte de ligne max est superieurs aux nombres d elignes recuperé precedement
+            // Si le nombrte de ligne max est superieurs aux nombres de lignes recuperé precedement
             if($nb_line >= $lim){
 
                 // on retire du nombre de ligne le nombre d'elements recuperé precedement

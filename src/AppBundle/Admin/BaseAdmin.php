@@ -130,11 +130,17 @@ class BaseAdmin extends Admin{
         $this->sendMatching($base);
     }
 
+    public function postRemove($base) {
+        // Lors du remove d'une Base coté Admin
+        $this->removeBaseDetail($base);
+    }
+
     public function postUpdate($base) {
         $this->removePreviousBaseMatching($base);
+        $this->removeBaseDetail($base);
 
         // Lors de l'update d'une nouvelle Base coté Admin
-        $this->populateBaseDetail($base, true);
+        $this->populateBaseDetail($base);
 
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine');
         $campaign = $em->getRepository('ApplicationSonataUserBundle:Campaign')->findCampaignByBase($base);
@@ -237,19 +243,13 @@ class BaseAdmin extends Admin{
      * @param boolean $updateAction
      * @param Base $base
      */
-    protected function populateBaseDetail($base, $updateAction = false)
+    protected function populateBaseDetail($base)
     {
         $file = $base->getPath();
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getEntityManager();
 
         // Si un fichier à été soumis durant le formulaire
         if(null !== $file){
-
-            // S'il s'agit d'un update, on vide la base de ses baseDetails
-            if($updateAction == true){
-                // On supprime les entités de base detail du fichier precedent
-                $base->removeBaseDetailAll();
-            }
 
             // On récupère le service qui va envoyer le populate
             $sendMatching = $this->getConfigurationPool()->getContainer()->get('populate_exchange_sender');
@@ -270,6 +270,17 @@ class BaseAdmin extends Admin{
                 //throw new AdminException("Problème dans l'import du fichier CSV: $file, veuillez enregistrer un fichier valide");
             }
         }
+    }
+
+    protected function removeBaseDetail($base)
+    {
+
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getEntityManager();
+
+        $conn = $em->getConnection();
+
+        $sth = $conn->prepare('DELETE FROM base_details WHERE fk_base = ?;');
+        $sth->execute(array($base->getId()));
     }
 
     /**

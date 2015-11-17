@@ -91,6 +91,12 @@ class Campaign
     protected $base;
 
     /**
+     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="campaigns", cascade={"persist", "merge"})
+     * @ORM\JoinColumn(name="users_id", referencedColumnName="id")
+     */
+    protected $users;
+
+    /**
      * @ORM\OneToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Matching", mappedBy="campaign")
      *
      * @var ArrayCollection $match
@@ -286,6 +292,23 @@ class Campaign
         return $this->base;
     }
 
+    public function setUsers($user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get users
+     *
+     * @return ArrayCollection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
     /**
      * Sets img.
      *
@@ -363,6 +386,7 @@ class Campaign
     public function __construct()
     {
         $this->match = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Application\Sonata\UserBundle\Controller;
 use Application\Sonata\UserBundle\Event\MailEvent;
 use Application\Sonata\UserBundle\ApplicationEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -17,14 +18,18 @@ class MatchingController extends Controller
 
         // On recupere l'ensemble des bases actives
         $em = $this->getDoctrine();
-        $campaigns = $em->getRepository('ApplicationSonataUserBundle:Campaign')->findCampaignWithMatching();
+        $campaigns = $em->getRepository('ApplicationSonataUserBundle:Campaign')->findCampaignWithMatching($user);
 
         $matchArray = [];
-
         if($campaigns){
             foreach($campaigns as $tmp) {
-                $match = $em->getRepository('ApplicationSonataUserBundle:Matching')->findAllFromCampaign($user, $tmp);
-                array_push($matchArray, ['campaign' => $tmp, 'match' => $match]);
+                if($tmp->getUsers()->isEmpty()){
+                    $match = $em->getRepository('ApplicationSonataUserBundle:Matching')->findAllFromCampaign($user, $tmp);
+                    array_push($matchArray, ['campaign' => $tmp, 'match' => $match]);
+                }else if($tmp->getUsers()->contains($user)){
+                    $match = $em->getRepository('ApplicationSonataUserBundle:Matching')->findAllFromCampaign($user, $tmp);
+                    array_push($matchArray, ['campaign' => $tmp, 'match' => $match]);
+                }
             }
         }
 

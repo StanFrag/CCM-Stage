@@ -100,7 +100,7 @@ class BaseController extends Controller
             $filePath = $form->get('file')->getData()->getPathName();
 
             // On supprime les anciennes base details
-            $base->removeBaseDetailAll();
+            $this->removeBaseDetail($base);
 
             $uploadPathFile = $this->get('public_user.upload_base')->update($base, $oldFile);
 
@@ -181,6 +181,8 @@ class BaseController extends Controller
             throw new AccessDeniedException();
         }
 
+        $this->removeBaseDetail($base);
+
         $em = $this->getDoctrine()->getEntityManager();
         $em->remove($base);
         $em->flush();
@@ -191,6 +193,16 @@ class BaseController extends Controller
         $this->setFlash('sonata_user_success', 'remove.base.success');
 
         return $this->redirect($this->generateUrl('base_list'));
+    }
+
+    protected function removeBaseDetail($base)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $conn = $em->getConnection();
+
+        $sth = $conn->prepare('DELETE FROM base_details WHERE fk_base = ?;');
+        $sth->execute(array($base->getId()));
     }
 
     public function uploadAction(Request $request)

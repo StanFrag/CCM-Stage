@@ -18,6 +18,7 @@ class User extends BaseUser
         parent::__construct();
 
         $this->base = new ArrayCollection();
+        $this->campaigns = new ArrayCollection();
         $this->locked = true;
         $this->enabled = false;
     }
@@ -46,6 +47,12 @@ class User extends BaseUser
      * @var ArrayCollection $base
      */
     protected $base;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Campaign", inversedBy="users", cascade={"persist", "merge"})
+     * @ORM\JoinColumn(name="campaigns_id", referencedColumnName="id")
+     */
+    protected $campaigns;
 
     /**
      * @var string
@@ -106,6 +113,24 @@ class User extends BaseUser
     public function setCompany($company)
     {
         $this->company = $company;
+    }
+
+    public function setCampaigns($campaign)
+    {
+        $this->campaigns = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->campaigns[] = $campaign;
+
+        return $this;
+    }
+
+    /**
+     * Get campaigns
+     *
+     * @return ArrayCollection
+     */
+    public function getCampaigns()
+    {
+        return $this->campaigns;
     }
 
     public function getLegalSituation()

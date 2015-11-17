@@ -3,7 +3,9 @@
 namespace Application\Sonata\UserBundle\Entity\Repository;
 
 use Application\Sonata\UserBundle\Entity\Base;
+use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 /**
  * CampaignRepository
@@ -49,7 +51,7 @@ class CampaignRepository extends EntityRepository
         return $query->execute(); // instanceof Doctrine\ODM\MongoDB\EagerCursor
     }
 
-    public function findCampaignWithMatching(){
+    public function findCampaignWithMatching(User $user){
         $qb = $this->createQueryBuilder('c');
 
         $t = $qb->select('c')
