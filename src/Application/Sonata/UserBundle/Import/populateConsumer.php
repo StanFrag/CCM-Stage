@@ -28,6 +28,8 @@ class populateConsumer implements ConsumerInterface{
         // Decode message
         $object = unserialize($msg->body);
 
+        $this->consumer->getChannel()->queue_bind('populate-queue', 'broadcasting');
+
         // Rabbitmq consumer non lancé, renvoi en liste necessaire.
         if (isset($object['message']) && $object['message'] === 'shutdown') {
             $this->consumer->forceStopConsumer();
