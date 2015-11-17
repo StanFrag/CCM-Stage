@@ -37,7 +37,7 @@ class dbSender{
             }
 
             // Publish message
-            $msg = serialize($msgToPublish);
+            $msg = json_encode($msgToPublish);
             $this->container->get('old_sound_rabbit_mq.add_match_exchange_producer')->publish($msg);
         }
     }

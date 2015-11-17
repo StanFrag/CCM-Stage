@@ -22,12 +22,14 @@ class dbConsumer implements ConsumerInterface{
         $this->container = $container;
         $this->em = $em;
         $this->consumer = $consumer;
+
+        $this->consumer->getChannel()->queue_bind('match-exchange', 'broadcasting');
     }
 
     public function execute(AMQPMessage $msg)
     {
         // On decode le message recu
-        $object = unserialize($msg->body);
+        $object = json_decode($msg->body, true);
 
         // Verification que le consumer est activé
         if (isset($object['message']) && $object['message'] === 'shutdown') {

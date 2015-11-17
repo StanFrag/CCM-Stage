@@ -24,7 +24,7 @@ class populateSender{
         );
 
         // Publish message
-        $msg = serialize($msgToPublish);
+        $msg = json_encode($msgToPublish);
 
         // Count nombre data
         $num = 0;
