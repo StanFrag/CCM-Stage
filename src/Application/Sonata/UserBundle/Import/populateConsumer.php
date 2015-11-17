@@ -28,7 +28,7 @@ class populateConsumer implements ConsumerInterface{
     public function execute(AMQPMessage $msg)
     {
         // Decode message
-        $object = unserialize($msg->body);
+        $object = json_decode($msg->body, true);
 
         // Rabbitmq consumer non lancé, renvoi en liste necessaire.
         if (isset($object['message']) && $object['message'] === 'shutdown') {

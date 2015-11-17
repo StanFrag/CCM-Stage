@@ -29,7 +29,7 @@ class dbConsumer implements ConsumerInterface{
     public function execute(AMQPMessage $msg)
     {
         // On decode le message recu
-        $object = unserialize($msg->body);
+        $object = json_decode($msg->body, true);
 
         // Verification que le consumer est activé
         if (isset($object['message']) && $object['message'] === 'shutdown') {
