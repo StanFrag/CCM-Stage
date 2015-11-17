@@ -33,7 +33,7 @@ class populateConsumer implements ConsumerInterface{
         // Rabbitmq consumer non lancé, renvoi en liste necessaire.
         if (isset($object['message']) && $object['message'] === 'shutdown') {
             $this->consumer->forceStopConsumer();
-            return false;
+            return true;
         }
 
         // On verifie que les id recuperée ne sont pas null

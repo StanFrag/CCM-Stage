@@ -34,7 +34,7 @@ class dbConsumer implements ConsumerInterface{
         // Verification que le consumer est activé
         if (isset($object['message']) && $object['message'] === 'shutdown') {
             $this->consumer->forceStopConsumer();
-            return false;
+            return true;
         }
 
         $conn = $this->em->getConnection();
