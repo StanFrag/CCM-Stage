@@ -22,7 +22,7 @@ class populateConsumer implements ConsumerInterface{
         $this->consumer = $consumer;
         $this->directory = $directory;
 
-        $this->consumer->getChannel()->queue_bind('populate-queue', 'broadcasting');
+        $this->consumer->getChannel()->queue_bind('populate-exchange', 'broadcasting');
     }
 
     public function execute(AMQPMessage $msg)

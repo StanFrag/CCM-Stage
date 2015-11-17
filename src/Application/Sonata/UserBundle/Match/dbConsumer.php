@@ -23,7 +23,7 @@ class dbConsumer implements ConsumerInterface{
         $this->em = $em;
         $this->consumer = $consumer;
 
-        $this->consumer->getChannel()->queue_bind('match-queue', 'broadcasting');
+        $this->consumer->getChannel()->queue_bind('match-exchange', 'broadcasting');
     }
 
     public function execute(AMQPMessage $msg)
