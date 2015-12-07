@@ -4,9 +4,8 @@
     <property file="/etc/quidea/phing.properties" />
     <available file="../../vagrant-devbox/puphpet/files/conf/quidea/phing.properties" property="vagrant_file" />
     <property name="environment" value="dev" />
-    <property name="cache_dir" value="/var/cache/sf2/md5.r-target.com/cache/${environment}" />
 
-    <if>
+<if>
         <isset property="vagrant_file"/>
         <then>
             <!-- This include is here to allow IDE's to do their job with properties included -->
@@ -15,13 +14,7 @@
     </if>
 
     <target name="sf2_remove_cache">
-        <if>
-            <equals arg1="${environment}" arg2="dev" />
-            <then>
-                <property name="cache_dir" value="app/cache/${environment}" override="true" />
-            </then>
-        </if>
-        <delete dir="${cache_dir}" includeemptydirs="true" />
+        <delete dir="app/cache/${environment}" includeemptydirs="true" />
     </target>
 
     <target name="sf2_create_cache">
